@@ -18,7 +18,7 @@ public abstract class ErrorMessage {
     private long id;
 
     @Column(nullable = false)
-    private AdminErrorMessage.ErrorMessageType type;
+    private ErrorMessageType type;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String message;

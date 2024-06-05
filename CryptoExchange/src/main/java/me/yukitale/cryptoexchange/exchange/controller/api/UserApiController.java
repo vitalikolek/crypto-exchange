@@ -1274,7 +1274,7 @@ public class UserApiController {
         return ResponseEntity.ok("success");
     }
 
-    private ResponseEntity<String> createLimitOrder(HttpServletRequest request, User user, Map<java.lang.String, Object> data) {
+    private ResponseEntity<String> createLimitOrder(HttpServletRequest request, User user, Map<String, Object> data) {
         if (!user.isFeatureEnabled(UserFeature.Type.TRADING)) {
             return ResponseEntity.badRequest().body("trading_ban");
         }
@@ -1283,7 +1283,7 @@ public class UserApiController {
             return ResponseEntity.badRequest().body("already_exists");
         }
 
-        java.lang.String coin = java.lang.String.valueOf(data.get("coin")).toUpperCase().split("USDT")[0];
+        String coin = String.valueOf(data.get("coin")).toUpperCase().split("USDT")[0];
 
         double price = getDoubleValue(data, "price");
         if (Double.isNaN(price) || price <= 0) {
@@ -1300,7 +1300,7 @@ public class UserApiController {
             return ResponseEntity.badRequest().body("min_amount");
         }
 
-        java.lang.String type = java.lang.String.valueOf(data.get("type"));
+        String type = String.valueOf(data.get("type"));
         UserTradeOrder.Type orderType = UserTradeOrder.Type.BUY;
         if (type.equals("BUY")) {
             Coin usdt = coinRepository.findUSDT();

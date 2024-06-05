@@ -5,6 +5,7 @@ import me.yukitale.cryptoexchange.exchange.model.user.*;
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.repository.ban.EmailBanRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.*;
+import me.yukitale.cryptoexchange.exchange.security.service.UserDetailsImpl;
 import me.yukitale.cryptoexchange.exchange.service.UserService;
 import me.yukitale.cryptoexchange.panel.admin.model.other.*;
 import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminDepositCoinRepository;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -179,7 +181,9 @@ public class SupporterPanelController {
                 users = userRepository.findAllByRoleTypeOrderByLastActivityDesc(UserRoleType.ROLE_USER.ordinal(), pageable);
             }
         }
+        User user = getUser(authentication);
         model.addAttribute("users", users);
+        model.addAttribute("user", user);
 
         model.addAttribute("current_page", page);
         model.addAttribute("max_page", maxPage);
@@ -331,6 +335,16 @@ public class SupporterPanelController {
         }
 
         return "supporter-panel/support";
+    }
+
+    public User getUser(Authentication authentication) {
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated()) {
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            return userRepository.findById(userDetails.getId()).orElse(null);
+            //return userRepository.findByUsername(authentication.getName()).orElse(null);
+        }
+
+        return null;
     }
 
     private static List<Integer> paginate(int pages, int page, int maxButtons) {
