@@ -1,14 +1,12 @@
 package me.yukitale.cryptoexchange.exchange.repository.user;
 
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
-import me.yukitale.cryptoexchange.exchange.model.user.UserSupportMessage;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserSupportDialogRepository extends JpaRepository<UserSupportDialog, Long> {
+public interface UserSupportDialogRepository extends JpaRepository<UserSupportDialog, Long>, JpaSpecificationExecutor<UserSupportDialog> {
 
     long countByUserWorkerId(long workerId);
 
@@ -41,6 +39,8 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
 
     List<UserSupportDialog> findByOnlyWelcomeAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(boolean onlyWelcome, int supportUnviewedMessages, Pageable pageable);
 
+    List<UserSupportDialog> findByUser_Support_IdAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(long supportId, int supportUnviewedMessages, Pageable pageable);
+
     long countByOnlyWelcomeAndUserWorkerId(boolean onlyWelcome, long workerId);
 
     long countByOnlyWelcomeAndUserWorkerIdAndSupportUnviewedMessagesGreaterThan(boolean onlyWelcome, long workerId, int supportUnviewedMessages);
@@ -48,4 +48,6 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
     long countByOnlyWelcomeAndSupportUnviewedMessagesGreaterThan(boolean onlyWelcome, int supportUnviewedMessages);
 
     long countByOnlyWelcome(boolean onlyWelcome);
+
+    List<UserSupportDialog> findByUser_Support_IdOrderBySupportUnviewedMessagesDescLastMessageDateDesc(long supportId, Pageable pageable);
 }

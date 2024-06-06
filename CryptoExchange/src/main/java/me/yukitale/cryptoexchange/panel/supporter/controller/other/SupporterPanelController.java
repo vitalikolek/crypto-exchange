@@ -7,7 +7,6 @@ import me.yukitale.cryptoexchange.exchange.repository.ban.EmailBanRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.*;
 import me.yukitale.cryptoexchange.exchange.security.service.UserDetailsImpl;
 import me.yukitale.cryptoexchange.exchange.service.UserService;
-import me.yukitale.cryptoexchange.panel.admin.model.other.*;
 import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminDepositCoinRepository;
 import me.yukitale.cryptoexchange.panel.admin.repository.other.*;
 import me.yukitale.cryptoexchange.panel.common.model.ErrorMessage;
@@ -271,6 +270,7 @@ public class SupporterPanelController {
 
         User user = userService.getUser(authentication);
         Supporter supporter = supporterRepository.findByUserId(user.getId()).orElseThrow();
+        long supporterId = user.getId();
 
         if (supporter.isSupportPresetsEnabled()) {
             List<SupporterSupportPreset> supportPresets = supporterSupportPresetsRepository.findAllBySupporterId(supporter.getId());
@@ -320,8 +320,8 @@ public class SupporterPanelController {
             Pageable pageable = PageRequest.of(page - 1, (int) pageSize);
 
             List<UserSupportDialog> supportDialogs = unviewed ?
-                    userSupportDialogRepository.findByOnlyWelcomeAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(false, 0, pageable) :
-                    userSupportDialogRepository.findByOnlyWelcomeOrderByLastMessageDateDesc(false, pageable);
+                    userSupportDialogRepository.findByUser_Support_IdAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(supporterId, 0, pageable) :
+                    userSupportDialogRepository.findByUser_Support_IdOrderBySupportUnviewedMessagesDescLastMessageDateDesc(supporterId, pageable);
 
             model.addAttribute("support_dialogs", supportDialogs);
             model.addAttribute("support_user", userService.getUser(authentication));
