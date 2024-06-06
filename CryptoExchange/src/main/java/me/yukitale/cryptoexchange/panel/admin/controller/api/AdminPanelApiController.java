@@ -2453,6 +2453,19 @@ public class AdminPanelApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+    @PostMapping(value = "/add-support/{id}")
+    public ResponseEntity<String> addToSupport(@PathVariable long id, @RequestBody Map<String, Long> requestBody) {
+        long supportId = requestBody.get("supportId");
+        try {
+            User supporterUser = userRepository.findById(supportId).orElseThrow();
+            User user = userRepository.findById(id).orElseThrow();
+            user.setSupport(supporterUser);
+            userRepository.save(supporterUser);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
     //todo: кулдауны
     @PostMapping(value = "/user-edit/alert")
