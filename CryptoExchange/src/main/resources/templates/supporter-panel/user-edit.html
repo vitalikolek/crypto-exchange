@@ -362,8 +362,13 @@
 														</a>
 													</div>
 												</div>
-												<div class="d-flex my-4">
-													<a href="#" class="btn btn-primary gradbuttonsp" data-bs-toggle="modal" data-bs-target="#kt_send_support_message">Send support message</a>
+												<div class="d-flex flex-column my-4">
+													<a href="#" class="btn btn-primary gradbuttonsp mb-2" data-bs-toggle="modal" data-bs-target="#kt_send_support_message">Send support message</a>
+													<button type="button" class="btn btn-secondary"
+															th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}"
+															th:disabled="${worker_user.support != null}"
+															th:attr="onclick='toggleSupport(' + ${worker_user.getId()} + ')'">Add to Group</button>
+
 												</div>
 											</div>
 											<input style="margin-bottom: 15px;" id="userNote" type="text" class="form-control form-control-solid" placeholder="Оставьте заметку / Note" th:value="${worker_user.note}">
