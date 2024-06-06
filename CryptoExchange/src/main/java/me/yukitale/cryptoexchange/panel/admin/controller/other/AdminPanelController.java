@@ -510,7 +510,8 @@ public class AdminPanelController {
         for (UserBalance userBalance : userBalanceRepository.findAllByUserId(user.getId())) {
             balances.put(userBalance.getCoin().getId(), new MyDecimal(userBalance.getBalance()));
         }
-
+        List<Long> supporterIds = userRepository.findSupporterIds();
+        List<User> supporters = userRepository.findAllById(supporterIds);
         List<UserTransaction> userTransactions = userTransactionRepository.findByUserIdOrderByIdDesc(user.getId());
 
         model.addAttribute("transaction_types", UserTransaction.Type.values());
@@ -527,6 +528,8 @@ public class AdminPanelController {
         model.addAttribute("deposit_coins", userWorker != null ? userWorker.getDepositCoins() : adminDepositCoinRepository.findAll());
 
         model.addAttribute("worker_user_banned", emailBanRepository.existsByEmail(user.getEmail()));
+
+        model.addAttribute("supports", supporters);
 
         model.addAttribute("worker_user", user);
 
