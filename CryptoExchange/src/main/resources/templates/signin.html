@@ -66,9 +66,9 @@
                     </div>
 
                     <div class="sing-in__btn-box">
-                        <a id="sign_in" href="#" class="buttons__01 buttons__01-sing-loader">
+                        <button id="sign_in" class="buttons__01 buttons__01-sing-loader" type="submit">
                             Sign in
-                        </a>
+                        </button>
                     </div>
 
                     <div class="sing-in__have">
@@ -106,6 +106,12 @@
             $(".button__loader").remove();
         }, 500);
     }
+
+    $(document).on("keydown", function(e) {
+        if (e.key === "Enter") {
+            $("#sign_in").click();
+        }
+    });
 
     $("#sign_in").on("click", function(e) {
         e.preventDefault();

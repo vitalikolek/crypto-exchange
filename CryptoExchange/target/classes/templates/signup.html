@@ -128,6 +128,11 @@
         }, 500);
     }
 
+    $(document).on("keydown", function(e) {
+        if (e.key === "Enter") {
+            $("#create_account").click();
+        }
+    });
 
     $("#create_account").on("click", function(e) {
         e.preventDefault();
