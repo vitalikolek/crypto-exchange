@@ -409,7 +409,7 @@
 														<div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" id="support_dialog_table" style="max-height: 492px; margin-top: 10px;">
 															<th:block th:each="dialog: ${support_dialogs}">
 																<div th:with="user=${dialog.user}" class="rounded bg-hover-light d-flex flex-stack py-4 border-bottom border-active active" th:onclick="'openDialog(event, ' + ${dialog.user.id} + ')'">
-																	<div th:if="${user.getSupport() != null && user.getSupport().getId() == support_user.id}" class="ms-5 d-flex align-items-center" >
+																	<div class="ms-5 d-flex align-items-center" >
 																		<div class="symbol symbol-45px symbol-circle" style="cursor:pointer;">
 																			<img alt="Pic" th:src="${user.profilePhoto == null ? '../assets/img/profile/avatar.svg' : '../' + user.profilePhoto}">
 																			<div th:class="'symbol-badge bg-' + ${user.online} + ' start-100 top-100 border-4 h-10px w-10px ms-n2 mt-n2'"></div>

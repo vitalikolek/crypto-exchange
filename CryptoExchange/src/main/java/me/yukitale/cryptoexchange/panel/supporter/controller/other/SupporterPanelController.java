@@ -303,7 +303,7 @@ public class SupporterPanelController {
 
             long dialogs = unviewed ?
                     userSupportDialogRepository.countByOnlyWelcomeAndSupportUnviewedMessagesGreaterThan(false, 0) :
-                    userSupportDialogRepository.countByOnlyWelcome(false);
+                    userSupportDialogRepository.count();
 
             double pageSize = 50D;
 
@@ -320,8 +320,8 @@ public class SupporterPanelController {
             Pageable pageable = PageRequest.of(page - 1, (int) pageSize);
 
             List<UserSupportDialog> supportDialogs = unviewed ?
-                    userSupportDialogRepository.findByUser_Support_IdAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(supporterId, 0, pageable) :
-                    userSupportDialogRepository.findByUser_Support_IdOrderBySupportUnviewedMessagesDescLastMessageDateDesc(supporterId, pageable);
+                    userSupportDialogRepository.findUnviewedDialogsWithCustomSorting(supporterId, pageable) :
+                    userSupportDialogRepository.findDialogsWithCustomSorting(supporterId, pageable);
 
             model.addAttribute("support_dialogs", supportDialogs);
             model.addAttribute("support_user", userService.getUser(authentication));

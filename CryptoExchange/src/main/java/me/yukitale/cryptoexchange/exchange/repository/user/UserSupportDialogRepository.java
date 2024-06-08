@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +41,16 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
 
     List<UserSupportDialog> findByOnlyWelcomeAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(boolean onlyWelcome, int supportUnviewedMessages, Pageable pageable);
 
-    List<UserSupportDialog> findByUser_Support_IdAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(long supportId, int supportUnviewedMessages, Pageable pageable);
+    @Query("SELECT usd FROM UserSupportDialog usd JOIN usd.user u " +
+            "WHERE usd.supportUnviewedMessages = 1 " +
+            "ORDER BY CASE WHEN u.support.id = :supportId THEN 0 ELSE 1 END, " +
+            "usd.lastMessageDate DESC")
+    List<UserSupportDialog> findUnviewedDialogsWithCustomSorting(@Param("supportId") long supportId, Pageable pageable);
+
+    @Query("SELECT usd FROM UserSupportDialog usd JOIN usd.user u " +
+            "ORDER BY CASE WHEN u.support.id = :supportId THEN 0 ELSE 1 END DESC, " +
+            "usd.supportUnviewedMessages DESC, usd.lastMessageDate DESC")
+    List<UserSupportDialog> findDialogsWithCustomSorting(@Param("supportId") long supportId, Pageable pageable);
 
     long countByOnlyWelcomeAndUserWorkerId(boolean onlyWelcome, long workerId);
 
@@ -48,6 +59,4 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
     long countByOnlyWelcomeAndSupportUnviewedMessagesGreaterThan(boolean onlyWelcome, int supportUnviewedMessages);
 
     long countByOnlyWelcome(boolean onlyWelcome);
-
-    List<UserSupportDialog> findByUser_Support_IdOrderBySupportUnviewedMessagesDescLastMessageDateDesc(long supportId, Pageable pageable);
 }
