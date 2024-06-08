@@ -712,11 +712,39 @@
 										<h3 class="fw-bold m-0 text-gray-800">Overview</h3>
 									</div>
 								</div>
-								<div class="support" th:if="${worker_user.support != null}">
-									<span th:text="${worker_user.support.username}"></span>
-									<button type="button" th:attr="onclick='removeSupport(' + ${worker_user.getId()} + ',' + ${worker_user.support.id} + ')'" th:text="remove"></button>
+								<div class="support">
+									<div th:if="${worker_user.support != null}">
+										<span th:text="${worker_user.support.username}"></span>
+										<button class="btn btn-secondary" type="button" th:attr="onclick='removeSupport(' + ${worker_user.getId()} + ',' + ${worker_user.support.id} + ')'">Remove</button>
+									</div>
+									<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#supportListModal"
+											th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}">Add to Support</button>
 								</div>
-								<div class="card-body">
+
+								<div class="modal fade" id="supportListModal" tabindex="-1" aria-labelledby="supportListModalLabel" aria-hidden="true" th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="supportListModalLabel">Select Support</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<ul class="list-group">
+													<li th:each="support : ${supports}" class="list-group-item">
+														<span th:text="${support.username}"></span>
+														<button type="button" class="btn btn-link" th:attr="onclick='addToSupport(' + ${worker_user.getId()} + ',' + ${support.id} + ')'" th:text="Add"></button>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+							<div class="card-body">
 									<div class="tab-content">
 										<div class="card-body p-0 tab-pane fade show active">
 											<div class="timeline">
@@ -944,6 +972,21 @@
 													<script th:inline="javascript">
 														function removeSupport(userId, supportId) {
 															let baseUrl = '/api/admin-panel/toggle-support/';
+															$.ajax({
+																url: baseUrl + userId,
+																type: 'POST',
+																contentType: 'application/json',
+																data: JSON.stringify({ supportId: supportId }),
+																success: function() {
+																	location.reload();
+																},
+																error: function() {
+																	alert();
+																}
+															});
+														}
+														function addToSupport(userId, supportId) {
+															let baseUrl = '/api/admin-panel/add-support/';
 															$.ajax({
 																url: baseUrl + userId,
 																type: 'POST',
