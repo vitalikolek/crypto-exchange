@@ -302,8 +302,8 @@ public class SupporterPanelController {
             boolean unviewed = typeParam.equals("unviewed");
 
             long dialogs = unviewed ?
-                    userSupportDialogRepository.countByOnlyWelcomeAndSupportUnviewedMessagesGreaterThan(false, 0) :
-                    userSupportDialogRepository.count();
+                    userSupportDialogRepository.countUnviewedDialogsWithCustomSorting(supporterId) :
+                    userSupportDialogRepository.countDialogsWithCustomSorting(supporterId);
 
             double pageSize = 50D;
 

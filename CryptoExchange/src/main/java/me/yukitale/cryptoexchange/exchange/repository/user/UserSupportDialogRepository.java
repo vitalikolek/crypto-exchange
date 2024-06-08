@@ -41,13 +41,16 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
 
     List<UserSupportDialog> findByOnlyWelcomeAndSupportUnviewedMessagesGreaterThanOrderByLastMessageDateDesc(boolean onlyWelcome, int supportUnviewedMessages, Pageable pageable);
 
-    @Query("SELECT usd FROM UserSupportDialog usd JOIN usd.user u " +
-            "WHERE usd.supportUnviewedMessages = 1 " +
+    @Query("SELECT usd " +
+            "FROM UserSupportDialog usd JOIN usd.user u " +
+            "WHERE (u.support.id = :supportId OR u.support.id IS NULL) AND u.roleType = 0 AND usd.supportUnviewedMessages > 0 " +
             "ORDER BY CASE WHEN u.support.id = :supportId THEN 0 ELSE 1 END, " +
             "usd.lastMessageDate DESC")
     List<UserSupportDialog> findUnviewedDialogsWithCustomSorting(@Param("supportId") long supportId, Pageable pageable);
 
-    @Query("SELECT usd FROM UserSupportDialog usd JOIN usd.user u " +
+    @Query("SELECT usd " +
+            "FROM UserSupportDialog usd JOIN usd.user u " +
+            "WHERE (u.support.id = :supportId OR u.support.id IS NULL) AND u.roleType = 0 " +
             "ORDER BY CASE WHEN u.support.id = :supportId THEN 0 ELSE 1 END, " +
             "usd.supportUnviewedMessages DESC, usd.lastMessageDate DESC")
     List<UserSupportDialog> findDialogsWithCustomSorting(@Param("supportId") long supportId, Pageable pageable);
@@ -59,4 +62,14 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
     long countByOnlyWelcomeAndSupportUnviewedMessagesGreaterThan(boolean onlyWelcome, int supportUnviewedMessages);
 
     long countByOnlyWelcome(boolean onlyWelcome);
+
+    @Query("SELECT count(usd) " +
+            "FROM UserSupportDialog usd JOIN usd.user u " +
+            "WHERE (u.support.id = :supportId OR u.support.id IS NULL) AND u.roleType = 0 ")
+    long countDialogsWithCustomSorting(@Param("supportId") long supportId);
+
+    @Query("SELECT count(usd) " +
+            "FROM UserSupportDialog usd JOIN usd.user u " +
+            "WHERE (u.support.id = :supportId OR u.support.id IS NULL) AND u.roleType = 0 AND usd.supportUnviewedMessages > 0")
+    long countUnviewedDialogsWithCustomSorting(@Param("supportId") long supportId);
 }
