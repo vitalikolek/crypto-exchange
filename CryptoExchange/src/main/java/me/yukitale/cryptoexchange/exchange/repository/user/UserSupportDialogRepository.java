@@ -48,7 +48,7 @@ public interface UserSupportDialogRepository extends JpaRepository<UserSupportDi
     List<UserSupportDialog> findUnviewedDialogsWithCustomSorting(@Param("supportId") long supportId, Pageable pageable);
 
     @Query("SELECT usd FROM UserSupportDialog usd JOIN usd.user u " +
-            "ORDER BY CASE WHEN u.support.id = :supportId THEN 0 ELSE 1 END DESC, " +
+            "ORDER BY CASE WHEN u.support.id = :supportId THEN 0 ELSE 1 END, " +
             "usd.supportUnviewedMessages DESC, usd.lastMessageDate DESC")
     List<UserSupportDialog> findDialogsWithCustomSorting(@Param("supportId") long supportId, Pageable pageable);
 
