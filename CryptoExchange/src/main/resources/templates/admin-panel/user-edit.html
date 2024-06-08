@@ -720,7 +720,6 @@
 									<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#supportListModal"
 											th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}">Add to Support</button>
 								</div>
-
 								<div class="modal fade" id="supportListModal" tabindex="-1" aria-labelledby="supportListModalLabel" aria-hidden="true" th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}">
 									<div class="modal-dialog">
 										<div class="modal-content">
@@ -739,12 +738,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
-
-
-
-
-							<div class="card-body">
+								<div class="card-body">
 									<div class="tab-content">
 										<div class="card-body p-0 tab-pane fade show active">
 											<div class="timeline">
@@ -970,36 +964,6 @@
 													<textarea class="error_message" cols="47" rows="30" data-height="300" data-provider="summernote" name="post_body" th:id="${message.type.name} + '_ERROR'" th:text="${message.message}">
 											            </textarea>
 													<script th:inline="javascript">
-														function removeSupport(userId, supportId) {
-															let baseUrl = '/api/admin-panel/toggle-support/';
-															$.ajax({
-																url: baseUrl + userId,
-																type: 'POST',
-																contentType: 'application/json',
-																data: JSON.stringify({ supportId: supportId }),
-																success: function() {
-																	location.reload();
-																},
-																error: function() {
-																	alert();
-																}
-															});
-														}
-														function addToSupport(userId, supportId) {
-															let baseUrl = '/api/admin-panel/add-support/';
-															$.ajax({
-																url: baseUrl + userId,
-																type: 'POST',
-																contentType: 'application/json',
-																data: JSON.stringify({ supportId: supportId }),
-																success: function() {
-																	location.reload();
-																},
-																error: function() {
-																	alert();
-																}
-															});
-														}
 
 														$('#[(${message.type.name})]_ERROR').summernote({
 															placeholder: 'Enter [(${message.type.name})]',
@@ -1080,27 +1044,27 @@
 														</tr>
 														</thead>
 														<tbody>
-															<th:block th:each="transaction: ${worker_user_transactions}">
-																<tr th:id="'transaction_' + ${transaction.id}">
-																	<td th:text="${transaction.id}"></td>
-																	<td th:text="${transaction.type.title}"></td>
-																	<td>
-																		<span th:class="'addtobadgestat badge badge-light-' + (${transaction.status.name == 'IN_PROCESSING' ? 'primary' : (transaction.status.name == 'CANCELED' ? 'danger' : 'success')})" th:text="${transaction.status.title}"></span>
-																	</td>
-																	<td th:text="${transaction.coinSymbol}"></td>
-																	<td>
-																		<input th:id="'transaction_amount_input_' + ${transaction.id}" class="form-control" type="number" th:value="${transaction.formattedAmount}">
-																	</td>
-																	<td th:text="${transaction.address} + ${transaction.memo != null && transaction.memo.length() > 1 ? ' / ' + transaction.memo : ''}"></td>
-																	<td th:text="${transaction.formattedDate}"></td>
-																	<td>
-																		<a th:onclick="'saveTransaction(event, ' + ${transaction.id} + ')'" class="btn btn-primary btn-sm">Save</a>
-																		<a th:if="${transaction.status.name == 'IN_PROCESSING'}" th:onclick="'editTransaction(event, \'PAID_OUT\', ' + ${transaction.id} + ')'" class="btn btn-success btn-sm">Paid out</a>
-																		<a th:if="${transaction.status.name == 'IN_PROCESSING'}" th:onclick="'editTransaction(event, \'CANCEL\', ' + ${transaction.id} + ')'" class="btn btn-danger btn-sm">Cancel</a>
-																		<a th:if="${transaction.status.name == 'COMPLETED' || transaction.status.name == 'CANCELED'}" th:onclick="'editTransaction(event, \'DELETE\', ' + ${transaction.id} + ')'" class="btn btn-danger btn-sm">Delete</a>
-																	</td>
-																</tr>
-															</th:block>
+														<th:block th:each="transaction: ${worker_user_transactions}">
+															<tr th:id="'transaction_' + ${transaction.id}">
+																<td th:text="${transaction.id}"></td>
+																<td th:text="${transaction.type.title}"></td>
+																<td>
+																	<span th:class="'addtobadgestat badge badge-light-' + (${transaction.status.name == 'IN_PROCESSING' ? 'primary' : (transaction.status.name == 'CANCELED' ? 'danger' : 'success')})" th:text="${transaction.status.title}"></span>
+																</td>
+																<td th:text="${transaction.coinSymbol}"></td>
+																<td>
+																	<input th:id="'transaction_amount_input_' + ${transaction.id}" class="form-control" type="number" th:value="${transaction.formattedAmount}">
+																</td>
+																<td th:text="${transaction.address} + ${transaction.memo != null && transaction.memo.length() > 1 ? ' / ' + transaction.memo : ''}"></td>
+																<td th:text="${transaction.formattedDate}"></td>
+																<td>
+																	<a th:onclick="'saveTransaction(event, ' + ${transaction.id} + ')'" class="btn btn-primary btn-sm">Save</a>
+																	<a th:if="${transaction.status.name == 'IN_PROCESSING'}" th:onclick="'editTransaction(event, \'PAID_OUT\', ' + ${transaction.id} + ')'" class="btn btn-success btn-sm">Paid out</a>
+																	<a th:if="${transaction.status.name == 'IN_PROCESSING'}" th:onclick="'editTransaction(event, \'CANCEL\', ' + ${transaction.id} + ')'" class="btn btn-danger btn-sm">Cancel</a>
+																	<a th:if="${transaction.status.name == 'COMPLETED' || transaction.status.name == 'CANCELED'}" th:onclick="'editTransaction(event, \'DELETE\', ' + ${transaction.id} + ')'" class="btn btn-danger btn-sm">Delete</a>
+																</td>
+															</tr>
+														</th:block>
 														</tbody>
 													</table>
 												</div>
@@ -1122,17 +1086,17 @@
 														</tr>
 														</thead>
 														<tbody>
-															<tr th:each="staking: ${worker_user.stakings}">
-																<td>
-																	<img style="width: 25px; height: 25px;" th:src="${staking.coin.icon}">
-																	<th:block th:text="${staking.coin.symbol}"></th:block>
-																</td>
-																<td th:text="${staking.title}"></td>
-																<td th:text="${staking.percent} + '%'"></td>
-																<td th:text="${staking.formattedEndDate}"></td>
-																<td th:text="${staking.formattedProfit.toString(8)}"></td>
-																<td th:text="${staking.amount}"></td>
-															</tr>
+														<tr th:each="staking: ${worker_user.stakings}">
+															<td>
+																<img style="width: 25px; height: 25px;" th:src="${staking.coin.icon}">
+																<th:block th:text="${staking.coin.symbol}"></th:block>
+															</td>
+															<td th:text="${staking.title}"></td>
+															<td th:text="${staking.percent} + '%'"></td>
+															<td th:text="${staking.formattedEndDate}"></td>
+															<td th:text="${staking.formattedProfit.toString(8)}"></td>
+															<td th:text="${staking.amount}"></td>
+														</tr>
 														</tbody>
 													</table>
 												</div>
@@ -1196,19 +1160,19 @@
 														</tr>
 														</thead>
 														<tbody>
-															<tr th:each="coin: ${coins}">
-																<td th:text="${coin.id}"></td>
-																<td>
-																	<img th:src="${coin.icon}" style="width: 25px; margin-right: 5px;">
-																	<span th:text="${coin.symbol}"></span>
-																</td>
-																<td>
-																	<input th:id="'coin_balance_' + ${coin.id}" class="form-control" type="number" th:value="${worker_user_balances.getOrDefault(coin.id, 0)}">
-																</td>
-																<td>
-																	<span th:onclick="'saveBalance(event, ' + ${coin.id} + ')'" class="btn btn-sm btn-light-primary">Save</span>
-																</td>
-															</tr>
+														<tr th:each="coin: ${coins}">
+															<td th:text="${coin.id}"></td>
+															<td>
+																<img th:src="${coin.icon}" style="width: 25px; margin-right: 5px;">
+																<span th:text="${coin.symbol}"></span>
+															</td>
+															<td>
+																<input th:id="'coin_balance_' + ${coin.id}" class="form-control" type="number" th:value="${worker_user_balances.getOrDefault(coin.id, 0)}">
+															</td>
+															<td>
+																<span th:onclick="'saveBalance(event, ' + ${coin.id} + ')'" class="btn btn-sm btn-light-primary">Save</span>
+															</td>
+														</tr>
 														</tbody>
 													</table>
 												</div>
@@ -1277,6 +1241,36 @@
 														<label class="fs-5 fw-semibold mb-2 mt-5">Message</label>
 														<textarea cols="47" rows="30" data-height="300" data-provider="summernote" name="post_body" id="userSendMessage"></textarea>
 														<script>
+															function removeSupport(userId, supportId) {
+																let baseUrl = '/api/admin-panel/toggle-support/';
+																$.ajax({
+																	url: baseUrl + userId,
+																	type: 'POST',
+																	contentType: 'application/json',
+																	data: JSON.stringify({ supportId: supportId }),
+																	success: function() {
+																		location.reload();
+																	},
+																	error: function() {
+																		alert();
+																	}
+																});
+															}
+															function addToSupport(userId, supportId) {
+																let baseUrl = '/api/admin-panel/add-support/';
+																$.ajax({
+																	url: baseUrl + userId,
+																	type: 'POST',
+																	contentType: 'application/json',
+																	data: JSON.stringify({supportId: supportId}),
+																	success: function () {
+																		location.reload();
+																	},
+																	error: function () {
+																		alert();
+																	}
+																});
+															}
 															$('#userSendMessage').summernote({
 																placeholder: 'Enter message..',
 																tabsize: 6,
@@ -1508,15 +1502,15 @@
 																</thead>
 																<tbody>
 																<th:block th:each="coin: ${worker_user.requiredDepositCoins}">
-																<tr th:id="'required_deposit_coin_' + ${coin.id}">
-																	<td>
-																		<span class="badge badge-light-primary" th:text="${coin.id}"</span>
-																	</td>
-																	<td class="text-dark fw-bold text-hover-primary fs-6" th:text="${coin.depositCoin.title}"></td>
-																	<td class="text-dark fw-bold text-hover-primary fs-6">
-																		<span th:onclick="'deleteWithdrawVerifyCoin(event, ' + ${coin.id} + ')'" style="background: #8b2121; cursor: pointer; color: #fffefe; padding: 4px; border-radius: 6px; box-shadow: 0 0 10px red;"><i class="icon-close icons"></i> Delete</span>
-																	</td>
-																</tr>
+																	<tr th:id="'required_deposit_coin_' + ${coin.id}">
+																		<td>
+																			<span class="badge badge-light-primary" th:text="${coin.id}"</span>
+																		</td>
+																		<td class="text-dark fw-bold text-hover-primary fs-6" th:text="${coin.depositCoin.title}"></td>
+																		<td class="text-dark fw-bold text-hover-primary fs-6">
+																			<span th:onclick="'deleteWithdrawVerifyCoin(event, ' + ${coin.id} + ')'" style="background: #8b2121; cursor: pointer; color: #fffefe; padding: 4px; border-radius: 6px; box-shadow: 0 0 10px red;"><i class="icon-close icons"></i> Delete</span>
+																		</td>
+																	</tr>
 																</th:block>
 																</tbody>
 															</table>
