@@ -712,13 +712,15 @@
 										<h3 class="fw-bold m-0 text-gray-800">Overview</h3>
 									</div>
 								</div>
-								<div class="support">
-									<div th:if="${worker_user.support != null}">
+								<div class="support card card-body">
+									<div class="row g-9 mb-5" th:if="${worker_user.support != null}">
 										<span th:text="${worker_user.support.username}"></span>
 										<button class="btn btn-secondary" type="button" th:attr="onclick='removeSupport(' + ${worker_user.getId()} + ',' + ${worker_user.support.id} + ')'">Remove</button>
 									</div>
+									<div class="row g-9 mb-5">
 									<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#supportListModal"
 											th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}">Add to Support</button>
+									</div>
 								</div>
 								<div class="modal fade" id="supportListModal" tabindex="-1" aria-labelledby="supportListModalLabel" aria-hidden="true" th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}">
 									<div class="modal-dialog">

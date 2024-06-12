@@ -366,9 +366,9 @@
 													<a href="#" class="btn btn-primary gradbuttonsp mb-2" data-bs-toggle="modal" data-bs-target="#kt_send_support_message">Send support message</a>
 													<button type="button" class="btn btn-secondary"
 															th:if="${!worker_user.isSupporter() and !worker_user.isAdmin()}"
-															th:style="${worker_user.support == null ? 'background-color: blue; color: white;' : ''}"
+															th:style="${worker_user.support == null ? 'background-color: #009EF7; color: white;' : ''}"
 															th:disabled="${worker_user.support != null}"
-															th:attr="onclick='toggleSupport(' + ${worker_user.getId()} + ')'">Add to Group</button>
+															th:attr="onclick='toggleSupport(' + ${worker_user.getId()} + ')'">Add to My Support</button>
 												</div>
 
 											</div>
