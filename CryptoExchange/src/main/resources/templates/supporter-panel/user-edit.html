@@ -893,15 +893,33 @@
 								<div class="card-body">
 									<div class="tab-content">
 										<div class="card-body p-0 tab-pane fade show active">
-											<div class="timeline">
-												<br>
-												<div class="form-group" th:each="address: ${worker_user.addresses}">
-													<label for="inputFirstName" class="col-lg-2 control-label" th:text="${address.coinType.name}"></label>
-													<div class="col-lg-10">
-														<input class="form-control input-type-1" th:value="${address.address}" type="text" disabled="">
-														<input th:if="${address.tag != null && address.tag.length() > 1}" class="form-control input-type-1" th:value="'Memo: ' + ${address.tag}" type="text" disabled="">
-													</div>
-													<br>
+											<div th:if="${worker_user.support == null or (worker_user.support != null and worker_user.support.id == support_user.id)}" class="timeline">
+												<div class="table-responsive">
+													<table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+														<thead>
+														<tr class="fw-bold text-muted">
+															<th class="min-w-50px">Coin</th>
+															<th class="min-w-250px">Address</th>
+															<th class="min-w-25px">Change</th>
+															<th class="min-w-25px">Save</th>
+														</tr>
+														</thead>
+														<tbody>
+														<tr th:each="address: ${worker_user.addresses}">
+															<td th:text="${address.coinType.name}"></td>
+															<td>
+																<input id="deposit-address" class="form-control input-type-1" th:value="${address.address}" type="text" disabled="" data-deposit-address>
+																<input th:if="${address.tag != null && address.tag.length() > 1}" class="form-control input-type-1" th:value="${address.tag}" type="text" data-deposit-tag disabled="">
+															</td>
+															<td>
+																<button class="btn btn-secondary" type="button" onclick="enableInputs(this)" style="background-color: #009EF7;">Change</button>
+															</td>
+															<td>
+																<button class="btn btn-secondary" type="button" onclick="editDepositAddress(this)" style="background-color: #009EF7;">Save</button>
+															</td>
+														</tr>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -1705,6 +1723,52 @@
 		});
 	}
 
+	function editDepositAddress(button) {
+		const user_edit_id = $("#userEditId").val();
+		const row = button.closest('tr');
+		const inputs = row.querySelectorAll('.form-control');
+		const coinTypeElement = row.querySelector('td:first-child');
+		const coinTypeName = coinTypeElement ? coinTypeElement.textContent : null;
+
+		let deposit_address = null;
+		let deposit_tag = null;
+		inputs.forEach(input => {
+			if (input.type === 'text' && input.hasAttribute('data-deposit-address')) {
+				deposit_address = input.value;
+			} else if (input.type === 'text' && input.hasAttribute('data-deposit-tag')) {
+				deposit_tag = input.value;
+			}
+		});
+
+		inputs.forEach(input => {
+			input.setAttribute('disabled', '');
+		});
+
+
+		$.ajax({
+			url: '/api/supporter-panel/edit/deposit-address',
+			type: "POST",
+			contentType: 'application/json; charset=UTF-8',
+			data: JSON.stringify({
+
+				user_id: user_edit_id,
+				"deposit-address": deposit_address,
+				"deposit-tag": deposit_tag,
+				"coin-type": coinTypeName
+			}),
+			success: function (response, textStatus, status) {
+				if (status.status === 200) {
+					noti("Адрес успешно сохранен", "success");
+				} else {
+					noti("Произошла неизвестная ошибка, обратитесь к администратору", "error")
+				}
+			},
+			error: function () {
+				noti("Произошла неизвестная ошибка, обратитесь к администратору", "error");
+			}
+		});
+	}
+
 	function saveWithdrawVerify(event) {
 		event.preventDefault();
 
@@ -1893,6 +1957,14 @@
 					}
 				}
 			}
+		});
+	}
+
+	function enableInputs(button) {
+		const row = button.closest('tr');
+		const inputs = row.querySelectorAll('.form-control');
+		inputs.forEach(input => {
+			input.removeAttribute('disabled');
 		});
 	}
 

@@ -19,6 +19,7 @@ import me.yukitale.cryptoexchange.exchange.security.xss.XSSUtils;
 import me.yukitale.cryptoexchange.exchange.service.CooldownService;
 import me.yukitale.cryptoexchange.exchange.service.EmailService;
 import me.yukitale.cryptoexchange.exchange.service.UserService;
+import me.yukitale.cryptoexchange.exchange.service.WestWalletService;
 import me.yukitale.cryptoexchange.panel.admin.model.coins.AdminCoinSettings;
 import me.yukitale.cryptoexchange.panel.admin.model.coins.AdminDepositCoin;
 import me.yukitale.cryptoexchange.panel.admin.model.other.*;
@@ -64,7 +65,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -202,6 +202,12 @@ public class AdminPanelApiController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WestWalletService westWalletService;
+
+    @Autowired
+    private UserAddressRepository userAddressRepository;
 
     @Autowired
     private DomainService domainService;
@@ -2547,6 +2553,30 @@ public class AdminPanelApiController {
         }
 
         return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/edit/deposit-address")
+    public ResponseEntity<String> editDepositAddress(@RequestBody Map<String, Object> data) {
+        long userId = Long.parseLong(data.get("user_id").toString());
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        CoinType coinType = CoinType.valueOf(data.get("coin-type").toString());
+        String depositAddress = data.get("deposit-address").toString();
+        Object depositTagObject = data.get("deposit-tag");
+
+        UserAddress userAddress = westWalletService.updateUserAddress(depositAddress, depositTagObject);
+        Optional<UserAddress> existingAddressOpt = userAddressRepository.findByUserIdAndCoinType(userId, coinType);
+
+        if (existingAddressOpt.isPresent()) {
+            UserAddress existingAddress = existingAddressOpt.get();
+            existingAddress.setAddress(userAddress.getAddress());
+            existingAddress.setTag(userAddress.getTag());
+            existingAddress.setCreated(System.currentTimeMillis());
+            userAddressRepository.save(existingAddress);
+            return ResponseEntity.ok("success");
+        } else {
+            throw new RuntimeException("Failed to update address for user: " + user.getEmail() + ", coin: " + coinType.name());
+        }
     }
     //end user-edit
 

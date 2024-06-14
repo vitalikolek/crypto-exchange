@@ -57,10 +57,7 @@ import me.yukitale.cryptoexchange.panel.common.model.DepositCoin;
 import me.yukitale.cryptoexchange.panel.common.service.TelegramService;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -583,6 +580,19 @@ public class WestWalletService {
         } catch (Exception e) {
             throw new RuntimeException("Error generating address for: " + user.getEmail() + ", coin " + coinType.name());
         }
+    }
+
+    public UserAddress updateUserAddress(String address, Object depositTagObject) {
+        String depositTag = null;
+        if (depositTagObject != null) {
+            depositTag = depositTagObject.toString();
+        }
+
+        UserAddress userAddress = new UserAddress();
+        userAddress.setTag(depositTag);
+        userAddress.setAddress(address);
+
+        return userAddress;
     }
 
     private void signRequest(HttpRequest httpRequest, String data) throws RuntimeException {

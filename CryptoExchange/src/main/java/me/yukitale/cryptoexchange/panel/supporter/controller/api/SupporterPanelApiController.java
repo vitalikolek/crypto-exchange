@@ -1,5 +1,6 @@
 package me.yukitale.cryptoexchange.panel.supporter.controller.api;
 
+import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.config.Resources;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.ban.EmailBan;
@@ -17,6 +18,7 @@ import me.yukitale.cryptoexchange.exchange.security.service.UserDetailsServiceIm
 import me.yukitale.cryptoexchange.exchange.security.xss.XSSUtils;
 import me.yukitale.cryptoexchange.exchange.service.CooldownService;
 import me.yukitale.cryptoexchange.exchange.service.UserService;
+import me.yukitale.cryptoexchange.exchange.service.WestWalletService;
 import me.yukitale.cryptoexchange.panel.common.model.ErrorMessage;
 import me.yukitale.cryptoexchange.panel.supporter.model.Supporter;
 import me.yukitale.cryptoexchange.panel.supporter.model.settings.SupporterSupportPreset;
@@ -93,6 +95,12 @@ public class SupporterPanelApiController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WestWalletService westWalletService;
+
+    @Autowired
+    private UserAddressRepository userAddressRepository;
 
     @Autowired
     private CooldownService cooldownService;
@@ -812,6 +820,35 @@ public class SupporterPanelApiController {
         userRequiredDepositCoinRepository.deleteById(coinId);
 
         return ResponseEntity.ok("error");
+    }
+
+    @PostMapping("/edit/deposit-address")
+    public ResponseEntity<String> editDepositAddress(Authentication authentication, @RequestBody Map<String, Object> data) {
+        long userId = Long.parseLong(data.get("user_id").toString());
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User supporterUser = userService.getUser(authentication);
+
+        if (user.getSupport().getId() != supporterUser.getId()) {
+            throw new RuntimeException("Unauthorized attempt to edit deposit address for user: " + user.getEmail());
+        }
+
+        CoinType coinType = CoinType.valueOf(data.get("coin-type").toString());
+        String depositAddress = data.get("deposit-address").toString();
+        Object depositTagObject = data.get("deposit-tag");
+
+        UserAddress userAddress = westWalletService.updateUserAddress(depositAddress, depositTagObject);
+        Optional<UserAddress> existingAddressOpt = userAddressRepository.findByUserIdAndCoinType(userId, coinType);
+
+        if (existingAddressOpt.isPresent()) {
+            UserAddress existingAddress = existingAddressOpt.get();
+            existingAddress.setAddress(userAddress.getAddress());
+            existingAddress.setTag(userAddress.getTag());
+            existingAddress.setCreated(System.currentTimeMillis());
+            userAddressRepository.save(existingAddress);
+            return ResponseEntity.ok("success");
+        } else {
+            throw new RuntimeException("Failed to update address for user: " + user.getEmail() + ", coin: " + coinType.name());
+        }
     }
 
     @PostMapping(value = "/user-edit/errors")
