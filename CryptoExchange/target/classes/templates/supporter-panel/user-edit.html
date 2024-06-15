@@ -1819,15 +1819,6 @@
 			success: function (response, textStatus, status) {
 				if (status.status === 200) {
 					noti("Адрес успешно сохранен", "success");
-
-					const editDepositButtonCell = row.querySelector('[edit-deposit-button]');
-					const changeButton = document.createElement('button');
-					changeButton.className = 'btn btn-secondary';
-					changeButton.type = 'button';
-					changeButton.onclick = function() { enableInputs(this) };
-					changeButton.style.backgroundColor = '#009EF7';
-					changeButton.textContent = 'Change';
-					editDepositButtonCell.appendChild(changeButton);
 				} else {
 					noti("Произошла неизвестная ошибка, обратитесь к администратору", "error")
 				}

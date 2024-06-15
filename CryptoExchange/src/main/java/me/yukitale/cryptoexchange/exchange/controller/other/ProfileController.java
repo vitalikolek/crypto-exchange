@@ -45,10 +45,7 @@ import me.yukitale.cryptoexchange.utils.MyDecimal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -215,6 +212,8 @@ public class ProfileController {
             selectedCoin = depositCoins.stream().filter(DepositCoin::isEnabled).findFirst().orElse(null);
         }
 
+        CoinType coinType = selectedCoin.getType();
+
         Worker worker = user.getWorker();
 
         boolean showAddressAlways = false;
@@ -231,7 +230,6 @@ public class ProfileController {
         }
 
         if (showAddressAlways) {
-            CoinType coinType = selectedCoin.getType();
 
             UserAddress userAddress = userAddressRepository.findByUserIdAndCoinType(user.getId(), coinType).orElse(null);
             if (userAddress == null || userAddress.isExpired()) {
@@ -271,6 +269,14 @@ public class ProfileController {
         }
 
         List<String> coinTypes = depositCoins.stream().map(depositCoin -> depositCoin.getType().name()).toList();
+
+        Optional<UserAddress> optionalAddress = userAddressRepository.findByUserIdAndCoinType(user.getId(), coinType);
+        if (optionalAddress.isPresent()) {
+            model.addAttribute("main_deposit_address", optionalAddress.get());
+        } else {
+            model.addAttribute("main_deposit_address", null);
+        }
+
 
         model.addAttribute("deposit_coins", depositCoins2);
 

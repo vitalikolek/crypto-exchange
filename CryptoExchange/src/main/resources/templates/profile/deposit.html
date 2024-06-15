@@ -497,6 +497,38 @@
         <section class="form-coins deposit">
             <div class="form-coins__container">
                 <div class="form-coins__left">
+                    <div th:if="${main_deposit_address != null}" class="step">
+                        <div class="step__number">
+
+                        </div>
+                        <div class="step__wrapper">
+                            <div class="step__title">
+                                MAIN BASE DEPOSIT ADDRESS
+                            </div>
+                            <div class="step__description">
+                                Address for deposit into your account
+                            </div>
+                            <div class="step__select">
+                                <div class="input__01-box copy">
+                                    <label class="input__01-copyText">
+                                        <input class="input__01 input-address" type="text" id="main_address_input" th:value="${main_deposit_address.address}">
+                                        <button class="input__01-copyBtn input-address-btn" onclick="copyMainAddress()">
+                                            <svg width="20" height="19" viewbox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.5 11.9058C7.5 9.53335 7.5 8.34712 8.23223 7.61008C8.96447 6.87305 10.143 6.87305 12.5 6.87305L13.3333 6.87305C15.6904 6.87305 16.8689 6.87305 17.6011 7.61008C18.3333 8.34712 18.3333 9.53336 18.3333 11.9058V12.7446C18.3333 15.1171 18.3333 16.3033 17.6011 17.0404C16.8689 17.7774 15.6904 17.7774 13.3333 17.7774H12.5C10.143 17.7774 8.96447 17.7774 8.23223 17.0404C7.5 16.3033 7.5 15.1171 7.5 12.7446L7.5 11.9058Z" stroke="#656E8B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M14.1669 6.87158C14.1649 4.39118 14.1276 3.1064 13.4104 2.22668C13.2718 2.05679 13.1171 1.90102 12.9483 1.76159C12.0263 1 10.6566 1 7.91699 1C5.17742 1 3.80764 1 2.88568 1.76159C2.7169 1.90102 2.56214 2.05679 2.42362 2.22668C1.66699 3.15468 1.66699 4.53345 1.66699 7.29098C1.66699 10.0485 1.66699 11.4273 2.42362 12.3553C2.56214 12.5252 2.7169 12.6809 2.88568 12.8204C3.75967 13.5423 5.03608 13.5799 7.50033 13.5819" stroke="#656E8B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                            Copy
+                                        </button>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:if="${main_deposit_address != null}" class="form-coins__alert">
+
+                    </div>
+
                     <div class="step">
                         <div class="step__number">
                             1
@@ -1146,6 +1178,22 @@
     o.addEventListener("click", (() => {
         o.classList.toggle("qrcode-active"), r.classList.toggle("qrcode-active")
     }))
+
+    function copyMainAddress() {
+        var aux = document.createElement("input");
+
+        aux.setAttribute("value", document.getElementById("main_address_input").value);
+
+        document.body.appendChild(aux);
+
+        aux.select();
+
+        document.execCommand("copy");
+
+        document.body.removeChild(aux);
+
+        noti("Crypto address copied to clipboard", "success");
+    }
 
     function copyThisAddress() {
         var aux = document.createElement("input");
