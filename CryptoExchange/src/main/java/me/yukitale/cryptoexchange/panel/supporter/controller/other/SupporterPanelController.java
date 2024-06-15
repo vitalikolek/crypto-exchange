@@ -256,6 +256,7 @@ public class SupporterPanelController {
         model.addAttribute("workers_user", userPage.getContent());
         model.addAttribute("current_page", page);
         model.addAttribute("max_page", userPage.getTotalPages());
+        model.addAttribute("missing_coin_types", userService.getMissingCoinTypes(userId));
 
         return "supporter-panel/user-edit";
     }

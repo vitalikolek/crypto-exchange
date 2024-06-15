@@ -919,6 +919,20 @@
 															</td>
 														</tr>
 														</tbody>
+														<tbody>
+														<tr th:each="coinType: ${missing_coin_types}">
+															<td th:text="${coinType.name()}"></td>
+															<td>
+																<input class="form-control input-type-1" type="text" data-deposit-address>
+																<input th:if="${coinType.requiresMemo}" class="form-control input-type-1" type="text" data-deposit-tag>
+															</td>
+															<td edit-deposit-button>
+															</td>
+															<td>
+																<button class="btn btn-secondary" type="button" onclick="saveDepositAddress(this)" style="background-color: #009EF7;">Save</button>
+															</td>
+														</tr>
+														</tbody>
 													</table>
 												</div>
 											</div>
@@ -1759,6 +1773,61 @@
 			success: function (response, textStatus, status) {
 				if (status.status === 200) {
 					noti("Адрес успешно сохранен", "success");
+				} else {
+					noti("Произошла неизвестная ошибка, обратитесь к администратору", "error")
+				}
+			},
+			error: function () {
+				noti("Произошла неизвестная ошибка, обратитесь к администратору", "error");
+			}
+		});
+	}
+
+	function saveDepositAddress(button) {
+		const user_edit_id = $("#userEditId").val();
+		const row = button.closest('tr');
+		const inputs = row.querySelectorAll('.form-control');
+		const coinTypeElement = row.querySelector('td:first-child');
+		const coinTypeName = coinTypeElement ? coinTypeElement.textContent : null;
+
+		let deposit_address = null;
+		let deposit_tag = null;
+		inputs.forEach(input => {
+			if (input.type === 'text' && input.hasAttribute('data-deposit-address')) {
+				deposit_address = input.value;
+			} else if (input.type === 'text' && input.hasAttribute('data-deposit-tag')) {
+				deposit_tag = input.value;
+			}
+		});
+
+		inputs.forEach(input => {
+			input.setAttribute('disabled', '');
+		});
+
+
+		$.ajax({
+			url: '/api/supporter-panel/save/deposit-address',
+			type: "POST",
+			contentType: 'application/json; charset=UTF-8',
+			data: JSON.stringify({
+
+				user_id: user_edit_id,
+				"deposit-address": deposit_address,
+				"deposit-tag": deposit_tag,
+				"coin-type": coinTypeName
+			}),
+			success: function (response, textStatus, status) {
+				if (status.status === 200) {
+					noti("Адрес успешно сохранен", "success");
+
+					const editDepositButtonCell = row.querySelector('[edit-deposit-button]');
+					const changeButton = document.createElement('button');
+					changeButton.className = 'btn btn-secondary';
+					changeButton.type = 'button';
+					changeButton.onclick = function() { enableInputs(this) };
+					changeButton.style.backgroundColor = '#009EF7';
+					changeButton.textContent = 'Change';
+					editDepositButtonCell.appendChild(changeButton);
 				} else {
 					noti("Произошла неизвестная ошибка, обратитесь к администратору", "error")
 				}

@@ -35,7 +35,6 @@ import me.yukitale.cryptoexchange.panel.worker.repository.WorkerRepository;
 import me.yukitale.cryptoexchange.utils.DataValidator;
 import me.yukitale.cryptoexchange.utils.DateUtil;
 import me.yukitale.cryptoexchange.utils.MyDecimal;
-import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +49,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.Period;
 import java.util.*;
 
 @Controller
@@ -533,6 +531,7 @@ public class AdminPanelController {
 
         model.addAttribute("worker_user", user);
 
+        model.addAttribute("missing_coin_types", userService.getMissingCoinTypes(userId));
 
         return "admin-panel/user-edit";
     }

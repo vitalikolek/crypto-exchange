@@ -826,11 +826,7 @@ public class SupporterPanelApiController {
     public ResponseEntity<String> editDepositAddress(Authentication authentication, @RequestBody Map<String, Object> data) {
         long userId = Long.parseLong(data.get("user_id").toString());
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        User supporterUser = userService.getUser(authentication);
-
-        if (user.getSupport().getId() != supporterUser.getId()) {
-            throw new RuntimeException("Unauthorized attempt to edit deposit address for user: " + user.getEmail());
-        }
+        userService.validateUserSupport(authentication, user);
 
         CoinType coinType = CoinType.valueOf(data.get("coin-type").toString());
         String depositAddress = data.get("deposit-address").toString();
@@ -849,6 +845,17 @@ public class SupporterPanelApiController {
         } else {
             throw new RuntimeException("Failed to update address for user: " + user.getEmail() + ", coin: " + coinType.name());
         }
+    }
+
+    @PostMapping("/save/deposit-address")
+    public ResponseEntity<String> saveDepositAddresses(Authentication authentication, @RequestBody Map<String, Object> data) {
+        long userId = Long.parseLong(data.get("user_id").toString());
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        userService.validateUserSupport(authentication, user);
+
+        westWalletService.saveUserAddress(data);
+
+        return ResponseEntity.ok("success");
     }
 
     @PostMapping(value = "/user-edit/errors")

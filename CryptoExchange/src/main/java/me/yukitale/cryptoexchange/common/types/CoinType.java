@@ -1,32 +1,41 @@
 package me.yukitale.cryptoexchange.common.types;
 
 public enum CoinType {
+    BTC(false),
+    BCH(false),
+    ETH(false),
+    USDTERC20(false),
+    ETC(false),
+    XRP(true),
+    LTC(false),
+    ADA(false),
+    DSH(false),
+    ZCASH(false),
+    DOGE(false),
+    SOL(false),
+    XMR(false),
+    XTZ(false),
+    XLM(true),
+    EOS(true),
+    TRX(false),
+    USDTTRC20(false),
+    BNB2(true),
+    BNBBEP20(false),
+    USDTBEP20(false),
+    BUSDBEP20(false),
+    USDCTRC20(false),
+    BTG(false),
+    USDPERC20(false),
+    SHIBBEP20(false),
+    CROERC(false);
 
-    BTC,
-    BCH,
-    ETH,
-    USDTERC20,
-    ETC,
-    XRP,
-    LTC,
-    ADA,
-    DSH,
-    ZCASH,
-    DOGE,
-    SOL,
-    XMR,
-    XTZ,
-    XLM,
-    EOS,
-    TRX,
-    USDTTRC20,
-    BNB2,
-    BNBBEP20,
-    USDTBEP20,
-    BUSDBEP20,
-    USDCTRC20,
-    BTG,
-    USDPERC20,
-    SHIBBEP20,
-    CROERC;
+    public final boolean requiresMemo;
+
+    CoinType(boolean requiresMemo) {
+        this.requiresMemo = requiresMemo;
+    }
+
+    public boolean requiresMemo() {
+        return requiresMemo;
+    }
 }

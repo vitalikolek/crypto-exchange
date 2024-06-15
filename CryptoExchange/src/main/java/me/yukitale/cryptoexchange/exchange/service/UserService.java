@@ -1,26 +1,42 @@
 package me.yukitale.cryptoexchange.exchange.service;
 
-import com.fasterxml.jackson.datatype.jsr310.ser.DurationSerializer;
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import me.yukitale.cryptoexchange.common.types.CoinType;
+import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.*;
+import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
+import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.*;
+import me.yukitale.cryptoexchange.exchange.repository.user.settings.UserFeatureRepository;
 import me.yukitale.cryptoexchange.exchange.security.service.UserDetailsImpl;
 import me.yukitale.cryptoexchange.exchange.security.service.UserDetailsServiceImpl;
+import me.yukitale.cryptoexchange.panel.admin.model.other.AdminFeature;
+import me.yukitale.cryptoexchange.panel.admin.model.other.AdminSettings;
+import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminCoinSettingsRepository;
 import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminErrorMessageRepository;
+import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminFeatureRepository;
+import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminSettingsRepository;
 import me.yukitale.cryptoexchange.panel.common.model.CoinSettings;
 import me.yukitale.cryptoexchange.panel.common.model.ErrorMessage;
 import me.yukitale.cryptoexchange.panel.common.model.Feature;
+import me.yukitale.cryptoexchange.panel.worker.model.Domain;
+import me.yukitale.cryptoexchange.panel.worker.model.Promocode;
+import me.yukitale.cryptoexchange.panel.worker.model.Worker;
 import me.yukitale.cryptoexchange.panel.worker.model.settings.other.WorkerFeature;
 import me.yukitale.cryptoexchange.panel.worker.model.settings.other.WorkerRecordSettings;
 import me.yukitale.cryptoexchange.panel.worker.model.settings.other.WorkerSettings;
 import me.yukitale.cryptoexchange.panel.worker.repository.DomainRepository;
 import me.yukitale.cryptoexchange.panel.worker.repository.PromocodeRepository;
+import me.yukitale.cryptoexchange.panel.worker.repository.WorkerRepository;
 import me.yukitale.cryptoexchange.panel.worker.repository.settings.coins.WorkerCoinSettingsRepository;
 import me.yukitale.cryptoexchange.panel.worker.repository.settings.other.WorkerFeatureRepository;
 import me.yukitale.cryptoexchange.panel.worker.repository.settings.other.WorkerRecordSettingsRepository;
 import me.yukitale.cryptoexchange.panel.worker.repository.settings.other.WorkerSettingsRepository;
 import me.yukitale.cryptoexchange.utils.GeoUtil;
+import me.yukitale.cryptoexchange.utils.MathUtil;
+import me.yukitale.cryptoexchange.utils.MyDecimal;
 import me.yukitale.cryptoexchange.utils.ServletUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,30 +44,11 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import me.yukitale.cryptoexchange.exchange.model.Coin;
-import me.yukitale.cryptoexchange.exchange.model.user.*;
-import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
-import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
-import me.yukitale.cryptoexchange.exchange.repository.user.*;
-import me.yukitale.cryptoexchange.exchange.repository.user.settings.UserFeatureRepository;
-import me.yukitale.cryptoexchange.panel.admin.model.other.AdminFeature;
-import me.yukitale.cryptoexchange.panel.admin.model.other.AdminSettings;
-import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminCoinSettingsRepository;
-import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminFeatureRepository;
-import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminSettingsRepository;
-import me.yukitale.cryptoexchange.panel.worker.model.Domain;
-import me.yukitale.cryptoexchange.panel.worker.model.Promocode;
-import me.yukitale.cryptoexchange.panel.worker.model.Worker;
-import me.yukitale.cryptoexchange.panel.worker.repository.WorkerRepository;
-import me.yukitale.cryptoexchange.utils.MathUtil;
-import me.yukitale.cryptoexchange.utils.MyDecimal;
 
-import jakarta.servlet.http.HttpServletRequest;
-import me.yukitale.cryptoexchange.exchange.model.user.*;
-import me.yukitale.cryptoexchange.exchange.repository.user.*;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -89,6 +86,9 @@ public class UserService {
 
     @Autowired
     private UserSupportDialogRepository userSupportDialogRepository;
+
+    @Autowired
+    private UserAddressRepository userAddressRepository;
 
     @Autowired
     private DomainRepository domainRepository;
@@ -197,7 +197,8 @@ public class UserService {
     }
 
     public User createUser(String referrer, Domain domain, String email, String username, String password, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
-        Worker worker = domain != null ? domain.getWorker() : null;;
+        Worker worker = domain != null ? domain.getWorker() : null;
+        ;
         boolean byDomain = worker != null;
         if (worker == null && refId > 0) {
             worker = workerRepository.findByUserId(refId).orElse(null);
@@ -216,7 +217,7 @@ public class UserService {
 
         User user = new User(username, email, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed);
         user.setReferrer(referrer);
-        
+
         UserRole userRole = roleRepository.findByName(UserRoleType.ROLE_USER)
                 .orElseThrow(() -> new RuntimeException("User role " + UserRoleType.ROLE_USER + " not found in repository"));
 
@@ -253,7 +254,8 @@ public class UserService {
             try {
                 long emailEnd = Long.parseLong(emailLeft.substring(emailLeft.length() - 6));
                 recordSettings = workerRecordSettingsRepository.findByEmailEnd(emailEnd).orElse(null);
-            } catch (Exception ex) {}
+            } catch (Exception ex) {
+            }
         }
 
         if (recordSettings != null) {
@@ -407,6 +409,14 @@ public class UserService {
         userSupportDialogRepository.save(userSupportDialog);
     }
 
+    public void validateUserSupport(Authentication authentication, User user) {
+        User supporterUser = getUser(authentication);
+
+        if (user.getSupport() != null && user.getSupport().getId() != supporterUser.getId()) {
+            throw new RuntimeException("Unauthorized attempt to edit deposit address for user: " + user.getEmail());
+        }
+    }
+
     public void bindToWorker(User user, Worker worker) {
         if (worker != null && user.getWorker() == null) {
             CoinSettings coinSettings = worker.getCoinSettings();
@@ -496,7 +506,8 @@ public class UserService {
         try {
             UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("user-agent"));
             platform = userAgent.getOperatingSystem().getName() + ", " + userAgent.getBrowser().getName();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         String ip = ServletUtil.getIpAddress(request);
 
@@ -578,6 +589,14 @@ public class UserService {
         double value = coinUsdBalance.getValue() / totalUsdBalance.getValue() * 100D;
 
         return new MyDecimal(Double.isNaN(value) ? 0D : value, true);
+    }
+
+    public List<CoinType> getMissingCoinTypes(long userId) {
+        return List.of(CoinType.values()).stream()
+            .filter(coinType -> userAddressRepository.findByUserId(userId).stream()
+                .map(UserAddress::getCoinType)
+                .noneMatch(coinType::equals))
+                .toList();
     }
 
     public MyDecimal getAllocationWithoutWorker(User user, Coin coin) {

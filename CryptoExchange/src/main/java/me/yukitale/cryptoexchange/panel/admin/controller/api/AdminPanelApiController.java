@@ -2578,6 +2578,13 @@ public class AdminPanelApiController {
             throw new RuntimeException("Failed to update address for user: " + user.getEmail() + ", coin: " + coinType.name());
         }
     }
+
+    @PostMapping("/save/deposit-address")
+    public ResponseEntity<String> saveDepositAddresses(@RequestBody Map<String, Object> data) {
+        westWalletService.saveUserAddress(data);
+
+        return ResponseEntity.ok("success");
+    }
     //end user-edit
 
     //start smart-deposit

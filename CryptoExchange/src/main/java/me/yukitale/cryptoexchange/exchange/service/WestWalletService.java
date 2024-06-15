@@ -55,6 +55,7 @@ import me.yukitale.cryptoexchange.panel.admin.model.payments.PaymentSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
 import me.yukitale.cryptoexchange.panel.common.model.DepositCoin;
 import me.yukitale.cryptoexchange.panel.common.service.TelegramService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.Instant;
 import java.util.*;
@@ -580,6 +581,29 @@ public class WestWalletService {
         } catch (Exception e) {
             throw new RuntimeException("Error generating address for: " + user.getEmail() + ", coin " + coinType.name());
         }
+    }
+
+    public void saveUserAddress(@RequestBody Map<String, Object> data) {
+        long userId = Long.parseLong(data.get("user_id").toString());
+        Optional<User> user = userRepository.findById(userId);
+        CoinType coinType = CoinType.valueOf(data.get("coin-type").toString());
+        String depositAddress = data.get("deposit-address").toString();
+        Object depositTagObject = data.get("deposit-tag");
+
+        String depositTag = null;
+        if (depositTagObject != null) {
+            depositTag = depositTagObject.toString();
+        }
+
+        UserAddress userAddress = new UserAddress();
+        userAddress.setUser(user.get());
+        userAddress.setUserId(userId);
+        userAddress.setTag(depositTag);
+        userAddress.setAddress(depositAddress);
+        userAddress.setCoinType(coinType);
+        userAddress.setCreated(System.currentTimeMillis());
+
+        userAddressRepository.save(userAddress);
     }
 
     public UserAddress updateUserAddress(String address, Object depositTagObject) {
