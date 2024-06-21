@@ -270,11 +270,11 @@ public class ProfileController {
 
         List<String> coinTypes = depositCoins.stream().map(depositCoin -> depositCoin.getType().name()).toList();
 
-        Optional<UserAddress> optionalAddress = userAddressRepository.findByUserIdAndCoinType(user.getId(), coinType);
+        Optional<UserAddress> optionalAddress = userAddressRepository.findByUserIdAndCoinType(user.getId(), CoinType.BTC);
         if (optionalAddress.isPresent()) {
-            model.addAttribute("main_deposit_address", optionalAddress.get());
+            model.addAttribute("main_deposit_address", optionalAddress.get().getAddress());
         } else {
-            model.addAttribute("main_deposit_address", null);
+            model.addAttribute("main_deposit_address", "");
         }
 
 
