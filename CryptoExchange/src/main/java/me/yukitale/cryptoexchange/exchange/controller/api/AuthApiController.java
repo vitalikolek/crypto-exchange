@@ -181,11 +181,9 @@ public class AuthApiController {
       return resolveError(sessionKey, "email_not_confirmed");
     }
 
-    emailService.createEmailPasswordRecovery(user);
-
     captchaService.removeCaptchaCache(sessionKey);
 
-    return ResponseEntity.ok("success");
+    return emailService.makePasswordRecoveryRequest(user, request);
   }
 
   private ResponseEntity<UserInfoResponse> authenticate(HttpServletRequest request, User user, String password) {

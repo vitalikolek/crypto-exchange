@@ -4,22 +4,35 @@ import jakarta.annotation.PostConstruct;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import me.yukitale.cryptoexchange.exchange.data.EmailPasswordRecovery;
 import me.yukitale.cryptoexchange.exchange.data.EmailRegistration;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
+import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
+import me.yukitale.cryptoexchange.exchange.model.user.UserSupportMessage;
+import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserEmailConfirmRepository;
+import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
+import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportMessageRepository;
+import me.yukitale.cryptoexchange.exchange.security.xss.XSSUtils;
 import me.yukitale.cryptoexchange.panel.admin.model.other.AdminSettings;
+import me.yukitale.cryptoexchange.panel.admin.model.telegram.TelegramMessage;
 import me.yukitale.cryptoexchange.panel.worker.repository.DomainRepository;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import me.yukitale.cryptoexchange.exchange.model.user.UserEmailConfirm;
 import me.yukitale.cryptoexchange.panel.admin.model.other.AdminEmailSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminEmailSettingsRepository;
 import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminSettingsRepository;
 import me.yukitale.cryptoexchange.panel.worker.model.Domain;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,10 +55,22 @@ public class EmailService {
     private AdminEmailSettingsRepository adminEmailSettingsRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserEmailConfirmRepository userEmailConfirmRepository;
 
     @Autowired
     private DomainRepository domainRepository;
+
+    @Autowired
+    private CooldownService cooldownService;
+
+    @Autowired
+    private UserSupportDialogRepository userSupportDialogRepository;
+
+    @Autowired
+    private UserSupportMessageRepository userSupportMessageRepository;
 
     @PostConstruct
     public void init() {
@@ -262,5 +287,53 @@ public class EmailService {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    public ResponseEntity<String> makePasswordRecoveryRequest(User user, HttpServletRequest request) {
+        String message = "recover password";
+
+        if (cooldownService.isCooldown(user.getId() + "-support")) {
+            return ResponseEntity.badRequest().body("cooldown");
+        }
+
+        if (!user.isFeatureEnabled(UserFeature.Type.SUPPORT)) {
+            return ResponseEntity.badRequest().body("support_ban");
+        }
+
+        if (StringUtils.isBlank(message)) {
+            return ResponseEntity.badRequest().body("message_is_empty");
+        }
+        if (message.length() > 2000) {
+            return ResponseEntity.badRequest().body("message_limit");
+        }
+
+        message = XSSUtils.stripXSS(message);
+
+        UserSupportMessage supportMessage = new UserSupportMessage(UserSupportMessage.Target.TO_SUPPORT, UserSupportMessage.Type.TEXT, message, true, false, user);
+
+        createOrUpdateSupportDialog(supportMessage, user);
+
+        userSupportMessageRepository.save(supportMessage);
+
+        userService.createAction(user, request, "Sended support message");
+
+        cooldownService.addCooldown(user.getId() + "-support", Duration.ofMillis(500));
+
+        return ResponseEntity.ok("success");
+    }
+
+    private void createOrUpdateSupportDialog(UserSupportMessage supportMessage, User user) {
+        UserSupportDialog userSupportDialog = userSupportDialogRepository.findByUserId(user.getId()).orElse(null);
+        if (userSupportDialog == null) {
+            userSupportDialog = new UserSupportDialog();
+        }
+
+        userSupportDialog.setOnlyWelcome(false);
+        userSupportDialog.setSupportUnviewedMessages(userSupportDialog.getSupportUnviewedMessages() + 1);
+        userSupportDialog.setTotalMessages(userSupportDialog.getTotalMessages() + 1);
+        userSupportDialog.setLastMessageDate(supportMessage.getCreated());
+        userSupportDialog.setUser(user);
+
+        userSupportDialogRepository.save(userSupportDialog);
     }
 }
