@@ -9,6 +9,7 @@ import me.yukitale.cryptoexchange.captcha.CaptchaService;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
 import me.yukitale.cryptoexchange.exchange.payload.request.Login2FARequest;
 import me.yukitale.cryptoexchange.exchange.payload.request.LoginRequest;
+import me.yukitale.cryptoexchange.exchange.payload.request.RegisterInvRequest;
 import me.yukitale.cryptoexchange.exchange.payload.request.RegisterRequest;
 import me.yukitale.cryptoexchange.exchange.payload.response.UserInfoResponse;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserRepository;
@@ -297,6 +298,111 @@ public class AuthApiController {
 
     if (!registered) {
       user = userService.createUser(referrer, domain, email, username, password, domainName, platform, regIp, promocodeName, refId, true);
+    }
+
+    captchaService.removeCaptchaCache(sessionKey);
+
+    if (emailRequiredConfirm) {
+      return ResponseEntity.ok("email_confirm");
+    }
+
+    return authenticate(request, user, password);
+  }
+
+  @PostMapping("/registerInv")
+  public ResponseEntity<?> registerInvUser(@Valid @RequestBody RegisterInvRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
+    String sessionKey = request.getSession().getId();
+    Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
+    if (captchaOptional.isEmpty()) {
+      return ResponseEntity.badRequest().body("bad_captcha");
+    }
+
+    String captchaAnswer = registerRequest.getCaptcha();
+    if (!captchaOptional.get().getAnswer().equals(captchaAnswer)) {
+      return resolveError(sessionKey, "wrong_captcha");
+    }
+
+    String email = registerRequest.getEmail().toLowerCase();
+
+    if (!DataValidator.isEmailValided(email)) {
+      return resolveError(sessionKey, "email_not_valid");
+    }
+
+    String phone = registerRequest.getPhone().toLowerCase();
+    if (!DataValidator.isPhoneValided(phone)) {
+      return resolveError(sessionKey, "phone_not_valid");
+    }
+
+    String username = registerRequest.getUsername();
+    if (!DataValidator.isUsernameValided(username)) {
+      return resolveError(sessionKey, "username_not_valid");
+    }
+
+    String password = registerRequest.getPassword();
+    if (password.length() < 8 || password.length() > 64) {
+      return resolveError(sessionKey, "password_not_valid");
+    }
+
+    String fullName = registerRequest.getFullName();
+    if (!DataValidator.isFullNameValided(fullName)) {
+      return resolveError(sessionKey, "full_name_not_valid");
+    }
+
+    if (userRepository.existsByEmail(email)) {
+      return resolveError(sessionKey, "email_already_taken");
+    }
+
+    if (userRepository.existsByUsernameIgnoreCase(registerRequest.getUsername())) {
+      return resolveError(sessionKey, "username_already_taken");
+    }
+
+    domainName = domainName.toLowerCase();
+    domainName = domainName.startsWith("www.") ? domainName.replaceFirst("www\\.", "") : domainName;
+
+    String promocodeName = StringUtils.isBlank(registerRequest.getPromocode()) || registerRequest.getPromocode().equals("0") ? null : registerRequest.getPromocode();
+    long refId = -1;
+    try {
+      refId = Long.parseLong(registerRequest.getRef());
+    } catch (Exception ignored) {}
+
+    String platform = ServletUtil.getPlatform(request);
+    String regIp = ServletUtil.getIpAddress(request);
+
+    Domain domain = domainRepository.findByName(domainName).orElse(null);
+
+    String referrer = WebUtils.getCookie(request, "referrer") == null ? "" : WebUtils.getCookie(request, "referrer").getValue();
+
+    User user = null;
+    boolean emailRequiredConfirm = false;
+    boolean registered = false;
+    //todo: нормально сделать тут все
+    if (domain != null && domain.isEmailEnabled() && domain.isEmailValid()) {
+      if (domain.isEmailRequiredEnabled()) {
+        emailService.createEmailRegistration(referrer, domain, email, username, password, domainName, platform, regIp, promocodeName, refId);
+        emailRequiredConfirm = true;
+        registered = true;
+      } else {
+        user = userService.createInvUser(referrer, domain, email, username, password, fullName, phone, domainName, platform, regIp, promocodeName, refId, false);
+        emailService.createEmailConfirmation(domain, email, domainName, user);
+        registered = true;
+      }
+    } else if (domain == null) {
+      AdminEmailSettings adminEmailSettings = adminEmailSettingsRepository.findFirst();
+      if (adminEmailSettings.isEnabled() && adminEmailSettings.isValid()) {
+        if (adminEmailSettings.isRequiredEnabled()) {
+          emailService.createEmailRegistration(referrer, null, email, username, password, domainName, platform, regIp, promocodeName, refId);
+          emailRequiredConfirm = true;
+          registered = true;
+        } else {
+          user = userService.createInvUser(referrer, domain, email, username, password, fullName, phone, domainName, platform, regIp, promocodeName, refId, false);
+          emailService.createEmailConfirmation(null, email, domainName, user);
+          registered = true;
+        }
+      }
+    }
+
+    if (!registered) {
+      user = userService.createInvUser(referrer, domain, email, username, password, fullName, phone, domainName, platform, regIp, promocodeName, refId, false);
     }
 
     captchaService.removeCaptchaCache(sessionKey);

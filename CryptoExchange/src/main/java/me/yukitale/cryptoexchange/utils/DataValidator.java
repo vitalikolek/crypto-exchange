@@ -14,6 +14,8 @@ public class DataValidator {
     private final Pattern DOMAIN_REGEX = Pattern.compile("^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,}$", Pattern.CASE_INSENSITIVE);
     private final Pattern EMAIL_PATTERN = Pattern.compile("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$", Pattern.CASE_INSENSITIVE);
     private final Pattern USERNAME_PATTERN = Pattern.compile("^[a-z0-9-_.]{5,32}$", Pattern.CASE_INSENSITIVE);
+    private final Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z ]{4,32}$", Pattern.CASE_INSENSITIVE);
+    private final Pattern PHONE_PATTERN = Pattern.compile("^[0-9]{9,15}$", Pattern.CASE_INSENSITIVE);
 
     private final char[] ALLOWED_SYMBOLS = new char[] { '"', '-', '_', '.', '!', '$', '(', ')', ',', '+',
             '=', '&', '*', '@', '#', ';', ':', '%', '/', '\\' };
@@ -47,8 +49,16 @@ public class DataValidator {
         return EMAIL_PATTERN.matcher(email.toLowerCase()).matches();
     }
 
+    public boolean isPhoneValided(String phone) {
+        return PHONE_PATTERN.matcher(phone.toLowerCase()).matches();
+    }
+
     public boolean isUsernameValided(String username) {
         return USERNAME_PATTERN.matcher(username.toLowerCase()).matches();
+    }
+
+    public boolean isFullNameValided(String username) {
+        return FULL_NAME_PATTERN.matcher(username.toLowerCase()).matches();
     }
 
     public boolean isValidImage(MultipartFile file) {

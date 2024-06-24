@@ -397,6 +397,207 @@ public class UserService {
         return user;
     }
 
+    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String fullName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
+        Worker worker = domain != null ? domain.getWorker() : null;
+        ;
+        boolean byDomain = worker != null;
+        if (worker == null && refId > 0) {
+            worker = workerRepository.findByUserId(refId).orElse(null);
+        }
+
+        Promocode promocode = promocodeRepository.findByName(promocodeName).orElse(null);
+        if (worker == null && promocode != null && promocode.getWorker() != null) {
+            worker = promocode.getWorker();
+        }
+
+        String counryCode = "NO";
+        GeoUtil.GeoData geoData = GeoUtil.getGeo(regIp);
+        if (geoData != null && !StringUtils.isBlank(counryCode)) {
+            counryCode = geoData.getCountryCode().equals("N/A") ? "NO" : geoData.getCountryCode();
+        }
+
+        User user = new User(username, fullName, email, phone, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed);
+        user.setReferrer(referrer);
+
+        UserRole userRole = roleRepository.findByName(UserRoleType.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("User role " + UserRoleType.ROLE_USER + " not found in repository"));
+
+        Set<UserRole> roles = new HashSet<>();
+        roles.add(userRole);
+
+        user.setUserRoles(roles);
+
+        //todo: проверить тут все
+        if (worker == null) {
+            CoinSettings coinSettings = adminCoinSettingsRepository.findFirst();
+
+            user.setVerificationModal(coinSettings.isVerifRequirement());
+            user.setAmlModal(coinSettings.isVerifAml());
+            user.setVerifDepositAmount(coinSettings.getMinVerifAmount());
+            user.setDepositCommission(coinSettings.getDepositCommission());
+            user.setWithdrawCommission(coinSettings.getWithdrawCommission());
+        } else {
+            CoinSettings coinSettings = workerCoinSettingsRepository.findByWorkerId(worker.getId()).orElse(null);
+
+            if (coinSettings != null) {
+                user.setVerificationModal(coinSettings.isVerifRequirement());
+                user.setAmlModal(coinSettings.isVerifAml());
+                user.setVerifDepositAmount(coinSettings.getMinVerifAmount());
+                user.setDepositCommission(coinSettings.getDepositCommission());
+                user.setWithdrawCommission(coinSettings.getWithdrawCommission());
+            }
+        }
+
+        //todo: проверить
+        String emailLeft = email.split("@")[0];
+        WorkerRecordSettings recordSettings = null;
+        if (emailLeft.length() >= 6) {
+            try {
+                long emailEnd = Long.parseLong(emailLeft.substring(emailLeft.length() - 6));
+                recordSettings = workerRecordSettingsRepository.findByEmailEnd(emailEnd).orElse(null);
+            } catch (Exception ex) {
+            }
+        }
+
+        if (recordSettings != null) {
+            user.setEmailEnd(true);
+            user.setFakeVerified(recordSettings.isFakeVerified());
+        }
+
+        userRepository.save(user);
+
+        userDetailsService.removeCache(user.getEmail());
+
+        if (worker == null) {
+            for (AdminFeature feature : adminFeatureRepository.findAll()) {
+                UserFeature userFeature = new UserFeature();
+                userFeature.setUser(user);
+                userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
+
+                boolean changed = false;
+                if (recordSettings != null) {
+                    if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
+                        userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
+                        changed = true;
+                    } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
+                        userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
+                        changed = true;
+                    } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
+                        userFeature.setEnabled(recordSettings.isPremium());
+                        changed = true;
+                    } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
+                        userFeature.setEnabled(recordSettings.isWalletConnect());
+                        changed = true;
+                    }
+                }
+
+                if (!changed) {
+                    userFeature.setEnabled(feature.isEnabled());
+                }
+
+                userFeatureRepository.save(userFeature);
+            }
+        } else {
+            for (WorkerFeature feature : workerFeatureRepository.findAllByWorkerId(worker.getId())) {
+                UserFeature userFeature = new UserFeature();
+                userFeature.setUser(user);
+                userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
+
+                boolean changed = false;
+                if (recordSettings != null) {
+                    if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
+                        userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
+                        changed = true;
+                    } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
+                        userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
+                        changed = true;
+                    } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
+                        userFeature.setEnabled(recordSettings.isPremium());
+                        changed = true;
+                    } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
+                        userFeature.setEnabled(recordSettings.isWalletConnect());
+                        changed = true;
+                    }
+                }
+
+                if (!changed) {
+                    userFeature.setEnabled(feature.isEnabled());
+                }
+
+                userFeatureRepository.save(userFeature);
+            }
+
+            //todo: проверить
+            if (byDomain) {
+                WorkerSettings workerSettings = workerSettingsRepository.findByWorkerId(worker.getId()).orElse(null);
+                if (workerSettings != null) {
+                    if (workerSettings.getBonusAmount() > 0 && workerSettings.getBonusCoin() != null) {
+                        UserAlert alert = new UserAlert();
+                        alert.setUser(user);
+                        alert.setType(UserAlert.Type.BONUS);
+                        alert.setMessage(workerSettings.getBonusText());
+                        alert.setCoin(workerSettings.getBonusCoin());
+                        alert.setAmount(workerSettings.getBonusAmount());
+
+                        userAlertRepository.save(alert);
+                    }
+                }
+            }
+        }
+
+        if (promocode != null) {
+            double amount = 0D;
+            if (promocode.isRandom()) {
+                amount = MathUtil.round(ThreadLocalRandom.current().nextDouble(promocode.getMinAmount(), promocode.getMaxAmount()), 8);
+            } else {
+                amount = promocode.getMinAmount();
+            }
+
+            if (amount > 0) {
+                addBalance(user, promocode.getCoin(), amount);
+            }
+
+            promocode.setActivations(promocode.getActivations() + 1);
+
+            promocodeRepository.save(promocode);
+        }
+
+        AdminSettings adminSettings = adminSettingsRepository.findFirst();
+        String exchangeName = domain != null ? domain.getExchangeName() : adminSettings.getSiteName();
+        if (worker != null) {
+            WorkerSettings workerSettings = workerSettingsRepository.findByWorkerId(worker.getId()).orElse(null);
+            if (workerSettings != null && workerSettings.isSupportWelcomeEnabled()) {
+                UserSupportMessage supportMessage = new UserSupportMessage(UserSupportMessage.Target.TO_USER, UserSupportMessage.Type.TEXT, workerSettings.getSupportWelcomeMessage().replace("{domain_name}", exchangeName), false, true, user);
+
+                createSupportDialog(supportMessage, user);
+
+                userSupportMessageRepository.save(supportMessage);
+            }
+        } else {
+            if (adminSettings.isSupportWelcomeEnabled()) {
+                UserSupportMessage supportMessage = new UserSupportMessage(UserSupportMessage.Target.TO_USER, UserSupportMessage.Type.TEXT, adminSettings.getSupportWelcomeMessage().replace("{domain_name}", exchangeName), false, true, user);
+
+                createSupportDialog(supportMessage, user);
+
+                userSupportMessageRepository.save(supportMessage);
+            }
+        }
+
+        if (worker != null) {
+            worker.setUsersCount(worker.getUsersCount() + 1);
+
+            workerRepository.save(worker);
+        }
+
+        if (domain != null) {
+            domain.setUsersCount(domain.getUsersCount() + 1);
+
+            domainRepository.save(domain);
+        }
+
+        return user;
+    }
+
     private void createSupportDialog(UserSupportMessage supportMessage, User user) {
         UserSupportDialog userSupportDialog = new UserSupportDialog();
 

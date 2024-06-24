@@ -44,6 +44,13 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @Size(min = 3, max = 64)
+    @Column(unique = true)
+    private String fullName;
+
+    @Column(unique = true)
+    private String phone;
+
     @NotBlank
     @Size(min = 8, max = 64)
     private String password;
@@ -195,6 +202,31 @@ public class User {
     public User(String username, String email, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed) {
         this.username = username;
         this.email = email;
+        this.password = password;
+        this.promocodeName = promocodeName;
+        this.regIp = regIp;
+        this.lastIp = regIp;
+        this.lastActivity = System.currentTimeMillis();
+        this.lastOnline = this.lastActivity;
+        this.domain = domain;
+        this.platform = platform;
+        this.regCountryCode = countryCode;
+        this.lastCountryCode = countryCode;
+        this.registered = new Date();
+        this.twoFactorEnabled = false;
+        this.twoFactorCode = generateTwoFactorCode();
+        this.worker = worker;
+        this.firstDepositBonusEnabled = firstDepositBonusEnabled;
+        this.firstDepositBonusAmount = firstDepositBonusAmount;
+        this.emailConfirmed = emailConfirmed;
+        this.roleType = UserRoleType.ROLE_USER.ordinal();
+    }
+
+    public User(String username, String fullName, String email, String phone, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed) {
+        this.username = username;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
         this.password = password;
         this.promocodeName = promocodeName;
         this.regIp = regIp;
