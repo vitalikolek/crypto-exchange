@@ -135,6 +135,9 @@ public class User {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean emailEnd;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean invUser;
+
     private long depositsCount;
 
     @Column(columnDefinition = "INT DEFAULT 0")
@@ -199,7 +202,7 @@ public class User {
     private Set<UserRole> userRoles = new HashSet<>();
 
     //todo: first deposit bonus amount/enabled
-    public User(String username, String email, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed) {
+    public User(String username, String email, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed, boolean invUser) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -219,10 +222,11 @@ public class User {
         this.firstDepositBonusEnabled = firstDepositBonusEnabled;
         this.firstDepositBonusAmount = firstDepositBonusAmount;
         this.emailConfirmed = emailConfirmed;
+        this.invUser = invUser;
         this.roleType = UserRoleType.ROLE_USER.ordinal();
     }
 
-    public User(String username, String fullName, String email, String phone, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed) {
+    public User(String username, String fullName, String email, String phone, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed, boolean invUser) {
         this.username = username;
         this.fullName = fullName;
         this.email = email;
@@ -244,6 +248,7 @@ public class User {
         this.firstDepositBonusEnabled = firstDepositBonusEnabled;
         this.firstDepositBonusAmount = firstDepositBonusAmount;
         this.emailConfirmed = emailConfirmed;
+        this.invUser = invUser;
         this.roleType = UserRoleType.ROLE_USER.ordinal();
     }
 

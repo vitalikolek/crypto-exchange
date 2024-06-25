@@ -6,27 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegisterInvRequest {
-
-    @NotBlank
-    private String username;
-
-    @NotBlank
-    private String email;
+public class RegisterInvRequest extends RegisterRequest {
 
     @NotBlank
     private String fullName;
 
     @NotBlank
     private String phone;
-
-    @NotBlank
-    private String password;
-
-    @NotBlank
-    private String captcha;
-
-    private String promocode;
-
-    private String ref;
 }

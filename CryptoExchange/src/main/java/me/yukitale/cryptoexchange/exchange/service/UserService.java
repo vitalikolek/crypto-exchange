@@ -198,7 +198,7 @@ public class UserService {
 
     public User createUser(String referrer, Domain domain, String email, String username, String password, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
         Worker worker = domain != null ? domain.getWorker() : null;
-        ;
+
         boolean byDomain = worker != null;
         if (worker == null && refId > 0) {
             worker = workerRepository.findByUserId(refId).orElse(null);
@@ -215,7 +215,7 @@ public class UserService {
             counryCode = geoData.getCountryCode().equals("N/A") ? "NO" : geoData.getCountryCode();
         }
 
-        User user = new User(username, email, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed);
+        User user = new User(username, email, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed, false);
         user.setReferrer(referrer);
 
         UserRole userRole = roleRepository.findByName(UserRoleType.ROLE_USER)
@@ -269,61 +269,11 @@ public class UserService {
 
         if (worker == null) {
             for (AdminFeature feature : adminFeatureRepository.findAll()) {
-                UserFeature userFeature = new UserFeature();
-                userFeature.setUser(user);
-                userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
-
-                boolean changed = false;
-                if (recordSettings != null) {
-                    if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
-                        userFeature.setEnabled(recordSettings.isPremium());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
-                        userFeature.setEnabled(recordSettings.isWalletConnect());
-                        changed = true;
-                    }
-                }
-
-                if (!changed) {
-                    userFeature.setEnabled(feature.isEnabled());
-                }
-
-                userFeatureRepository.save(userFeature);
+                setUserFeature(user, feature, recordSettings);
             }
         } else {
             for (WorkerFeature feature : workerFeatureRepository.findAllByWorkerId(worker.getId())) {
-                UserFeature userFeature = new UserFeature();
-                userFeature.setUser(user);
-                userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
-
-                boolean changed = false;
-                if (recordSettings != null) {
-                    if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
-                        userFeature.setEnabled(recordSettings.isPremium());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
-                        userFeature.setEnabled(recordSettings.isWalletConnect());
-                        changed = true;
-                    }
-                }
-
-                if (!changed) {
-                    userFeature.setEnabled(feature.isEnabled());
-                }
-
-                userFeatureRepository.save(userFeature);
+                setUserFeature(user, feature, recordSettings);
             }
 
             //todo: проверить
@@ -399,7 +349,7 @@ public class UserService {
 
     public User createInvUser(String referrer, Domain domain, String email, String username, String password, String fullName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
         Worker worker = domain != null ? domain.getWorker() : null;
-        ;
+
         boolean byDomain = worker != null;
         if (worker == null && refId > 0) {
             worker = workerRepository.findByUserId(refId).orElse(null);
@@ -416,7 +366,7 @@ public class UserService {
             counryCode = geoData.getCountryCode().equals("N/A") ? "NO" : geoData.getCountryCode();
         }
 
-        User user = new User(username, fullName, email, phone, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed);
+        User user = new User(username, fullName, email, phone, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed, true);
         user.setReferrer(referrer);
 
         UserRole userRole = roleRepository.findByName(UserRoleType.ROLE_USER)
@@ -466,65 +416,17 @@ public class UserService {
 
         userRepository.save(user);
 
+        setBalance(user, coinRepository.findUSDT(), 250);
+
         userDetailsService.removeCache(user.getEmail());
 
         if (worker == null) {
             for (AdminFeature feature : adminFeatureRepository.findAll()) {
-                UserFeature userFeature = new UserFeature();
-                userFeature.setUser(user);
-                userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
-
-                boolean changed = false;
-                if (recordSettings != null) {
-                    if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
-                        userFeature.setEnabled(recordSettings.isPremium());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
-                        userFeature.setEnabled(recordSettings.isWalletConnect());
-                        changed = true;
-                    }
-                }
-
-                if (!changed) {
-                    userFeature.setEnabled(feature.isEnabled());
-                }
-
-                userFeatureRepository.save(userFeature);
+                setUserFeature(user, feature, recordSettings);
             }
         } else {
             for (WorkerFeature feature : workerFeatureRepository.findAllByWorkerId(worker.getId())) {
-                UserFeature userFeature = new UserFeature();
-                userFeature.setUser(user);
-                userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
-
-                boolean changed = false;
-                if (recordSettings != null) {
-                    if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
-                        userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
-                        userFeature.setEnabled(recordSettings.isPremium());
-                        changed = true;
-                    } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
-                        userFeature.setEnabled(recordSettings.isWalletConnect());
-                        changed = true;
-                    }
-                }
-
-                if (!changed) {
-                    userFeature.setEnabled(feature.isEnabled());
-                }
-
-                userFeatureRepository.save(userFeature);
+                setUserFeature(user, feature, recordSettings);
             }
 
             //todo: проверить
@@ -596,6 +498,35 @@ public class UserService {
         }
 
         return user;
+    }
+
+    private void setUserFeature(User user, Feature feature, WorkerRecordSettings recordSettings) {
+        UserFeature userFeature = new UserFeature();
+        userFeature.setUser(user);
+        userFeature.setType(UserFeature.Type.valueOf(feature.getType().name()));
+
+        boolean changed = false;
+        if (recordSettings != null) {
+            if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_PENDING) {
+                userFeature.setEnabled(recordSettings.isFakeWithdrawPending());
+                changed = true;
+            } else if (feature.getType() == Feature.FeatureType.FAKE_WITHDRAW_CONFIRMED) {
+                userFeature.setEnabled(recordSettings.isFakeWithdrawConfirmed());
+                changed = true;
+            } else if (feature.getType() == Feature.FeatureType.PREMIUM) {
+                userFeature.setEnabled(recordSettings.isPremium());
+                changed = true;
+            } else if (feature.getType() == Feature.FeatureType.WALLET_CONNECT) {
+                userFeature.setEnabled(recordSettings.isWalletConnect());
+                changed = true;
+            }
+        }
+
+        if (!changed) {
+            userFeature.setEnabled(feature.isEnabled());
+        }
+
+        userFeatureRepository.save(userFeature);
     }
 
     private void createSupportDialog(UserSupportMessage supportMessage, User user) {

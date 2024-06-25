@@ -216,193 +216,80 @@ public class AuthApiController {
 
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
-    String sessionKey = request.getSession().getId();
-    Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
-    if (captchaOptional.isEmpty()) {
-      return ResponseEntity.badRequest().body("bad_captcha");
-    }
-
-    String captchaAnswer = registerRequest.getCaptcha();
-    if (!captchaOptional.get().getAnswer().equals(captchaAnswer)) {
-      return resolveError(sessionKey, "wrong_captcha");
-    }
-
-    String email = registerRequest.getEmail().toLowerCase();
-
-    if (!DataValidator.isEmailValided(email)) {
-      return resolveError(sessionKey, "email_not_valid");
-    }
-
-    String username = registerRequest.getUsername();
-    if (!DataValidator.isUsernameValided(username)) {
-      return resolveError(sessionKey, "username_not_valid");
-    }
-
-    String password = registerRequest.getPassword();
-    if (password.length() < 8 || password.length() > 64) {
-      return resolveError(sessionKey, "password_not_valid");
-    }
-
-    if (userRepository.existsByEmail(email)) {
-      return resolveError(sessionKey, "email_already_taken");
-    }
-
-    if (userRepository.existsByUsernameIgnoreCase(registerRequest.getUsername())) {
-      return resolveError(sessionKey, "username_already_taken");
-    }
-
-    domainName = domainName.toLowerCase();
-    domainName = domainName.startsWith("www.") ? domainName.replaceFirst("www\\.", "") : domainName;
-
-    String promocodeName = StringUtils.isBlank(registerRequest.getPromocode()) || registerRequest.getPromocode().equals("0") ? null : registerRequest.getPromocode();
-    long refId = -1;
-    try {
-      refId = Long.parseLong(registerRequest.getRef());
-    } catch (Exception ignored) {}
-
-    String platform = ServletUtil.getPlatform(request);
-    String regIp = ServletUtil.getIpAddress(request);
-
-    Domain domain = domainRepository.findByName(domainName).orElse(null);
-
-    String referrer = WebUtils.getCookie(request, "referrer") == null ? "" : WebUtils.getCookie(request, "referrer").getValue();
-
-    User user = null;
-    boolean emailRequiredConfirm = false;
-    boolean registered = false;
-    //todo: нормально сделать тут все
-    if (domain != null && domain.isEmailEnabled() && domain.isEmailValid()) {
-      if (domain.isEmailRequiredEnabled()) {
-        emailService.createEmailRegistration(referrer, domain, email, username, password, domainName, platform, regIp, promocodeName, refId);
-        emailRequiredConfirm = true;
-        registered = true;
-      } else {
-        user = userService.createUser(referrer, domain, email, username, password, domainName, platform, regIp, promocodeName, refId, false);
-        emailService.createEmailConfirmation(domain, email, domainName, user);
-        registered = true;
-      }
-    } else if (domain == null) {
-      AdminEmailSettings adminEmailSettings = adminEmailSettingsRepository.findFirst();
-      if (adminEmailSettings.isEnabled() && adminEmailSettings.isValid()) {
-        if (adminEmailSettings.isRequiredEnabled()) {
-          emailService.createEmailRegistration(referrer, null, email, username, password, domainName, platform, regIp, promocodeName, refId);
-          emailRequiredConfirm = true;
-          registered = true;
-        } else {
-          user = userService.createUser(referrer, null, email, username, password, domainName, platform, regIp, promocodeName, refId, false);
-          emailService.createEmailConfirmation(null, email, domainName, user);
-          registered = true;
-        }
-      }
-    }
-
-    if (!registered) {
-      user = userService.createUser(referrer, domain, email, username, password, domainName, platform, regIp, promocodeName, refId, true);
-    }
-
-    captchaService.removeCaptchaCache(sessionKey);
-
-    if (emailRequiredConfirm) {
-      return ResponseEntity.ok("email_confirm");
-    }
-
-    return authenticate(request, user, password);
+    return handleRegistration(registerRequest, request, domainName, false);
   }
 
   @PostMapping("/registerInv")
   public ResponseEntity<?> registerInvUser(@Valid @RequestBody RegisterInvRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
+
+    String fullName = registerRequest.getFullName();
+    if (!DataValidator.isFullNameValided(fullName)) {
+      return resolveError(request.getSession().getId(), "full_name_not_valid");
+    }
+    String phone = registerRequest.getPhone().toLowerCase();
+    if (!DataValidator.isPhoneValided(phone)) {
+      return resolveError(request.getSession().getId(), "phone_not_valid");
+    }
+
+    return handleRegistration(registerRequest, request, domainName, true);
+  }
+
+  private ResponseEntity<?> handleRegistration(RegisterRequest registerRequest, HttpServletRequest request, String domainName, boolean isInvUser) {
     String sessionKey = request.getSession().getId();
+
     Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
     if (captchaOptional.isEmpty()) {
       return ResponseEntity.badRequest().body("bad_captcha");
     }
 
-    String captchaAnswer = registerRequest.getCaptcha();
-    if (!captchaOptional.get().getAnswer().equals(captchaAnswer)) {
+    if (!captchaOptional.get().getAnswer().equals(registerRequest.getCaptcha())) {
       return resolveError(sessionKey, "wrong_captcha");
     }
 
-    String email = registerRequest.getEmail().toLowerCase();
-
-    if (!DataValidator.isEmailValided(email)) {
-      return resolveError(sessionKey, "email_not_valid");
+    if (!isValidRegisterRequest(registerRequest, sessionKey, isInvUser)) {
+      return resolveError(sessionKey, "validation_failed");
     }
 
-    String phone = registerRequest.getPhone().toLowerCase();
-    if (!DataValidator.isPhoneValided(phone)) {
-      return resolveError(sessionKey, "phone_not_valid");
+    if (isEmailOrUsernameTaken(registerRequest, sessionKey)) {
+      return resolveError(sessionKey, "email_or_username_taken");
     }
 
-    String username = registerRequest.getUsername();
-    if (!DataValidator.isUsernameValided(username)) {
-      return resolveError(sessionKey, "username_not_valid");
-    }
+    domainName = sanitizeDomainName(domainName);
 
-    String password = registerRequest.getPassword();
-    if (password.length() < 8 || password.length() > 64) {
-      return resolveError(sessionKey, "password_not_valid");
-    }
-
-    String fullName = registerRequest.getFullName();
-    if (!DataValidator.isFullNameValided(fullName)) {
-      return resolveError(sessionKey, "full_name_not_valid");
-    }
-
-    if (userRepository.existsByEmail(email)) {
-      return resolveError(sessionKey, "email_already_taken");
-    }
-
-    if (userRepository.existsByUsernameIgnoreCase(registerRequest.getUsername())) {
-      return resolveError(sessionKey, "username_already_taken");
-    }
-
-    domainName = domainName.toLowerCase();
-    domainName = domainName.startsWith("www.") ? domainName.replaceFirst("www\\.", "") : domainName;
-
-    String promocodeName = StringUtils.isBlank(registerRequest.getPromocode()) || registerRequest.getPromocode().equals("0") ? null : registerRequest.getPromocode();
-    long refId = -1;
-    try {
-      refId = Long.parseLong(registerRequest.getRef());
-    } catch (Exception ignored) {}
+    String promocodeName = getPromocodeName(registerRequest);
+    long refId = getRefId(registerRequest);
 
     String platform = ServletUtil.getPlatform(request);
     String regIp = ServletUtil.getIpAddress(request);
-
     Domain domain = domainRepository.findByName(domainName).orElse(null);
-
-    String referrer = WebUtils.getCookie(request, "referrer") == null ? "" : WebUtils.getCookie(request, "referrer").getValue();
+    String referrer = getReferrer(request);
 
     User user = null;
     boolean emailRequiredConfirm = false;
-    boolean registered = false;
-    //todo: нормально сделать тут все
+
     if (domain != null && domain.isEmailEnabled() && domain.isEmailValid()) {
       if (domain.isEmailRequiredEnabled()) {
-        emailService.createEmailRegistration(referrer, domain, email, username, password, domainName, platform, regIp, promocodeName, refId);
+        emailService.createEmailRegistration(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId);
         emailRequiredConfirm = true;
-        registered = true;
       } else {
-        user = userService.createInvUser(referrer, domain, email, username, password, fullName, phone, domainName, platform, regIp, promocodeName, refId, false);
-        emailService.createEmailConfirmation(domain, email, domainName, user);
-        registered = true;
+        user = createUser(registerRequest, referrer, domain, domainName, platform, regIp, promocodeName, refId, isInvUser);
+        emailService.createEmailConfirmation(domain, registerRequest.getEmail(), domainName, user);
       }
     } else if (domain == null) {
       AdminEmailSettings adminEmailSettings = adminEmailSettingsRepository.findFirst();
       if (adminEmailSettings.isEnabled() && adminEmailSettings.isValid()) {
         if (adminEmailSettings.isRequiredEnabled()) {
-          emailService.createEmailRegistration(referrer, null, email, username, password, domainName, platform, regIp, promocodeName, refId);
+          emailService.createEmailRegistration(referrer, null, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId);
           emailRequiredConfirm = true;
-          registered = true;
         } else {
-          user = userService.createInvUser(referrer, domain, email, username, password, fullName, phone, domainName, platform, regIp, promocodeName, refId, false);
-          emailService.createEmailConfirmation(null, email, domainName, user);
-          registered = true;
+          user = createUser(registerRequest, referrer, null, domainName, platform, regIp, promocodeName, refId, isInvUser);
+          emailService.createEmailConfirmation(null, registerRequest.getEmail(), domainName, user);
         }
       }
     }
 
-    if (!registered) {
-      user = userService.createInvUser(referrer, domain, email, username, password, fullName, phone, domainName, platform, regIp, promocodeName, refId, false);
+    if (user == null) {
+      user = createUser(registerRequest, referrer, domain, domainName, platform, regIp, promocodeName, refId, isInvUser);
     }
 
     captchaService.removeCaptchaCache(sessionKey);
@@ -411,7 +298,75 @@ public class AuthApiController {
       return ResponseEntity.ok("email_confirm");
     }
 
-    return authenticate(request, user, password);
+    return authenticate(request, user, registerRequest.getPassword());
+  }
+
+  private boolean isValidRegisterRequest(RegisterRequest registerRequest, String sessionKey, boolean isInvUser) {
+    if (!DataValidator.isEmailValided(registerRequest.getEmail().toLowerCase())) {
+      return false;
+    }
+
+    if (!DataValidator.isUsernameValided(registerRequest.getUsername())) {
+      return false;
+    }
+
+    if (registerRequest.getPassword().length() < 8 || registerRequest.getPassword().length() > 64) {
+      return false;
+    }
+
+    if (isInvUser) {
+      RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
+      if (!DataValidator.isPhoneValided(invRequest.getPhone().toLowerCase())) {
+        return false;
+      }
+      if (!DataValidator.isFullNameValided(invRequest.getFullName())) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private boolean isEmailOrUsernameTaken(RegisterRequest registerRequest, String sessionKey) {
+    if (userRepository.existsByEmail(registerRequest.getEmail().toLowerCase())) {
+      return true;
+    }
+
+    if (userRepository.existsByUsernameIgnoreCase(registerRequest.getUsername())) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private String sanitizeDomainName(String domainName) {
+    domainName = domainName.toLowerCase();
+    return domainName.startsWith("www.") ? domainName.replaceFirst("www\\.", "") : domainName;
+  }
+
+  private String getPromocodeName(RegisterRequest registerRequest) {
+    return StringUtils.isBlank(registerRequest.getPromocode()) || "0".equals(registerRequest.getPromocode()) ? null : registerRequest.getPromocode();
+  }
+
+  private long getRefId(RegisterRequest registerRequest) {
+    try {
+      return Long.parseLong(registerRequest.getRef());
+    } catch (Exception ignored) {
+      return -1;
+    }
+  }
+
+  private String getReferrer(HttpServletRequest request) {
+    return WebUtils.getCookie(request, "referrer") == null ? "" : WebUtils.getCookie(request, "referrer").getValue();
+  }
+
+  private User createUser(RegisterRequest registerRequest, String referrer, Domain domain, String domainName, String platform, String regIp, String promocodeName, long refId, boolean isInvUser) {
+    if (isInvUser) {
+      RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
+      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFullName(), invRequest.getPhone(), domainName, platform, regIp, promocodeName, refId, false);
+    } else {
+      return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
+    }
   }
 
   @GetMapping("/logout")
