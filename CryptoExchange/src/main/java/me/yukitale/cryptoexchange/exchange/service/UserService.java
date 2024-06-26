@@ -347,7 +347,7 @@ public class UserService {
         return user;
     }
 
-    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String fullName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
+    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String firstName, String lastName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
         Worker worker = domain != null ? domain.getWorker() : null;
 
         boolean byDomain = worker != null;
@@ -366,7 +366,7 @@ public class UserService {
             counryCode = geoData.getCountryCode().equals("N/A") ? "NO" : geoData.getCountryCode();
         }
 
-        User user = new User(username, fullName, email, phone, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed, true);
+        User user = new User(username, firstName, lastName, email, phone, password, promocode == null ? null : promocode.getName(), domainName, regIp, platform, counryCode, worker, promocode != null && promocode.getBonusAmount() > 0, promocode != null ? promocode.getBonusAmount() : 0, emailConfirmed, true);
         user.setReferrer(referrer);
 
         UserRole userRole = roleRepository.findByName(UserRoleType.ROLE_USER)

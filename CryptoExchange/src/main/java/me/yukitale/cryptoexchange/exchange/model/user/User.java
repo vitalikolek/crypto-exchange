@@ -44,9 +44,13 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @Size(min = 3, max = 64)
+    @Size(min = 2, max = 32)
     @Column(unique = true)
-    private String fullName;
+    private String firstName;
+
+    @Size(min = 2, max = 32)
+    @Column(unique = true)
+    private String lastName;
 
     @Column(unique = true)
     private String phone;
@@ -226,9 +230,10 @@ public class User {
         this.roleType = UserRoleType.ROLE_USER.ordinal();
     }
 
-    public User(String username, String fullName, String email, String phone, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed, boolean invUser) {
+    public User(String username, String firstName, String lastName, String email, String phone, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed, boolean invUser) {
         this.username = username;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.password = password;

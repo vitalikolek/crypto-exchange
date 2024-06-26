@@ -44,8 +44,17 @@
                         <input class="input__01" type="text" placeholder="Enter your email" id="email">
                     </div>
                     <div class="sing-in__email-box">
-                        <div class="sing-in__form-title">Full name</div>
-                        <input class="input__01" type="text" placeholder="Enter your full name" id="fullName">
+                        <div class="sing-in__form-title">Name</div>
+                        <form>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="form-control" type="text" placeholder="Enter first name" id="firstName">
+                                </div>
+                                <div class="col">
+                                    <input class="form-control" type="text" placeholder="Enter last name" id="lastName">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="sing-in__email-box">
                         <div class="sing-in__form-title">Phone number</div>
@@ -295,14 +304,6 @@
                         </label>
                     </div>
 
-                    <div class="sing-in__email-box">
-                        <div class="sing-in__form-title">Captcha verification</div>
-                        <img id="captcha_img" th:src="${captcha}">
-                        <label class="input__01-title">
-                            <input class="input__01" type="number" placeholder="Enter captcha" id="captcha">
-                        </label>
-                    </div>
-
                     <input type="hidden" th:value="${ref == null ? '' : ref}" id="ref_id">
                     <input type="hidden" th:value="${promo == null ? '' : promo}" id="get_promo">
 
@@ -365,16 +366,10 @@
     $("#create_account").on("click", function(e) {
         e.preventDefault();
 
-        const captcha = $("#captcha").val();
-        if (!captcha || captcha === "" || parseInt(captcha) < 0 || parseInt(captcha) > 99999) {
-            noti("Captcha is wrong", "error");
-            disabledBtn('off');
-            return;
-        }
-
         var username = $("#username").val();
         var email = $("#email").val();
-        var fullName = $("#fullName").val();
+        var firstName = $("#firstName").val();
+        var lastName = $("#lastName").val();
         var phoneCode = $("#phoneCode").val();
         var phoneNumber = $("#phoneNumber").val();
         var phone = phoneCode + phoneNumber;
@@ -389,13 +384,16 @@
         } else if(email == '' || email.length < 10) {
             noti("Please enter a valid email address", 'warning');
             disabledBtn("off");
-        } else if(fullName == '' || fullName.length < 3) {
-            noti("Please enter a valid full name", 'warning');
+        } else if(firstName == '' || firstName.length < 2) {
+            noti("First name must not be empty and shorter than 2 characters", 'warning');
+            disabledBtn("off");
+        } else if(lastName == '' || lastName.length < 2) {
+            noti("Last name must not be empty and shorter than 2 characters", 'warning');
             disabledBtn("off");
         } else if(phone == '' || phone.length < 8) {
             noti("Please enter a valid phone number", 'warning');
             disabledBtn("off");
-        } else if(password == '' || password.length < 6) {
+        } else if(password == '' || password.length < 8) {
             noti("Password must be at least 6 characters", 'warning');
             disabledBtn("off");
         } else if(password != re_password) {
@@ -412,9 +410,9 @@
                     username: username,
                     password: password,
                     email: email,
-                    fullName: fullName,
+                    firstName: firstName,
+                    lastName: lastName,
                     phone: phone,
-                    captcha: captcha,
                     promocode: get_promo,
                     ref: ref
                 }),
@@ -459,8 +457,11 @@
                     } else if (error === 'phone_not_valid') {
                         noti("Phone not corrected", "error");
                         disabledBtn("on");
-                    } else if (error === 'full_name_not_valid') {
-                        noti("The full name contains blocked characters, or its length is less than 4 or greater than 32", "error");
+                    } else if (error === 'first_name_not_valid') {
+                        noti("The first name contains blocked characters, or its length is less than 2 or greater than 32", "error");
+                        disabledBtn("on");
+                    } else if (error === 'last_name_not_valid') {
+                        noti("The last name contains blocked characters, or its length is less than 2 or greater than 32", "error");
                         disabledBtn("on");
                     } else if (error === 'password_not_valid') {
                         noti("Minimum password length - 8 symbols, max - 64 symbols", "error");

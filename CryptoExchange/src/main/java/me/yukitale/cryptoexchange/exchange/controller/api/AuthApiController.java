@@ -216,15 +216,30 @@ public class AuthApiController {
 
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
+    String sessionKey = request.getSession().getId();
+
+    Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
+    if (captchaOptional.isEmpty()) {
+      return ResponseEntity.badRequest().body("bad_captcha");
+    }
+
+    if (!captchaOptional.get().getAnswer().equals(registerRequest.getCaptcha())) {
+      return resolveError(sessionKey, "wrong_captcha");
+    }
+
     return handleRegistration(registerRequest, request, domainName, false);
   }
 
   @PostMapping("/registerInv")
   public ResponseEntity<?> registerInvUser(@Valid @RequestBody RegisterInvRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
 
-    String fullName = registerRequest.getFullName();
-    if (!DataValidator.isNameValided(fullName)) {
-      return resolveError(request.getSession().getId(), "full_name_not_valid");
+    String firstName = registerRequest.getFirstName();
+    if (!DataValidator.isNameValided(firstName)) {
+      return resolveError(request.getSession().getId(), "first_name_not_valid");
+    }
+    String lastname = registerRequest.getLastName();
+    if (!DataValidator.isNameValided(lastname)) {
+      return resolveError(request.getSession().getId(), "last_name_not_valid");
     }
     String phone = registerRequest.getPhone().toLowerCase();
     if (!DataValidator.isPhoneValided(phone)) {
@@ -237,16 +252,7 @@ public class AuthApiController {
   private ResponseEntity<?> handleRegistration(RegisterRequest registerRequest, HttpServletRequest request, String domainName, boolean isInvUser) {
     String sessionKey = request.getSession().getId();
 
-    Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
-    if (captchaOptional.isEmpty()) {
-      return ResponseEntity.badRequest().body("bad_captcha");
-    }
-
-    if (!captchaOptional.get().getAnswer().equals(registerRequest.getCaptcha())) {
-      return resolveError(sessionKey, "wrong_captcha");
-    }
-
-    if (!isValidRegisterRequest(registerRequest, isInvUser)) {
+    if (!isValidRegisterRequest(registerRequest)) {
       return resolveError(sessionKey, "validation_failed");
     }
 
@@ -301,7 +307,7 @@ public class AuthApiController {
     return authenticate(request, user, registerRequest.getPassword());
   }
 
-  private boolean isValidRegisterRequest(RegisterRequest registerRequest, boolean isInvUser) {
+  private boolean isValidRegisterRequest(RegisterRequest registerRequest) {
     if (!DataValidator.isEmailValided(registerRequest.getEmail().toLowerCase())) {
       return false;
     }
@@ -312,16 +318,6 @@ public class AuthApiController {
 
     if (registerRequest.getPassword().length() < 8 || registerRequest.getPassword().length() > 64) {
       return false;
-    }
-
-    if (isInvUser) {
-      RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
-      if (!DataValidator.isPhoneValided(invRequest.getPhone().toLowerCase())) {
-        return false;
-      }
-      if (!DataValidator.isNameValided(invRequest.getFullName())) {
-        return false;
-      }
     }
 
     return true;
@@ -363,7 +359,7 @@ public class AuthApiController {
   private User createUser(RegisterRequest registerRequest, String referrer, Domain domain, String domainName, String platform, String regIp, String promocodeName, long refId, boolean isInvUser) {
     if (isInvUser) {
       RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
-      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFullName(), invRequest.getPhone(), domainName, platform, regIp, promocodeName, refId, false);
+      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), invRequest.getPhone(), domainName, platform, regIp, promocodeName, refId, false);
     } else {
       return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
     }
