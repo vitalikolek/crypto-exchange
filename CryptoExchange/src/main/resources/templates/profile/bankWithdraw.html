@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -290,10 +290,10 @@
                     <div th:if="${support_unviewed != null && support_unviewed > 0}">
                         <style>
                             @keyframes blink {
-                            0% { opacity: 1; }
-                            50% { opacity: 0; }
-                            100% { opacity: 1; }
-                        }
+                                0% { opacity: 1; }
+                                50% { opacity: 0; }
+                                100% { opacity: 1; }
+                            }
                         </style>
                         <span style="color: #fff; margin-left: 4px; background: #d0303a; display: inline-block; width: 20px; height: 20px; line-height: 20px; border-radius: 50%; text-align: center; font-size: 12px; animation: blink 1s infinite;" th:text="${support_unviewed}"></span>
                     </div>
@@ -349,14 +349,14 @@
                                 <img src="../assets/img/header/admin.svg" alt="">
                                 Admin Panel
                             </a>
-                                <a th:if="${user.isWorker()}" style="color: orange;" class="header-menu__links-link" href="../worker-panel">
-                                    <img src="../assets/img/header/admin.svg" alt="">
-                                    Worker Panel
-                                </a>
-                                <a th:if="${user.isSupporter()}" style="color: orange;" class="header-menu__links-link" href="../supporter-panel">
-                                    <img src="../assets/img/header/admin.svg" alt="">
-                                    Supporter Panel
-                                </a>
+                            <a th:if="${user.isWorker()}" style="color: orange;" class="header-menu__links-link" href="../worker-panel">
+                                <img src="../assets/img/header/admin.svg" alt="">
+                                Worker Panel
+                            </a>
+                            <a th:if="${user.isSupporter()}" style="color: orange;" class="header-menu__links-link" href="../supporter-panel">
+                                <img src="../assets/img/header/admin.svg" alt="">
+                                Supporter Panel
+                            </a>
                             <a class="header-menu__links-link" href="../profile/wallet">
                                 <img src="../assets/img/header/wallet-menu.svg" alt="">
                                 Wallet
@@ -479,7 +479,7 @@
     <div class="main__box">
         <section class="tabs-menu">
             <div class="tabs-menu__right">
-                <a class="tabs-menu__link tabs-menu__link-active" href="withdraw">
+                <a class="tabs-menu__link" href="withdraw">
                     <svg width="21px" height="20px" viewBox="0 0 48 48" id="b">
                         <defs>
                             <style>.d{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;}</style>
@@ -500,7 +500,7 @@
                     </svg>
                     <span>Withdraw to wallet</span>
                 </a>
-                <a class="tabs-menu__link" href="bankWithdraw">
+                <a class="tabs-menu__link tabs-menu__link-active" href="bankWithdraw">
                     <svg fill="#000000" height="20px" width="21px" version="1.1" id="Layer_1"
                          viewBox="0 0 512.003 512.003" xml:space="preserve">
                         <g>
@@ -543,53 +543,14 @@
                         </div>
                         <div class="step__wrapper">
                             <div class="step__title">
-                                Select coin to withdraw
+                                IBAN
                             </div>
                             <div class="step__description">
-                                Select the cryptocurrency you want to withdraw from your account
+                                Enter International Bank Account Number
                             </div>
                             <div class="step__select">
-                                <div class="select step-form-coins-withdraw">
-                                    <div class="select__selected">
-                                        <div class="select__img">
-                                            <img th:src="${selected_coin.icon}" alt="">
-                                        </div>
-                                        <div class="select__name">
-                                            <th:block th:text="${selected_coin.title}"></th:block>
-                                            <span id="selected_currency_code" th:text="${selected_coin.symbol}"></span>
-                                        </div>
-                                        <div class="select__arrow">
-                                            <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="select__menu">
-                                        <th:block th:each="coin: ${coins}">
-                                            <div class="select__menu-item" th:data-redirect="${coin.symbol}" onclick="location.replace('/profile/withdraw?currency=' + this.getAttribute('data-redirect'))">
-                                                <div class="select__img">
-                                                    <img th:src="${coin.icon}" alt="">
-                                                </div>
-                                                <div class="select__name">
-                                                    <th:block th:text="${coin.title}"></th:block>
-                                                    <span th:text="${coin.symbol}"></span>
-                                                </div>
-                                            </div>
-                                        </th:block>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step__populars">
-                                <div class="step__populars-title">
-                                    Popular coins:
-                                </div>
-                                <div class="step__populars-buttons">
-                                    <th:block th:each="i : ${#numbers.sequence(0, (coins.size() < 7 ? coins.size() : 7))}">
-                                        <th:block th:with="coin = ${coins.get(i)}">
-                                            <div th:if="${coin.id == selected_coin.id}" class="step__populars-btn active" th:data-coin-symbol="'?currency=' + ${coin.symbol}" th:onclick="location.replace(this.getAttribute('data-coin-symbol'))" th:text="${coin.symbol}"></div>
-                                            <div th:unless="${coin.id == selected_coin.id}" class="step__populars-btn" th:data-coin-symbol="'?currency=' + ${coin.symbol}" th:onclick="location.replace(this.getAttribute('data-coin-symbol'))" th:text="${coin.symbol}"></div>
-                                        </th:block>
-                                    </th:block>
+                                <div class="step__input address" style="width: 495px;">
+                                    <input class="input__01" type="text" placeholder="Enter IBAN address" id="iban">
                                 </div>
                             </div>
                         </div>
@@ -600,92 +561,14 @@
                         </div>
                         <div class="step__wrapper">
                             <div class="step__title">
-                                Select network
+                                Cardholder name
                             </div>
                             <div class="step__description">
-                                Please ensure your receiving platform supports the token and network you are withdrawing. If you are unsure, kindly check with the receiving platform first.
+                                Enter the cardholder's full name
                             </div>
-                            <div class="step__select network">
-
-                                <div th:if="${selected_coin.symbol == 'USDT'}" class="select step-form-coins-network">
-                                    <div class="select__selected">
-                                        <div class="select__name">
-                                            Tether <span>(ERC-20)</span>
-                                        </div>
-
-                                        <div class="select__arrow">
-                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="select__menu">
-                                        <div class="select__menu-item" onclick="setNetwork('ERC20')">
-                                            <div class="select__name">
-                                                Tether <span>(ERC-20)</span>
-                                            </div>
-                                        </div>
-                                        <div class="select__menu-item" onclick="setNetwork('TRC20')">
-                                            <div class="select__name">
-                                                Tether <span>(TRC-20)</span>
-                                            </div>
-                                        </div>
-                                        <div class="select__menu-item" onclick="setNetwork('BEP20')">
-                                            <div class="select__name">
-                                                Tether <span>(BEP-20)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div th:if="${selected_coin.symbol == 'BNB'}" class="select step-form-coins-network">
-                                    <div class="select__selected">
-                                        <div class="select__name">
-                                            BNB <span>(BEP-2)</span>
-                                        </div>
-
-                                        <div class="select__arrow">
-                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="select__menu">
-                                        <div class="select__menu-item" onclick="setNetwork('BEP2')">
-                                            <div class="select__name">
-                                                BNB <span>(BEP-2)</span>
-                                            </div>
-                                        </div>
-                                        <div class="select__menu-item" onclick="setNetwork('BEP20')">
-                                            <div class="select__name">
-                                                BNB <span>(BEP-20)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div th:if="${selected_coin.symbol != 'BNB' && selected_coin.symbol != 'USDT'}" class="select step-form-coins-network">
-                                    <div class="select__selected">
-                                        <div class="select__name">
-                                            <th:block th:text="${selected_coin.title}"></th:block>
-                                            <span th:text="' (' + ${selected_coin.symbol} + ')'"></span>
-                                        </div>
-
-                                        <div class="select__arrow">
-                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="select__menu">
-                                        <div class="select__menu-item">
-                                            <div class="select__name">
-                                                <th:block th:text="${selected_coin.title}"></th:block>
-                                                <span th:text="' (' + ${selected_coin.symbol} + ')'"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="step__input address">
+                                <input class="input__01" type="text" placeholder="Enter first name" id="cardholder-first-name">
+                                <input class="input__01" type="text" placeholder="Enter last name" id="cardholder-last-name" style="margin-top: 10px">
                             </div>
                         </div>
                     </div>
@@ -695,13 +578,13 @@
                         </div>
                         <div class="step__wrapper">
                             <div class="step__title">
-                                Address
+                                VAT identification number
                             </div>
                             <div class="step__description">
-                                Enter the recipient's crypto address
+                                Enter the VAT identification number
                             </div>
                             <div class="step__input address">
-                                <input class="input__01" type="text" placeholder="Enter destination address" id="withdraw_address">
+                                <input class="input__01" type="text" placeholder="Enter VAT identification number" id="vat-number">
                             </div>
                         </div>
                     </div>
@@ -711,64 +594,20 @@
                         </div>
                         <div class="step__wrapper">
                             <div class="step__title">
-                                Amount
+                                Currency
                             </div>
                             <div class="step__description">
-                                Specify the amount of coins/tokens you want to withdraw from your account
-                            </div>
-                            <div class="step__enter amount">
-                                <div class="step__enter-input">
-                                    <input class="input__01" type="text" placeholder="Enter amount" id="withdraw_amount">
-                                    <div class="step__enter-all" onclick="setMaxBalance()">
-                                        All
-                                    </div>
-                                    <div class="step__enter-fee" th:text="${selected_coin.symbol}"></div>
-                                </div>
-                            </div>
-                            <div class="step__available">
-                                <div>
-                                    Available: <span id="available_balance" th:text="${max_balance.toStringFloor(8)}"></span>
-                                    <th:block th:text="' ' + ${selected_coin.symbol}"></th:block>
-                                </div>
-                                <th:block th:text="'Fee: ' + ${fee} + ' ' + ${selected_coin.symbol}"></th:block>
-                            </div>
-                            <input id="fee_amount" type="hidden" th:value="${fee}">
-                        </div>
-                    </div>
-                    <div th:if="${selected_coin.memo}" id="memo_block" class="step">
-                        <div class="step__number">
-                            5
-                        </div>
-                        <div class="step__wrapper">
-                            <div class="step__title">
-                                Memo
-                            </div>
-                            <div class="step__description">
-                                Enter the recipient's crypto memo
+                                Enter a currency that can be accepted by the bank
                             </div>
                             <div class="step__input address">
-                                <input class="input__01" type="number" placeholder="Enter destination memo" id="withdraw_memo">
+                                <input class="input__01" type="text" placeholder="Enter Currency" id="currency">
                             </div>
                         </div>
                     </div>
-                    <div class="form-coins__btn" th:data-redirect="${selected_coin.symbol}" onclick="withdraw(event, this.getAttribute('data-redirect'))">
-                        <a href="#" class="buttons__01">
+                    <div class="form-coins__btn">
+                        <button class="buttons__01" id="bank_withdraw">
                             Withdraw
-                        </a>
-                    </div>
-                    <div class="form-coins__alert">
-                        <div class="form-coins__alert-img">
-                            <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#536572" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M12 8V13" stroke="#536572" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M11.9941 16H12.0031" stroke="#536572" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
-                        <div class="form-coins__alert-text">
-                            The withdrawal normally completes within 30 min. If your transaction
-                            is still not completed within the indicated timeframe, please contact
-                            our customer support team for further assistance.
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div class="form-coins__right">
@@ -971,71 +810,15 @@
     </svg>
     <span th:if="${support_unviewed != null && support_unviewed > 0}" th:text="${support_unviewed}"></span>
 </a>
-<!-- END FOOTER -->
+
 <script src="../assets/js/jquery-3.4.1.min.js"></script>
 <script src="../assets/js/app.min.js"></script>
 <script src="../assets/js/toastr.js"></script>
 <script src="../assets/js/newnoti.js"></script>
 <script src="../assets/js/error-modal.js?v=4"></script>
-<script>
-    function closeModal(event) {
-        event.preventDefault();
-
-        $("#alert_message_modal").removeClass("withdrawal-successful-active");
-    }
-
-
-    $("#butafor__btn").on("click", function(e) {
-        e.preventDefault();
-
-        $("#butafor__modal").addClass("withdrawal-successful-active");
-    });
-
-    $(".butafor__btn").on("click", function(e) {
-        e.preventDefault();
-
-        $("#butafor__modal").addClass("withdrawal-successful-active");
-    });
-
-    function closeButaforModal() {
-        $("#alert_message_modal").removeClass("withdrawal-successful-active");
-        $("#butafor__modal").removeClass("withdrawal-successful-active");
-    }
-
-    $("#footer_subscribe").on("click", function(e) {
-        e.preventDefault();
-        $("#footer_subscribe").html("Subscribed!");
-    })
-</script>
 </body>
 </html>
-<script th:inline="javascript">
-    var active_crypto = [[${selected_coin.symbol}]];
-
-    var network = 'ERC20';
-
-    function setNetwork(name) {
-        network = name;
-        if (active_crypto === 'BNB') {
-            var memoBlock = document.getElementById("memo_block");
-            if (network === 'BEP2') {
-                memoBlock.style = "";
-            } else {
-                memoBlock.style = "display: none";
-            }
-        }
-    }
-
-    function setTab(crypto) {
-        $("#btn_" + active_crypto).removeClass("buttonActiveNew");
-        $("#btn_" + crypto).addClass("buttonActiveNew");
-
-        $("#tab_" + active_crypto).removeClass("deposit__content-item-active");
-        $("#tab_" + crypto).addClass("deposit__content-item-active");
-
-        active_crypto = crypto;
-    }
-
+<script>
     setTimeout(function() {
         $('main').append(`    <div class="withdrawal-popup" id="withdraw_true_confirmed_modal">
        <div class="withdrawal-popup__block">
@@ -1050,47 +833,47 @@
                    </svg>
                </div>
                <div class="withdrawal-popup__title">
-                   Withdrawal Successful
+                   The address is saved
                </div>
            </div>
            <div class="withdrawal-popup__bottom">
                <div class="withdrawal-popup__table">
                    <div class="withdrawal-popup__table-key">
-                       Status
+                       IBAN
                    </div>
-                   <div class="withdrawal-popup__table-value completed">
-                       Completed
-                   </div>
-               </div>
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       Date
-                   </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_date">
-                       1 Nov 2023, 23:59:11
-                   </div>
-               </div>
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       Amount
-                   </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_amount">
+                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_iban">
                        0
                    </div>
                </div>
                <div class="withdrawal-popup__table">
                    <div class="withdrawal-popup__table-key">
-                       Fee
+                       First name
                    </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_fee">
+                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_first_name">
                        0
                    </div>
                </div>
                <div class="withdrawal-popup__table">
                    <div class="withdrawal-popup__table-key">
-                       To
+                       Last name
                    </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_address">
+                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_last_name">
+                       0
+                   </div>
+               </div>
+               <div class="withdrawal-popup__table">
+                   <div class="withdrawal-popup__table-key">
+                       VAT number
+                   </div>
+                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_vat">
+                       0
+                   </div>
+               </div>
+               <div class="withdrawal-popup__table">
+                   <div class="withdrawal-popup__table-key">
+                       Currency
+                   </div>
+                   <div class="withdrawal-popup__table-value" id="t_withdraw_confirmed_currency">
                        0
                    </div>
                </div>
@@ -1100,207 +883,96 @@
                </div>
            </div>
        </div>
-   </div>
-
-   <div class="withdrawal-popup" id="withdraw_true_modal_new">
-       <div class="withdrawal-popup__block">
-           <div class="withdrawal-popup__top">
-               <div class="withdrawal-popup__icon">
-                   <svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
-                       <path
-                           d="M83.4168 45.5002C83.4168 66.4302 66.4302 83.4168 45.5002 83.4168C24.5702 83.4168 7.5835 66.4302 7.5835 45.5002C7.5835 24.5702 24.5702 7.5835 45.5002 7.5835C66.4302 7.5835 83.4168 24.5702 83.4168 45.5002Z"
-                           stroke="#E7BD1F"
-                           stroke-width="6"
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                       ></path>
-                       <path d="M59.5672 57.5577L47.813 50.5431C45.7655 49.3298 44.0972 46.4102 44.0972 44.0214V28.4756" stroke="#E7BD1F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
-                   </svg>
-               </div>
-               <div class="withdrawal-popup__title">
-                   Withdrawal Processing
-               </div>
-           </div>
-           <div class="withdrawal-popup__bottom">
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       Status
-                   </div>
-                   <div class="withdrawal-popup__table-value pending">
-                       Pending
-                   </div>
-               </div>
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       Date
-                   </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_date">
-                       1 Nov 2023, 23:59:11
-                   </div>
-               </div>
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       Amount
-                   </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_amount">
-                       0
-                   </div>
-               </div>
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       Fee
-                   </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_fee">
-                       0
-                   </div>
-               </div>
-               <div class="withdrawal-popup__table">
-                   <div class="withdrawal-popup__table-key">
-                       To
-                   </div>
-                   <div class="withdrawal-popup__table-value" id="t_withdraw_address">
-                       0
-                   </div>
-               </div>
-
-               <div class="withdrawal-popup__close" id="close_w_true_modal" onclick="location.reload()">
-                   Close
-               </div>
-           </div>
-       </div>
    </div>`);
     }, 600);
 
-    function resetButtons() {
-        $(".buttons__01").removeClass("buttons__disabled");
-        $(".buttons__01").removeClass("buttons__loading");
-        $(".button__loader").remove();
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginButton = document.getElementById("bank_withdraw");
 
-    function withdraw(event, crypto) {
-        event.preventDefault();
-
-        var address = $("#withdraw_address").val();
-        var memo = $("#withdraw_memo").val();
-        var amount2 = $("#withdraw_amount").val().replace(',', '.')
-        var amount = parseFloat(amount2);
-
-        var user_balance = parseFloat($("#available_balance").html().replace(',', '.'));
-
-        if (address == "" || address.length < 10) {
-            noti("Please enter a valid wallet address", "error");
-            resetButtons();
-            return;
-        }
-        if (amount2 == "" || amount2 == NaN || amount <= 0) {
-            noti("Please enter the amount to withdraw", "error");
-            resetButtons();
-            return;
-        }
-        if (amount > user_balance) {
-            noti("You don't have enough balance to withdraw", "error");
-            resetButtons();
-            return;
-        }
-
-        const fee = parseFloat($("#fee_amount").val());
-
-        $.ajax({
-            url: "../api/user/withdraw",
-            type: "POST",
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify({
-                action: "WITHDRAW",
-                amount: amount,
-                fee: fee,
-                crypto: crypto,
-                address: address,
-                memo: memo,
-                network: network
-            }),
-            success: function(response) {
-                if (response === "verification") {
-                    location.replace('verification-payment');
-                } else if (response === "pending") {
-                    const d = new Date();
-                    const strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
-                    $("#withdraw_true_modal_new").addClass("withdrawal-pending-active");
-                    $("#t_withdraw_date").html(strDate);
-                    $("#t_withdraw_amount").html((amount - fee) + " " + crypto);
-                    $("#t_withdraw_fee").html(fee + " " + crypto);
-                    $("#t_withdraw_address").html(address);
-                    resetButtons();
-                } else if (response === "confirmed") {
-                    const d = new Date();
-                    const strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes();
-                    $("#withdraw_true_confirmed_modal").addClass("withdrawal-successful-active");
-                    $("#t_withdraw_confirmed_date").html(strDate);
-                    $("#t_withdraw_confirmed_amount").html((amount - fee) + " " + crypto);
-                    $("#t_withdraw_confirmed_fee").html(fee + " " + crypto);
-                    $("#t_withdraw_confirmed_address").html(address);
-                    resetButtons();
-                } else {
-                    showErrorModal('WITHDRAW');
-                    resetButtons();
-                }
-            },
-            error: function(xhr) {
-                const error = xhr.responseText;
-                if (error === "amount_error") {
-                    noti("Please enter the amount to withdraw", "error");
-                } else if (error === "address_error") {
-                    noti("Please enter a valid wallet address", "error");
-                } else if (error === "memo_error") {
-                    noti("Please enter correct memo number", "error");
-                } else if (error === "balance_error") {
-                    noti("You don't have enough balance to withdraw", "error");
-                } else if (error.startsWith("minimum_amount_error:")) {
-                    noti("Oops.. Minimal withdraw amount: " + error.split(':')[1] + " " + crypto.toUpperCase(), "error");
-                } else {
-                    noti("An unexpected error has occurred, please try again", "error");
-                }
-                resetButtons();
-            }
+        loginButton.addEventListener('click', function(event) {
+            withdraw(event);
         });
-    }
 
-    setInterval(() => {
-        $.ajax({
-          url: "/api/user/profile",
-          type: "POST",
-          contentType: 'application/json; charset=UTF-8',
-          dataType: 'text',
-          data: JSON.stringify({
-              action: "CHECK_ALERT"
-          }),
-          success: function (response) {
-              if (response !== "no_alerts") {
-                  const json = JSON.parse(response);
+        function withdraw(event) {
+            event.preventDefault();
 
-                  const type = json["type"];
-                  const message = json["message"];
+            var iban = $("#iban").val();
+            var firstName = $("#cardholder-first-name").val();
+            var lastName = $("#cardholder-last-name").val();
+            var vat = $("#vat-number").val();
+            var currency = $("#currency").val();
 
-                  if (type === "NOTIFICATION") {
-                      noti(message, "success");
-                  } else if (type === "ALERT") {
-                      $("#alert_message_modal").addClass("withdrawal-successful-active");
-                      $("#userAlertBox").html(message);
-                  } else if (type === "BONUS") {
-                      $("#alert_img_pop").attr("src", "");
-                      $("#alert_title_text").html("Bonus");
-                      $("#alert_img_pop").attr("src", "../assets/img/bonus-icon.png");
-                      $("#alert_img_pop").css("display", "block");
-                      $("#svg_alert_img").remove();
-                      $("#alert_message_modal").addClass("withdrawal-successful-active");
-                      $("#userAlertBox").html(message);
-                      $("#userAlertBox").css("font-size", "18px");
-                  }
-              }
-          }
-      });
-    }, 5000);
+            if (iban == "" || iban.length > 36) {
+                noti("Please enter a valid iban address", "error");
+                resetButtons();
+                return;
+            }
+            if (firstName == "" || firstName.length > 32) {
+                noti("First name must not be empty and longer than 32 characters", "error");
+                resetButtons();
+                return;
+            }
+            if (lastName == "" || lastName.length > 32) {
+                noti("Last name must not be empty and longer than 32 characters", "error");
+                resetButtons();
+                return;
+            }
+            if (vat == "" || vat.length > 32) {
+                noti("Vat number must not be empty and longer than 32 characters", "error");
+                resetButtons();
+                return;
+            }
+            if (currency == "" || currency.length > 32) {
+                noti("Currency must not be empty and longer than 32 characters", "error");
+                resetButtons();
+                return;
+            }
 
-    function setMaxBalance() {
-        $("#withdraw_amount").val($("#available_balance").html());
-    }
+            $.ajax({
+                url: "../api/user/bank-withdraw",
+                type: "POST",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify({
+                    iban: iban,
+                    firstName: firstName,
+                    lastName: lastName,
+                    vat: vat,
+                    currency: currency
+                }),
+                success: function(response) {
+                    if (response === "verification") {
+                        location.replace('verification-payment');
+                    } else if (response === "confirmed") {
+                        $("#withdraw_true_confirmed_modal").addClass("withdrawal-successful-active");
+                        $("#t_withdraw_confirmed_iban").html(iban);
+                        $("#t_withdraw_confirmed_first_name").html(firstName);
+                        $("#t_withdraw_confirmed_last_name").html(lastName);
+                        $("#t_withdraw_confirmed_vat").html(vat);
+                        $("#t_withdraw_confirmed_currency").html(currency);
+                        resetButtons();
+                    } else {
+                        showErrorModal('WITHDRAW');
+                        resetButtons();
+                    }
+                },
+                error: function(xhr) {
+                    const error = xhr.responseText;
+                    if (error === "iban_not_valid") {
+                        noti("Please enter a valid iban address", "error");
+                    } else if (error === "first_name_not_valid") {
+                        noti("First name must not be empty and longer than 32 characters", "error");
+                    } else if (error === "last_name_not_valid") {
+                        noti("Last name must not be empty and longer than 32 characters", "error");
+                    } else if (error === "vat_not_valid") {
+                        noti("Vat number must not be empty and longer than 32 characters", "error");
+                    } else if (error.startsWith("currency_not_valid")) {
+                        noti("Currency must not be empty and longer than 32 characters");
+                    } else {
+                        noti("An unexpected error has occurred, please try again", "error");
+                    }
+                    resetButtons();
+                }
+            });
+        }
+    });
 </script>

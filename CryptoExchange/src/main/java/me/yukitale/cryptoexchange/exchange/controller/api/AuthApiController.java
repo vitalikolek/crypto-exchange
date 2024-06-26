@@ -223,7 +223,7 @@ public class AuthApiController {
   public ResponseEntity<?> registerInvUser(@Valid @RequestBody RegisterInvRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
 
     String fullName = registerRequest.getFullName();
-    if (!DataValidator.isFullNameValided(fullName)) {
+    if (!DataValidator.isNameValided(fullName)) {
       return resolveError(request.getSession().getId(), "full_name_not_valid");
     }
     String phone = registerRequest.getPhone().toLowerCase();
@@ -246,7 +246,7 @@ public class AuthApiController {
       return resolveError(sessionKey, "wrong_captcha");
     }
 
-    if (!isValidRegisterRequest(registerRequest, sessionKey, isInvUser)) {
+    if (!isValidRegisterRequest(registerRequest, isInvUser)) {
       return resolveError(sessionKey, "validation_failed");
     }
 
@@ -301,7 +301,7 @@ public class AuthApiController {
     return authenticate(request, user, registerRequest.getPassword());
   }
 
-  private boolean isValidRegisterRequest(RegisterRequest registerRequest, String sessionKey, boolean isInvUser) {
+  private boolean isValidRegisterRequest(RegisterRequest registerRequest, boolean isInvUser) {
     if (!DataValidator.isEmailValided(registerRequest.getEmail().toLowerCase())) {
       return false;
     }
@@ -319,7 +319,7 @@ public class AuthApiController {
       if (!DataValidator.isPhoneValided(invRequest.getPhone().toLowerCase())) {
         return false;
       }
-      if (!DataValidator.isFullNameValided(invRequest.getFullName())) {
+      if (!DataValidator.isNameValided(invRequest.getFullName())) {
         return false;
       }
     }

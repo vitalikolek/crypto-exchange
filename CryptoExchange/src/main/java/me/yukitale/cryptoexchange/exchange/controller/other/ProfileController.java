@@ -761,6 +761,39 @@ public class ProfileController {
         return "profile/withdraw";
     }
 
+    @GetMapping(value = "bankWithdraw")
+    public String bankWithdrawController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader(value = "host") String host) {
+        userService.createAction(authentication, request, "Go to the /profile/withdraw");
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        User user = addUserAttribute(model, authentication);
+
+        Coin selectedCoin = StringUtils.isBlank("BTC") ? coinRepository.findFirst() : coinRepository.findBySymbol("BTC").orElseGet(() -> coinRepository.findFirst());
+
+        model.addAttribute("coins", coinRepository.findAll());
+        model.addAttribute("selected_coin", selectedCoin);
+
+        double price = coinService.getWorkerPrice(user.getWorker(), selectedCoin.getSymbol());
+
+        model.addAttribute("price", price);
+
+        double fee = 0D;
+        if (user.getWithdrawCommission() >= 0) {
+            fee = user.getWithdrawCommission();
+        } else if (user.getWorker() != null) {
+            fee = user.getWorker().getCoinSettings().getWithdrawCommission();
+        } else {
+            fee = adminCoinSettingsRepository.findFirst().getWithdrawCommission();
+        }
+
+        model.addAttribute("fee", new MyDecimal(fee > 0 ? fee / price : 0).toString(6));
+
+        model.addAttribute("max_balance", new MyDecimal(userService.getBalance(user, selectedCoin)));
+
+        return "profile/bankWithdraw";
+    }
+
     private User addUserAttribute(Model model, Authentication authentication) {
         User user = userService.getUser(authentication);
 

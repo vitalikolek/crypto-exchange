@@ -1,6 +1,7 @@
 package me.yukitale.cryptoexchange.exchange.controller.api;
 
 import jakarta.servlet.http.HttpServletRequest;
+import me.yukitale.cryptoexchange.captcha.CachedCaptcha;
 import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.config.Resources;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
@@ -98,6 +99,9 @@ public class UserApiController {
 
     @Autowired
     private UserAddressRepository userAddressRepository;
+
+    @Autowired
+    private UserBankRepository userBankRepository;
 
     @Autowired
     private UserTradeOrderRepository userTradeOrderRepository;
@@ -1416,6 +1420,38 @@ public class UserApiController {
                 return ResponseEntity.badRequest().body("action_not_found");
             }
         }
+    }
+
+    @PostMapping(value = "bank-withdraw")
+    public ResponseEntity<String> bankWithdrawController(Authentication authentication, @RequestBody Map<String, Object> data) {
+        String iban = String.valueOf(data.get("iban"));
+        if (iban.equals("") || iban.length() > 36) {
+            return ResponseEntity.badRequest().body("iban_not_valid");
+        }
+        String firstName = String.valueOf(data.get("firstName"));
+        if (!DataValidator.isNameValided(firstName)) {
+            return ResponseEntity.badRequest().body("first_name_not_valid");
+        }
+        String lastName = String.valueOf(data.get("lastName"));
+        if (!DataValidator.isNameValided(lastName)) {
+            return ResponseEntity.badRequest().body("last_name_not_valid");
+        }
+        String vat = String.valueOf(data.get("vat"));
+        if (vat.equals("") || vat.length() > 32) {
+            return ResponseEntity.badRequest().body("vat_not_valid");
+        }
+        String currency = String.valueOf(data.get("currency"));
+        if (currency.equals("") || currency.length() > 32) {
+            return ResponseEntity.badRequest().body("currency_not_valid");
+        }
+
+        User user = userService.getUser(authentication);
+
+        UserBank userBank = new UserBank(iban, firstName, lastName, vat, currency, user);
+
+        userBankRepository.save(userBank);
+
+        return ResponseEntity.ok("confirmed");
     }
 
     private ResponseEntity<String> withdraw(HttpServletRequest request, User user, Map<String, Object> data) {
