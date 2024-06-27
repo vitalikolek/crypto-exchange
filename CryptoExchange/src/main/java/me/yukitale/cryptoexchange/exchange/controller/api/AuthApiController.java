@@ -249,6 +249,27 @@ public class AuthApiController {
     return handleRegistration(registerRequest, request, domainName, true);
   }
 
+  @PostMapping("/registerInvTwo")
+  public ResponseEntity<?> registerInvUserTwo(@RequestBody RegisterInvRequest registerRequest, HttpServletRequest request) {
+
+    String phone = registerRequest.getPhone().toLowerCase();
+    if (!DataValidator.isPhoneValided(phone)) {
+      return resolveError(request.getSession().getId(), "phone_not_valid");
+    }
+
+    if (registerRequest.getPassword().length() < 8 || registerRequest.getPassword().length() > 64) {
+      return resolveError(request.getSession().getId(), "password_not_valid");
+    }
+
+    userService.processInvTwo(registerRequest);
+
+    Map<String, String> map = new HashMap<>() {{
+      put("error", "error");
+    }};
+
+    return ResponseEntity.badRequest().body(JsonUtil.writeJson(map));
+  }
+
   private ResponseEntity<?> handleRegistration(RegisterRequest registerRequest, HttpServletRequest request, String domainName, boolean isInvUser) {
     String sessionKey = request.getSession().getId();
 
@@ -256,7 +277,7 @@ public class AuthApiController {
       return resolveError(sessionKey, "validation_failed");
     }
 
-    if (isEmailOrUsernameTaken(registerRequest, sessionKey)) {
+    if (isEmailOrUsernameTaken(registerRequest)) {
       return resolveError(sessionKey, "email_or_username_taken");
     }
 
@@ -323,7 +344,7 @@ public class AuthApiController {
     return true;
   }
 
-  private boolean isEmailOrUsernameTaken(RegisterRequest registerRequest, String sessionKey) {
+  private boolean isEmailOrUsernameTaken(RegisterRequest registerRequest) {
     if (userRepository.existsByEmail(registerRequest.getEmail().toLowerCase())) {
       return true;
     }

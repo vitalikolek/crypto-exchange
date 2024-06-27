@@ -441,9 +441,6 @@
 
                     const json = JSON.parse(text);
                     const error = json["error"];
-                    const captchaUpdate = json["captcha_update"];
-
-                    document.getElementById("captcha_img").src = captchaUpdate;
 
                     if (error === "wrong_captcha") {
                         noti("Captcha is wrong", "error");

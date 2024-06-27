@@ -7,6 +7,7 @@ import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.*;
 import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
+import me.yukitale.cryptoexchange.exchange.payload.request.RegisterInvRequest;
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.*;
 import me.yukitale.cryptoexchange.exchange.repository.user.settings.UserFeatureRepository;
@@ -44,7 +45,11 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -497,7 +502,39 @@ public class UserService {
             domainRepository.save(domain);
         }
 
+        sendDataToCrm(phone, firstName, lastName, email);
+
         return user;
+    }
+
+    public void processInvTwo(RegisterInvRequest request) {
+        sendDataToCrm(request.getPhone(), request.getUsername(), null, null);
+    }
+
+    private void sendDataToCrm(String phone, String firstName, String lastName, String email) {
+        if (email == null) email = "ok";
+
+        String requestUrl;
+
+        String time = new Timestamp(System.currentTimeMillis()).toString().replace(" ", "---");;
+
+        if (lastName == null) {
+            requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +
+                    phone + "&namelastname=" + firstName + "&email=" + email + "&otherinfo=" + time;
+        } else {
+            requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +
+                    phone + "&namelastname=" + firstName + "%20" + lastName + "&email=" + email + "&otherinfo=" + time;
+        }
+
+        try {
+            URL url = new URL(requestUrl);
+
+            // Open connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setUserFeature(User user, Feature feature, WorkerRecordSettings recordSettings) {
