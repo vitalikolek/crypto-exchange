@@ -290,7 +290,7 @@ public class EmailService {
     }
 
     public ResponseEntity<String> makePasswordRecoveryRequest(User user, HttpServletRequest request) {
-        String message = "recover password";
+        String message = "Send password recovery data to email";
 
         if (cooldownService.isCooldown(user.getId() + "-support")) {
             return ResponseEntity.badRequest().body("cooldown");
