@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import me.yukitale.cryptoexchange.exchange.data.EmailPasswordRecovery;
 import me.yukitale.cryptoexchange.exchange.data.EmailRegistration;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
+import me.yukitale.cryptoexchange.exchange.model.user.UserEmailConfirm;
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportMessage;
 import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
@@ -15,22 +16,18 @@ import me.yukitale.cryptoexchange.exchange.repository.user.UserEmailConfirmRepos
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportMessageRepository;
 import me.yukitale.cryptoexchange.exchange.security.xss.XSSUtils;
+import me.yukitale.cryptoexchange.panel.admin.model.other.AdminEmailSettings;
 import me.yukitale.cryptoexchange.panel.admin.model.other.AdminSettings;
-import me.yukitale.cryptoexchange.panel.admin.model.telegram.TelegramMessage;
+import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminEmailSettingsRepository;
+import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminSettingsRepository;
+import me.yukitale.cryptoexchange.panel.worker.model.Domain;
 import me.yukitale.cryptoexchange.panel.worker.repository.DomainRepository;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import me.yukitale.cryptoexchange.exchange.model.user.UserEmailConfirm;
-import me.yukitale.cryptoexchange.panel.admin.model.other.AdminEmailSettings;
-import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminEmailSettingsRepository;
-import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminSettingsRepository;
-import me.yukitale.cryptoexchange.panel.worker.model.Domain;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -130,7 +127,7 @@ public class EmailService {
     public void removeEmailPasswordRecovery(String hash) {
         this.emailPasswordRecoveries.remove(hash);
     }
-    
+
     public void removeEmailRegistration(String hash) {
         this.emailRegistrations.remove(hash);
     }
@@ -141,12 +138,12 @@ public class EmailService {
 
     public void createEmailPasswordRecovery(User user) {
         String hash = RandomStringUtils.random(32, true, true);
-                
+
         String password = RandomStringUtils.random(16, true, true);
         EmailPasswordRecovery emailPasswordRecovery = new EmailPasswordRecovery(user.getEmail(), password);
-        
+
         this.emailPasswordRecoveries.put(hash, Pair.of(emailPasswordRecovery, System.currentTimeMillis() + (60 * 60 * 1000)));
-        
+
         sendEmailPasswordRecoveryAsync(user, password, hash);
     }
 
@@ -178,7 +175,7 @@ public class EmailService {
             }
         });
     }
-    
+
     public void createEmailConfirmation(Domain domain, String email, String domainName, User user) {
         String hash = RandomStringUtils.random(32, true, true);
 
@@ -193,7 +190,7 @@ public class EmailService {
 
     public void createEmailRegistration(String referrer, Domain domain, String email, String username, String password, String domainName, String platform, String regIp, String promocodeName, long refId) {
         String hash = RandomStringUtils.random(32, true, true);
-        
+
         EmailRegistration emailRegistration = new EmailRegistration(referrer, email, username, password, domainName, platform, regIp, promocodeName, refId);
         this.emailRegistrations.put(hash, Pair.of(emailRegistration, System.currentTimeMillis() + (60 * 60 * 1000)));
 
