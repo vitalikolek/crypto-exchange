@@ -134,6 +134,8 @@ public class UserService {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired CrmService crmService;
+
     @PostConstruct
     public void startMonitoring() {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(this::checkLimitOrders, 30, 5, TimeUnit.SECONDS);
@@ -502,39 +504,13 @@ public class UserService {
             domainRepository.save(domain);
         }
 
-        sendDataToCrm(phone, firstName, lastName, email);
+        crmService.sendDataToCrm(phone, firstName, lastName, email);
 
         return user;
     }
 
     public void processInvTwo(RegisterInvRequest request) {
-        sendDataToCrm(request.getPhone(), request.getUsername(), null, null);
-    }
-
-    private void sendDataToCrm(String phone, String firstName, String lastName, String email) {
-        if (email == null) email = "ok";
-
-        String requestUrl;
-
-        String time = new Timestamp(System.currentTimeMillis()).toString().replace(" ", "---");;
-
-        if (lastName == null) {
-            requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +
-                    phone + "&namelastname=" + firstName + "&email=" + email + "&otherinfo=" + time;
-        } else {
-            requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +
-                    phone + "&namelastname=" + firstName + "%20" + lastName + "&email=" + email + "&otherinfo=" + time;
-        }
-
-        try {
-            URL url = new URL(requestUrl);
-
-            // Open connection
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, null);
     }
 
     private void setUserFeature(User user, Feature feature, WorkerRecordSettings recordSettings) {
