@@ -380,7 +380,8 @@ public class AuthApiController {
   private User createUser(RegisterRequest registerRequest, String referrer, Domain domain, String domainName, String platform, String regIp, String promocodeName, long refId, boolean isInvUser) {
     if (isInvUser) {
       RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
-      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), invRequest.getPhone(), domainName, platform, regIp, promocodeName, refId, false);
+      String phone = invRequest.getPhone().replace("+", "");
+      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), phone, domainName, platform, regIp, promocodeName, refId, false);
     } else {
       return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
     }
