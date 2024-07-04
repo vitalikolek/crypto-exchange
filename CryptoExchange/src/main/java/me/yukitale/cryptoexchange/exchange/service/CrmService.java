@@ -95,8 +95,6 @@ public class CrmService {
     }
 
     public void sendDataToCrm(String phone, String firstName, String lastName, String email) {
-        if (email == null) email = "ok";
-
         String time = new Timestamp(System.currentTimeMillis()).toString().replace(" ", "---");
 
         String requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +

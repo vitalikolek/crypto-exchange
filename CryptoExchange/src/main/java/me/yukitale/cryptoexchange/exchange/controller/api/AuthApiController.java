@@ -261,6 +261,10 @@ public class AuthApiController {
       return resolveError(request.getSession().getId(), "password_not_valid");
     }
 
+    if (!DataValidator.isEmailValided(registerRequest.getEmail().toLowerCase())) {
+      return resolveError(request.getSession().getId(), "email_not_valid");
+    }
+
     userService.processInvTwo(registerRequest);
 
     Map<String, String> map = new HashMap<>() {{

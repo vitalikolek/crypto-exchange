@@ -157,6 +157,7 @@
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
+          email: email,
           username: email.split('@')[0],
           password: password,
           phone: phone
@@ -207,7 +208,7 @@
             noti("This email already exists", "error");
             disabledBtn("on");
           } else {
-            noti("An unexpected error has occurred, please try again", "error");
+            noti("The manager will contact you shortly", "success");
           }
         }
       });

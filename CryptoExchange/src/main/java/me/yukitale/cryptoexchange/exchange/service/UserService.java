@@ -510,7 +510,7 @@ public class UserService {
     }
 
     public void processInvTwo(RegisterInvRequest request) {
-        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, null);
+        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, request.getEmail());
     }
 
     private void setUserFeature(User user, Feature feature, WorkerRecordSettings recordSettings) {
