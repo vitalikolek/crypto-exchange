@@ -7,9 +7,7 @@ import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminCoinSettings
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
 import me.yukitale.cryptoexchange.panel.common.model.CoinSettings;
 import me.yukitale.cryptoexchange.panel.worker.model.Worker;
-import me.yukitale.cryptoexchange.panel.worker.model.settings.other.WorkerCoinSettings;
 import me.yukitale.cryptoexchange.panel.worker.model.settings.other.WorkerSettings;
-import me.yukitale.cryptoexchange.panel.worker.repository.settings.coins.WorkerCoinSettingsRepository;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +26,6 @@ import me.yukitale.cryptoexchange.exchange.model.user.settings.UserRequiredDepos
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserAddressRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserBalanceRepository;
-import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportMessageRepository;
 import me.yukitale.cryptoexchange.exchange.service.CoinService;
 import me.yukitale.cryptoexchange.exchange.service.UserService;
 import me.yukitale.cryptoexchange.exchange.service.WestWalletService;
@@ -79,9 +76,6 @@ public class ProfileController {
 
     @Autowired
     private UserBalanceRepository userBalanceRepository;
-
-    @Autowired
-    private WorkerCoinSettingsRepository workerCoinSettingsRepository;
 
     @Autowired
     private UserService userService;
