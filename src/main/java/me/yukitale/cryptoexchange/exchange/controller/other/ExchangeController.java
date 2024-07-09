@@ -2,7 +2,6 @@ package me.yukitale.cryptoexchange.exchange.controller.other;
 
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
-import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportMessageRepository;
 import me.yukitale.cryptoexchange.panel.admin.model.payments.PaymentSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
 import me.yukitale.cryptoexchange.panel.worker.model.FastPump;
@@ -309,6 +308,24 @@ public class ExchangeController {
         return "terms";
     }
 
+    @GetMapping(value = "/trade-bot")
+    public String tradeBotController(Model model, Authentication authentication, HttpServletRequest request, @RequestParam(value = "currency", required = false) String coinSymbol, @RequestHeader("host") String host) {
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+        userService.createAction(authentication, request, "Go to the /profile/swap");
+
+        User user = addUserAttribute(model, authentication);
+
+        model.addAttribute("coins", coinRepository.findAll());
+        model.addAttribute("usdt", coinRepository.findUSDT());
+
+        PaymentSettings paymentSettings = paymentSettingsRepository.findFirst();
+
+        model.addAttribute("payment_settings", paymentSettings);
+
+        return "trade-bot";
+    }
+
     @GetMapping(value = "trading")
     public String tradingController(Model model, Authentication authentication, HttpServletRequest request, @RequestParam(value = "currency", required = false) String coinSymbol, @RequestHeader("host") String host) {
         userService.createAction(authentication, request, "Go to the /trading");
@@ -510,6 +527,6 @@ public class ExchangeController {
     private void addPaymentSettings(Model model) {
         PaymentSettings paymentSettings = paymentSettingsRepository.findFirst();
 
-        model.addAttribute("payment_settings", paymentSettings);
+        model.addAttribute("77", paymentSettings);
     }
 }

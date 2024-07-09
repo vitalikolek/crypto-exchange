@@ -35,7 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
           "/", "/signin", "/signup", "/signin-2fa", "/forgot-password", "/email",
           //
           "/api/worker-panel/**", "/api/admin-panel/**", "/api/supporter-panel/**",
-          "/api/user/**", "/trading", "/profile/**", "/worker-panel/**",
+          "/api/user/**", "/trading", "/trade-bot", "/profile/**", "/worker-panel/**",
           "/admin-panel/**", "/supporter-panel/**", "/aml-kyc-policy", "/bugbounty",
           "/cookies-policy", "/cross-rates", "/fees", "/heat-map",
           "/indices", "/law", "/market-crypto", "/market-screener",

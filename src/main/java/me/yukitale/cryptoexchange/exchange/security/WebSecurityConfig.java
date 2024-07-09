@@ -76,6 +76,7 @@ public class WebSecurityConfig {
                       .requestMatchers("/api/supporter-panel/**").authenticated()
                       .requestMatchers("/api/user/**").authenticated()
                       .requestMatchers("/trading").authenticated()
+                      .requestMatchers("/trade-bot").authenticated()
                       .requestMatchers("/profile/**").authenticated()
                       .requestMatchers("/worker-panel/**").authenticated()
                       .requestMatchers("/admin-panel/**").authenticated()
