@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="assets/css/root.min.css?v=2">
     <link rel="stylesheet" href="../assets/css/support-widget.css?v=1">
     <link rel="stylesheet" href="assets/css/toastr.css">
+    <link rel="stylesheet" href="landings/css/home.min.css">
     <style>
         .top-ghTgp {
             display: flex;
@@ -436,102 +437,34 @@
             <div class="top-ghTgp info">
                 <div class="info__container">
                     <div class="info__stats">
-                        <div class="select step-form-coins-send" style="width: 138px;">
-                            <div class="select__selected" style="background: transparent; border: 0px;">
-                                <div class="select__img">
-                                    <img th:src="${coins.get(0).icon}" alt="">
-                                </div>
-                                <div class="select__name" style="color: #d1d4dc;">
-                                    <span th:text="${coins.get(0).symbol}"></span>
-                                </div>
-
-                                <div class="select__arrow">
-                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z"
-                                              fill="#667085"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="select__menu">
-                                <div th:each="coin: ${coins}" class="select__menu-item" th:data-coin-symbol="${coin.symbol}"
-                                     onclick="sendCurrencySelect(this.getAttribute('data-coin-symbol'))">
-                                    <div class="select__img">
-                                        <img th:src="${coin.icon}" alt="">
-                                    </div>
-                                    <div class="select__name">
-                                        <span th:text="${coin.symbol}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p>Total work: <span class="total-work border-gradient">7d.13h.24m</span></p>
                     </div>
 
-                    <div class="info__stats" style="display: inline-block;">Total assets - <span th:text="${total_usd_balance}"></span> USD</div>
+                    <div class="info__stats" style="display: inline-block;">
+                        <p>Status: <span class="status border-gradient">STARTED</span>
+                    </div>
 
                     <div class="info__stats">
-                        <div class="select step-form-coins-receive" style="width: 138px;">
-                            <div class="select__selected" style="background: transparent; border: 0px;">
-                                <div class="select__img">
-                                    <img th:src="${usdt.icon}" alt="">
-                                </div>
-                                <div class="select__name" style="color: #d1d4dc;">
-                                    <span th:text="${usdt.symbol}"></span>
-                                </div>
-
-                                <div class="select__arrow">
-                                    <svg width="12" height="12" viewbox="0 0 12 12" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z"
-                                              fill="#667085"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="select__menu">
-
-                                <div th:each="coin: ${coins}" class="select__menu-item" th:data-coin-symbol="${coin.symbol}"
-                                     onclick="getCurrencySelect(this.getAttribute('data-coin-symbol'))">
-                                    <div class="select__img">
-                                        <img th:src="${coin.icon}" alt="">
-                                    </div>
-                                    <div class="select__name">
-                                        <span th:text="${coin.symbol}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p>Total profit: <span class="profit border-gradient">1747$</span></p>
                     </div>
                 </div>
             </div>
             <div class="left-ghTgp coins">
                 <div class="book__title">
-                    Order Book
+                    Last Orders
                 </div>
                 <div class="coins__names">
                     <div class="coins__names-item coins__names-currency">
-                        Currency
+                        Pair
                     </div>
                     <div class="coins__names-item coins__names-last">
-                        Last
                     </div>
                     <div class="coins__names-item coins__names-change">
                         Change
                     </div>
                 </div>
                 <div class="coins__items">
-                    <div class="coins__items-wrapper">
-                        <th:block th:each="coin: ${coins}">
-                            <a th:unless="${coin.isStable()}" class="coins__item" th:href="'trading?currency=' + ${coin.symbol}">
-                                <div class="coins__item-currency">
-                                    <div class="coins__item-icon">
-                                        <img th:src="${coin.icon}" alt="" style="width: 20px !important">
-                                    </div>
-                                    <span th:text="${coin.symbol}"></span><th:block th:text="'/' + ${usdt.symbol}"></th:block>
-                                </div>
-                                <div class="coins__item-last" th:text="${coin.symbol}"></div>
-                                <div class="coins__item-change" th:text="${coin.symbol}"></div>
-                            </a>
-                        </th:block>
+                    <div id="lastOrders" class="coins__items-wrapper">
                     </div>
                 </div>
             </div>
@@ -540,14 +473,78 @@
                 <div class="loader-div" style="text-align: center; justify-content: center;">
                     <img class="loader" src="../assets/img/trade-bot/loader.gif" alt="Loader">
                 </div>
-                <div class="loader-buttons">
+                <div th:if="${coins.size()} > 1" class="loader-info coin-container">
+                    <div class="select step-form-coins-send" style="width: 138px;">
+                        <div class="select__selected" style="background: transparent; border: 0px;">
+                            <div class="select__img">
+                                <img th:src="${coins.get(0).icon}" alt="">
+                            </div>
+                            <div class="select__name" style="color: #d1d4dc;">
+                                <span id="firstCoin" th:text="${coins.get(0).symbol}"></span>
+                            </div>
+
+                            <div class="select__arrow">
+                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="select__menu">
+                            <div th:each="coin: ${coins}" class="select__menu-item" th:data-coin-symbol="${coin.symbol}" onclick="sendCurrencySelect(this.getAttribute('data-coin-symbol'))">
+                                <div class="select__img">
+                                    <img th:src="${coin.icon}" alt="">
+                                </div>
+                                <div class="select__name">
+                                    <span th:text="${coin.symbol}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step__available">
+                            <div>Available: <span id="my_available_balance" onclick="availableBalance()">0</span></div>
+                        </div>
+                        <input class="input__01" type="number" placeholder="Amount" id="firstCoinAmount" style="width: 100%">
+                    </div>
+
+                    <div class="select step-form-coins-receive" style="width: 138px;">
+                        <div class="select__selected" style="background: transparent; border: 0px;">
+                            <div class="select__img">
+                                <img th:src="${coins.get(1).icon}" alt="">
+                            </div>
+                            <div class="select__name" style="color: #d1d4dc;">
+                                <span id="secondCoin" th:text="${coins.get(1).symbol}"></span>
+                            </div>
+
+                            <div class="select__arrow">
+                                <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="select__menu">
+                            <div th:each="coin: ${coins}" class="select__menu-item" th:data-coin-symbol="${coin.symbol}" onclick="receiveCurrencySelect(this.getAttribute('data-coin-symbol'))">
+                                <div class="select__img">
+                                    <img th:src="${coin.icon}" alt="">
+                                </div>
+                                <div class="select__name">
+                                    <span th:text="${coin.symbol}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step__available">
+                            <div>Available: <span id="my_available_balance_2" onclick="availableBalance2()">0</span></div>
+                        </div>
+                        <input class="input__01" type="number" placeholder="Amount" id="secondCoinAmount" style="width: 100%">
+                    </div>
+
+                </div>
+                <div th:if="${coins.size()} > 1" class="loader-buttons">
                     <div class="order_btn-fbGht order_btn-fbGht-buy" id="start-btn">Start</div>
                     <div class="order_btn-fbGht order_btn-fbGht-sell" id="stop-btn">Stop</div>
                 </div>
-                <div class="loader-info">
-                    <p>Status: <span class="status border-gradient">STARTED</span></p>
-                    <p>Total work: <span class="total-work border-gradient">7d.13h.24m</span></p>
-                    <p>Total profit: <span class="profit border-gradient">1747$</span></p>
+                <div th:unless="${coins.size()} > 1">
+                    <div class="home__description">
+                        You must have 2 coins with a balance of at least 10 USDT each
+                    </div>
                 </div>
             </div>
             <div class="right-top-ghTgp coins">
@@ -575,7 +572,7 @@
                                     </div>
                                     <span th:text="${coin.symbol}"></span><th:block th:text="'/' + ${usdt.symbol}"></th:block>
                                 </div>
-                                <div class="coins__item-last">2354235</div>
+                                <div class="coins__item-last" th:text="${coin_service.getWorkerPriceFormatted(user.worker, coin.symbol)}"></div>
                                 <div class="coins__item-change">2345</div>
                             </a>
                         </th:block>
@@ -586,10 +583,7 @@
     </div>
     <div class="orders-list">
         <div class="button__container" id="orders">
-            <div class="rushButton buttonActiveNew" id="ordersBtnOne">
-                My Open Orders
-            </div>
-            <div class="rushButton" id="ordersBtnTwo">
+            <div class="rushButton buttonActiveNew">
                 My Trading History
             </div>
         </div>
@@ -604,52 +598,16 @@
                             Pair
                         </div>
                         <div class="orders__names-item orders__names-side">
-                            Side
-                        </div>
-                        <div class="orders__names-item orders__names-type">
-                            Type
+                            Change %
                         </div>
                         <div class="orders__names-item orders__names-amount">
                             Amount
                         </div>
                         <div class="orders__names-item orders__names-amount">
-                            Price
-                        </div>
-                        <div class="orders__names-item orders__names-cancel">
+                            Profit
                         </div>
                     </div>
                     <div class="orders__items" id="orders_table"><div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">No open orders</div>
-                    </div>
-                </div>
-            </div>
-            <div class="content__container-item tabsBoxOne" id="ordersConTwo">
-                <div class="orders__table">
-                    <div class="orders__names">
-                        <div class="orders__names-item orders__names-date">
-                            Date
-                        </div>
-                        <div class="orders__names-item orders__names-pair">
-                            Pair
-                        </div>
-                        <div class="orders__names-item orders__names-side">
-                            Side
-                        </div>
-                        <div class="orders__names-item orders__names-type">
-                            Type
-                        </div>
-                        <div class="orders__names-item orders__names-amount">
-                            Amount
-                        </div>
-                        <div class="orders__names-item orders__names-price">
-                            Price
-                        </div>
-                        <div class="orders__names-item orders__names-status">
-                            Status
-                        </div>
-                        <div class="orders__names-item orders__names-cancel">
-                        </div>
-                    </div>
-                    <div class="orders__items" id="orders_history"><div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">No historical orders</div>
                     </div>
                 </div>
             </div>
@@ -664,3 +622,244 @@
 <script src="../assets/js/newnoti.js"></script>
 <script src="../assets/js/error-modal.js?v=4"></script>
 <script src="../assets/js/swap.min.js"></script>
+<script>
+
+    $(document).ready(function() {
+        $.ajax({
+            url: "../api/user/get-trade-bot-orders",
+            method: "GET",
+            success: function(data) {
+                // Clear the previous content
+                $('#orders_table').empty();
+
+                if (data.length === 0) {
+                    $('#orders_table').html('<div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">No open orders</div>');
+                } else {
+                    data.forEach(function(order) {
+                        var ordersTable = `
+                        <div class="orders__item">
+                            <div class="orders__item-date">${new Date(order.date).toLocaleString()}</div>
+                            <div class="orders__item-pair">${order.firstCoin.symbol}/${order.secondCoin.symbol}</div>
+                            <div class="orders__item-side">${order.changeInPercent}%</div>
+                            <div class="orders__item-amount">${order.amountInUSDT.toFixed(2)}</div>
+                            <div class="orders__item-amount">${order.profitInUSDT.toFixed(2)}</div>
+                        </div>
+                    `;
+                        var lastOrders = `
+                        <a class="coins__item" th:href="#">
+                                <div class="coins__item-currency">
+                                <div class="coins__item-icon">
+                                        <img src="${order.firstCoin.icon}" alt="" style="width: 20px !important">
+                                    </div>
+                                    <span>${order.firstCoin.symbol}</span><block>/${order.secondCoin.symbol}</block>
+                                </div>
+                                <div class="coins__item-last"></div>
+                                <div class="coins__item-change">${order.changeInPercent}%</div>
+                            </a>
+                    `;
+                        $('#lastOrders').append(lastOrders);
+                        $('#orders_table').append(ordersTable);
+                    });
+                }
+            },
+            error: function(error) {
+                console.log("Error fetching orders:", error);
+                $('#orders_table').html('<div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">Failed to load orders</div>');
+            }
+        });
+    });
+
+    function getRandomInterval() {
+        let time = Math.floor(Math.random() * (60 - 15 + 1) + 15) * 1000;
+        console.log(time)
+        return time;
+    }
+
+    let isGenerating = true;
+
+    function generateOrder(endPoint) {
+        var firstCoinElement = document.getElementById("firstCoin");
+        var firstCoinCoinValue = firstCoinElement.textContent || firstCoinElement.innerText;
+        var secondCoinElement = document.getElementById("secondCoin");
+        var secondCoinValue = secondCoinElement.textContent || secondCoinElement.innerText;
+
+        var firstCoinAmount = $("#firstCoinAmount").val();
+        var secondCoinAmount = $("#secondCoinAmount").val();
+
+        $.ajax({
+            url: '../api/user/' + endPoint,
+            type: 'POST',
+            data: JSON.stringify({
+                firstCoinSymbol: firstCoinCoinValue,
+                firstCoinAmount: parseFloat(firstCoinAmount),
+                secondCoinSymbol: secondCoinValue,
+                secondCoinAmount:parseFloat(secondCoinAmount)
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function(order) {
+                console.log("Order generated:", order);
+                var ordersTable = `
+                        <div class="orders__item">
+                            <div class="orders__item-date">${new Date(order.date).toLocaleString()}</div>
+                            <div class="orders__item-pair">${order.firstCoin.symbol}/${order.secondCoin.symbol}</div>
+                            <div class="orders__item-side">${order.changeInPercent}%</div>
+                            <div class="orders__item-amount">${order.amountInUSDT.toFixed(2)}</div>
+                            <div class="orders__item-amount">${order.profitInUSDT.toFixed(2)}</div>
+                        </div>
+                    `;
+                var lastOrders = `
+                        <a class="coins__item" th:href="#">
+                                <div class="coins__item-currency">
+                                <div class="coins__item-icon">
+                                        <img src="${order.firstCoin.icon}" alt="" style="width: 20px !important">
+                                    </div>
+                                    <span>${order.firstCoin.symbol}</span><block>/${order.secondCoin.symbol}</block>
+                                </div>
+                                <div class="coins__item-last"></div>
+                                <div class="coins__item-change">${order.changeInPercent}%</div>
+                            </a>
+                    `;
+                $('#lastOrders').prepend(lastOrders);
+                $('#orders_table').prepend(ordersTable);
+                if (isGenerating) {
+                    setTimeout(function(){generateOrder(endPoint);}, getRandomInterval());
+                }
+            },
+            error: function(error) {
+                isGenerating = false;
+                console.error("Error generating order:", error);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        generateOrder("generate-order");
+    });
+
+    $('#start-btn').click(function() {
+        isGenerating = true;
+        console.log("start")
+        setTimeout(function() {
+            generateOrder("start-generating");
+        }, getRandomInterval());
+    });
+
+    $('#stop-btn').click(function() {
+        isGenerating = false;
+
+        $.ajax({
+            url: '../api/user/stop-generating',
+            type: 'GET',
+            success: function(response) {
+                console.log("Stopped generating orders");
+            },
+            error: function(error) {
+                console.error("Error stopping order generation", error);
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript" th:if="${coins.size()} > 1">
+    var ex_currency = [[${coins.get(0).symbol}]];
+    var for_currency = [[${usdt.symbol}]];
+    var ex_currency_2 = [[${coins.get(1).symbol}]];
+
+    updateBalance(ex_currency);
+    updateBalance2(ex_currency_2);
+
+    calcSwap(for_currency, ex_currency);
+
+    function updateBalance(crypto) {
+        $.ajax({
+            url: "../api/user/profile",
+            type: "POST",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify({
+                action: "GET_BALANCE",
+                crypto: crypto
+            }),
+            success: function (response, textStatus, status) {
+                if (status.status === 200) {
+                    $("#my_available_balance").empty().html(parseFloat(status.responseText).toFixed(4));
+                    $("#my_available_crypto").empty().html(crypto.toUpperCase());
+                } else {
+                    noti("An unknown error has occurred, please try again later", "error");
+                }
+            },
+            error: function (xhr) {
+                noti("An unknown error has occurred, please try again later", "error");
+            }
+        });
+    }
+
+    function updateBalance2(crypto) {
+        $.ajax({
+            url: "../api/user/profile",
+            type: "POST",
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify({
+                action: "GET_BALANCE",
+                crypto: crypto
+            }),
+            success: function (response, textStatus, status) {
+                if (status.status === 200) {
+
+                    $("#my_available_balance_2").empty().html(parseFloat(status.responseText).toFixed(4));
+                    $("#my_available_crypto_2").empty().html(crypto.toUpperCase());
+                } else {
+                    noti("An unknown error has occurred, please try again later", "error");
+                }
+            },
+            error: function (xhr) {
+                noti("An unknown error has occurred, please try again later", "error");
+            }
+        });
+    }
+
+    function sendCurrencySelect(crypto) {
+        ex_currency = crypto;
+        updateBalance(ex_currency);
+    }
+
+    function receiveCurrencySelect(crypto) {
+        ex_currency_2 = crypto;
+        updateBalance2(ex_currency_2);
+    }
+
+    function availableBalance() {
+        var available = $("#my_available_balance").html();
+        $("#ex_amount").val(available);
+
+        var amount = $("#ex_amount").val();
+        var ex = ex_currency;
+        var for_ex = for_currency;
+
+        if (parseFloat(amount) < 0 || amount == "-" || amount == "+") {
+            noti("Repeated actions will lead to account blocking!", "error");
+            $("#ex_amount").val("");
+            $("#ex_amount_from").val("");
+        } else {
+            calcAmountFrom(for_ex, ex, amount);
+        }
+    }
+
+    function availableBalance2() {
+        var available = $("#my_available_balance_2").html();
+        $("#ex_amount").val(available);
+
+        var amount = $("#ex_amount").val();
+        var ex = ex_currency_2;
+        var for_ex = for_currency;
+
+        if (parseFloat(amount) < 0 || amount == "-" || amount == "+") {
+            noti("Repeated actions will lead to account blocking!", "error");
+            $("#ex_amount").val("");
+            $("#ex_amount_from").val("");
+        } else {
+            calcAmountFrom(for_ex, ex, amount);
+        }
+    }
+
+</script>

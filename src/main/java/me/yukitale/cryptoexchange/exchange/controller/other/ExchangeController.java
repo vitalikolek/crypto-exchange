@@ -1,7 +1,10 @@
 package me.yukitale.cryptoexchange.exchange.controller.other;
 
+import me.yukitale.cryptoexchange.exchange.model.user.UserBalance;
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
+import me.yukitale.cryptoexchange.exchange.repository.user.UserBalanceRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
+import me.yukitale.cryptoexchange.exchange.service.TradeBotService;
 import me.yukitale.cryptoexchange.panel.admin.model.payments.PaymentSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
 import me.yukitale.cryptoexchange.panel.worker.model.FastPump;
@@ -55,6 +58,9 @@ public class ExchangeController {
     private AdminLegalSettingsRepository adminLegalSettingsRepository;
 
     @Autowired
+    private UserBalanceRepository userBalanceRepository;
+
+    @Autowired
     private PaymentSettingsRepository paymentSettingsRepository;
 
     @Autowired
@@ -83,6 +89,9 @@ public class ExchangeController {
 
     @Autowired
     private CoinService coinService;
+
+    @Autowired
+    private TradeBotService tradeBotService;
 
     @GetMapping(value = "aml-kyc-policy")
     public String amlController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
@@ -312,16 +321,40 @@ public class ExchangeController {
     public String tradeBotController(Model model, Authentication authentication, HttpServletRequest request, @RequestParam(value = "currency", required = false) String coinSymbol, @RequestHeader("host") String host) {
         addDomainInfoAttribute(model, host);
         addPaymentSettings(model);
-        userService.createAction(authentication, request, "Go to the /profile/swap");
+        userService.createAction(authentication, request, "Go to the /trade-bot");
 
         User user = addUserAttribute(model, authentication);
 
-        model.addAttribute("coins", coinRepository.findAll());
+        tradeBotService.generateNumbersForAbsentTime(user);
+
+        Map<Long, String> balances = new HashMap<>();
+        Map<Long, String> usdBalances = new HashMap<>();
+
+        for (UserBalance userBalance : userBalanceRepository.findAllByUserId(user.getId())) {
+            balances.put(userBalance.getCoin().getId(), userBalance.getFormattedBalance().toString(8));
+            usdBalances.put(userBalance.getCoin().getId(), userService.getUsdBalanceWithWorker(user, userBalance.getCoin()).toString());
+        }
+
+        List<Coin> allCoins = coinRepository.findAll();
+        List<Coin> coinsWithBalance = new ArrayList<>();
+
+        for (Coin coin : allCoins) {
+            double balance = userService.getUsdBalanceWithWorker(user, coin).getValue();
+            if (balance > 0) {
+                coinsWithBalance.add(coin);
+            }
+        }
+
+        model.addAttribute("balances", balances);
+        model.addAttribute("usd_balances", usdBalances);
+
+        model.addAttribute("coins", coinsWithBalance);
         model.addAttribute("usdt", coinRepository.findUSDT());
 
         PaymentSettings paymentSettings = paymentSettingsRepository.findFirst();
 
         model.addAttribute("payment_settings", paymentSettings);
+        model.addAttribute("coin_service", coinService);
 
         return "trade-bot";
     }

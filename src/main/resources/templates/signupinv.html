@@ -27,7 +27,24 @@
                    src="https://www.facebook.com/tr?id=1483027352583200&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-</head>
+     <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '3254754151324531');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=3254754151324531&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- End Meta Pixel Code -->
+    </head>
 <body class="sing-in__body">
 
 <section class="sing-in">
@@ -218,6 +235,7 @@
                             setTimeout(function () {
                                 location.replace("../profile/wallet");
                             }, 1000);
+                            fbq('track', 'Lead');
                         } else {
                             noti("Registration is almost complete, please check your email", "success");
                             showConfirmationEmail("A registration confirmation email has been sent to your mailbox <strong style='color: dodgerblue'>" + email + "</strong><br>If the email didn't arrive, check your spam folder.");

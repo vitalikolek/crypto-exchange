@@ -68,6 +68,10 @@ public class User {
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date registered;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private Date tradeBotStarted;
+
     @Size(max = 64)
     private String domain;
 
@@ -121,6 +125,8 @@ public class User {
     @Column(columnDefinition = "DOUBLE DEFAULT -1")
     private double withdrawCommission;
 
+    private double tradeBotProfit;
+
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean verificationModal;
 
@@ -141,6 +147,9 @@ public class User {
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean invUser;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean tradeBotWorking;
 
     private long depositsCount;
 

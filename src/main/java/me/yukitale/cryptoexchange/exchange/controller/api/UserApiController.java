@@ -7,14 +7,12 @@ import me.yukitale.cryptoexchange.config.Resources;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.*;
 import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
+import me.yukitale.cryptoexchange.exchange.payload.request.TradeBotOrderRequest;
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.*;
 import me.yukitale.cryptoexchange.exchange.security.service.UserDetailsServiceImpl;
 import me.yukitale.cryptoexchange.exchange.security.xss.XSSUtils;
-import me.yukitale.cryptoexchange.exchange.service.CoinService;
-import me.yukitale.cryptoexchange.exchange.service.CooldownService;
-import me.yukitale.cryptoexchange.exchange.service.UserService;
-import me.yukitale.cryptoexchange.exchange.service.WestWalletService;
+import me.yukitale.cryptoexchange.exchange.service.*;
 import me.yukitale.cryptoexchange.panel.admin.model.other.AdminSettings;
 import me.yukitale.cryptoexchange.panel.admin.model.telegram.TelegramMessage;
 import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminCoinSettingsRepository;
@@ -138,6 +136,9 @@ public class UserApiController {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private TradeBotService tradeBotService;
 
     //start photo settings
     @PostMapping(value = "photo")
@@ -1402,6 +1403,34 @@ public class UserApiController {
         return ResponseEntity.ok(String.valueOf(purchased));
     }
     //end trading
+
+    //start trade-bot
+    @PostMapping("/start-generating")
+    public ResponseEntity<UserTradeBotOrder> startGeneratingOrders(@RequestBody TradeBotOrderRequest request, Authentication authentication) {
+        userService.setTradeBotWorking(userService.getUser(authentication), true);
+        return tradeBotService.generateTradeBotOrder(userService.getUser(authentication), request);
+    }
+
+    @PostMapping("/generate-order")
+    public ResponseEntity<UserTradeBotOrder> generateRandomOrder(@RequestBody TradeBotOrderRequest request, Authentication authentication) {
+        return tradeBotService.generateTradeBotOrder(userService.getUser(authentication), request);
+    }
+
+    @GetMapping("/stop-generating")
+    public void stopGeneratingOrders(Authentication authentication) {
+        userService.setTradeBotWorking(userService.getUser(authentication), false);
+    }
+
+    @GetMapping("/get-trade-bot-orders")
+    public List<UserTradeBotOrder> getTradeBotOrders(Authentication authentication) {
+        return tradeBotService.getTradeBotOrders(userService.getUser(authentication));
+    }
+
+    @GetMapping("/get-coin-balance")
+    public double getTradeBotOrders(Authentication authentication, @RequestBody String coin) {
+        return userService.getBalance(userService.getUser(authentication), coinRepository.findBySymbol(coin).get());
+    }
+    //end trade-bot
 
     //start withdraw
     @PostMapping(value = "withdraw")

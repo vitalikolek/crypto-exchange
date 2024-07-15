@@ -853,4 +853,9 @@ public class UserService {
 
         userBalanceRepository.saveLazyBypass(userBalance, userId, coinSymbol);
     }
+
+     public void setTradeBotWorking(User user, boolean isWorking) {
+        user.setTradeBotWorking(isWorking);
+        userRepository.save(user);
+     }
 }
