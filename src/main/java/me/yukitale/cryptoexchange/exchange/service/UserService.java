@@ -858,4 +858,8 @@ public class UserService {
         user.setTradeBotWorking(isWorking);
         userRepository.save(user);
      }
+
+     public List<User> findRandomUsers(int limit) {
+        return userRepository.findRandomUsers(limit);
+     }
 }

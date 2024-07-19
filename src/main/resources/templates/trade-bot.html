@@ -549,34 +549,10 @@
             </div>
             <div class="right-top-ghTgp coins">
                 <div class="book__title">
-                    Order Book
-                </div>
-                <div class="coins__names">
-                    <div class="coins__names-item coins__names-currency">
-                        Currency
-                    </div>
-                    <div class="coins__names-item coins__names-last">
-                        Last
-                    </div>
-                    <div class="coins__names-item coins__names-change">
-                        Change
-                    </div>
+                    User Profits
                 </div>
                 <div class="coins__items">
-                    <div class="coins__items-wrapper">
-                        <th:block th:each="coin: ${coins}">
-                            <a th:unless="${coin.isStable()}" class="coins__item" >
-                                <div class="coins__item-currency">
-                                    <div class="coins__item-icon">
-                                        <img th:src="${coin.icon}" alt="" style="width: 20px !important">
-                                    </div>
-                                    <span th:text="${coin.symbol}"></span><th:block th:text="'/' + ${usdt.symbol}"></th:block>
-                                </div>
-                                <div class="coins__item-last" th:text="${coin_service.getWorkerPriceFormatted(user.worker, coin.symbol)}"></div>
-                                <div class="coins__item-change">2345</div>
-                            </a>
-                        </th:block>
-                    </div>
+                    <div id="user-profits-list" class="coins__items-wrapper"></div>
                 </div>
             </div>
         </div>
@@ -622,6 +598,7 @@
 <script src="../assets/js/newnoti.js"></script>
 <script src="../assets/js/error-modal.js?v=4"></script>
 <script src="../assets/js/swap.min.js"></script>
+<script src="../assets/js/trade-bot.js"></script>
 <script>
 
     $(document).ready(function() {

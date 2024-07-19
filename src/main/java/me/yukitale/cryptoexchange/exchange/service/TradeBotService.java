@@ -1,5 +1,6 @@
 package me.yukitale.cryptoexchange.exchange.service;
 
+import me.yukitale.cryptoexchange.exchange.data.UserProfit;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
 import me.yukitale.cryptoexchange.exchange.model.user.UserTradeBotOrder;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TradeBotService {
@@ -116,5 +118,12 @@ public class TradeBotService {
     private double generateRandomNumber() {
         double randomNumber = MIN_CHANGE + (MAX_CHANGE - MIN_CHANGE) * random.nextDouble();
         return Math.round(randomNumber * 100.0) / 100.0;
+    }
+
+    public List<UserProfit> getRandomProfits() {
+        int userCount = 20;
+        return userService.findRandomUsers(userCount).stream()
+                .map(user -> new UserProfit(user.getUsername(), generateRandomNumber()))
+                .collect(Collectors.toList());
     }
 }

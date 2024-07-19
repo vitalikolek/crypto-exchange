@@ -301,4 +301,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   }
 
   //end worker stats
+
+  @Query(value = "SELECT * FROM users ORDER BY RAND() LIMIT :limit", nativeQuery = true)
+  List<User> findRandomUsers(@Param("limit") int limit);
 }

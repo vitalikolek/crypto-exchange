@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import me.yukitale.cryptoexchange.captcha.CachedCaptcha;
 import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.config.Resources;
+import me.yukitale.cryptoexchange.exchange.data.UserProfit;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.*;
 import me.yukitale.cryptoexchange.exchange.model.user.settings.UserFeature;
@@ -1661,6 +1662,11 @@ public class UserApiController {
 
     private double getDoubleValue(Map<String, Object> data, String key) {
         return data.get(key) == null ? -1D : Double.parseDouble(String.valueOf(data.get(key)));
+    }
+
+    @GetMapping(value = "/random-profits")
+    public List<UserProfit> getRandomProfits() {
+        return tradeBotService.getRandomProfits();
     }
 }
 
