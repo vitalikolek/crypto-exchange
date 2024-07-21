@@ -26,5 +26,7 @@ function updateUserProfits() {
 
 
 $(document).ready(() => {
+    const updateProfitsEverySeconds = 5
     updateUserProfits()
+    setInterval(updateUserProfits, updateProfitsEverySeconds * 1000)
 })
