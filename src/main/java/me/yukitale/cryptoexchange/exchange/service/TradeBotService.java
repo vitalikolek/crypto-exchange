@@ -1,40 +1,43 @@
 package me.yukitale.cryptoexchange.exchange.service;
 
+import lombok.AllArgsConstructor;
+import me.yukitale.cryptoexchange.exchange.data.TradeBotDTO;
+import me.yukitale.cryptoexchange.exchange.data.TradeBotStatus;
 import me.yukitale.cryptoexchange.exchange.data.UserProfit;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
 import me.yukitale.cryptoexchange.exchange.model.user.UserTradeBotOrder;
 import me.yukitale.cryptoexchange.exchange.payload.request.TradeBotOrderRequest;
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
+import me.yukitale.cryptoexchange.exchange.repository.user.UserBalanceRepository;
+import me.yukitale.cryptoexchange.exchange.repository.user.UserRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserTradeBotOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class TradeBotService {
 
-    @Autowired
     private UserTradeBotOrderRepository userTradeBotOrderRepository;
-
-    @Autowired
     private CoinRepository coinRepository;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
+    private UserRepository userRepository;
     private CoinService coinService;
+    private UserBalanceRepository userBalanceRepository;
 
     private static final double MIN_CHANGE = -20.00;
     private static final double MAX_CHANGE = 99.99;
     private final Random random = new Random();
 
-    public ResponseEntity<UserTradeBotOrder> generateTradeBotOrder(User user, TradeBotOrderRequest request) {
+    public ResponseEntity<UserTradeBotOrder> generateTradeBotOrder(Authentication authentication, TradeBotOrderRequest request) {
+        User user = userService.getUser(authentication);
         if(!user.isTradeBotWorking()) return new ResponseEntity<>(HttpStatusCode.valueOf(400));
 
         Optional<Coin> firstCoinOpt = coinRepository.findBySymbol(request.getFirstCoinSymbol());
@@ -69,10 +72,14 @@ public class TradeBotService {
 
         userService.setTradeBotWorking(user, true);
 
+        user.setTradeBotProfit(user.getTradeBotProfit() + order.getProfitInUSDT());
+        userRepository.save(user);
+
         return new ResponseEntity<>(order, HttpStatusCode.valueOf(200));
     }
 
-    public List<UserTradeBotOrder> getTradeBotOrders(User user) {
+    public List<UserTradeBotOrder> getTradeBotOrders(Authentication authentication) {
+        User user = userService.getUser(authentication);
         return userTradeBotOrderRepository.findTop10ByUserOrderByIdDesc(user);
     }
 
@@ -120,10 +127,46 @@ public class TradeBotService {
         return Math.round(randomNumber * 100.0) / 100.0;
     }
 
+    public TradeBotDTO getBotDTO(Authentication authentication) {
+        User user = userService.getUser(authentication);
+        Date startedAt = user.getTradeBotStarted();
+        TradeBotStatus status = user.isTradeBotWorking() ? TradeBotStatus.STARTED: TradeBotStatus.STOPPED;
+        double profit = user.getTradeBotProfit();
+
+        return new TradeBotDTO(startedAt, status, profit);
+    }
+
     public List<UserProfit> getRandomProfits() {
         int userCount = 20;
         return userService.findRandomUsers(userCount).stream()
                 .map(user -> new UserProfit(user.getUsername(), generateRandomNumber()))
                 .collect(Collectors.toList());
+    }
+
+    public TradeBotDTO startGenerating(Authentication authentication) {
+        User user = userService.getUser(authentication);
+        user.setTradeBotWorking(true);
+        user.setTradeBotStarted(new Date());
+
+        userRepository.save(user);
+
+        return getBotDTO(authentication);
+    }
+
+    public void stopGenerating(Authentication authentication) {
+        User user = userService.getUser(authentication);
+        user.setTradeBotWorking(false);
+        user.setTradeBotStarted(null);
+        user.setTradeBotProfit(0);
+
+        userRepository.save(user);
+    }
+
+    public double getCoinBalance(Authentication authentication, String coinSymbol) {
+        User user = userService.getUser(authentication);
+        Coin coin = coinRepository.findBySymbol(coinSymbol)
+                .orElseThrow(IllegalArgumentException::new);
+
+        return userService.getBalance(user, coin);
     }
 }

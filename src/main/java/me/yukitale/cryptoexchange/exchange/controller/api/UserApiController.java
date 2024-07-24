@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import me.yukitale.cryptoexchange.captcha.CachedCaptcha;
 import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.config.Resources;
+import me.yukitale.cryptoexchange.exchange.data.TradeBotDTO;
 import me.yukitale.cryptoexchange.exchange.data.UserProfit;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.*;
@@ -38,6 +39,7 @@ import me.yukitale.cryptoexchange.utils.*;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -1405,34 +1407,6 @@ public class UserApiController {
     }
     //end trading
 
-    //start trade-bot
-    @PostMapping("/start-generating")
-    public ResponseEntity<UserTradeBotOrder> startGeneratingOrders(@RequestBody TradeBotOrderRequest request, Authentication authentication) {
-        userService.setTradeBotWorking(userService.getUser(authentication), true);
-        return tradeBotService.generateTradeBotOrder(userService.getUser(authentication), request);
-    }
-
-    @PostMapping("/generate-order")
-    public ResponseEntity<UserTradeBotOrder> generateRandomOrder(@RequestBody TradeBotOrderRequest request, Authentication authentication) {
-        return tradeBotService.generateTradeBotOrder(userService.getUser(authentication), request);
-    }
-
-    @GetMapping("/stop-generating")
-    public void stopGeneratingOrders(Authentication authentication) {
-        userService.setTradeBotWorking(userService.getUser(authentication), false);
-    }
-
-    @GetMapping("/get-trade-bot-orders")
-    public List<UserTradeBotOrder> getTradeBotOrders(Authentication authentication) {
-        return tradeBotService.getTradeBotOrders(userService.getUser(authentication));
-    }
-
-    @GetMapping("/get-coin-balance")
-    public double getTradeBotOrders(Authentication authentication, @RequestBody String coin) {
-        return userService.getBalance(userService.getUser(authentication), coinRepository.findBySymbol(coin).get());
-    }
-    //end trade-bot
-
     //start withdraw
     @PostMapping(value = "withdraw")
     public ResponseEntity<String> withdrawController(Authentication authentication, HttpServletRequest request, @RequestBody Map<String, Object> body) {
@@ -1668,5 +1642,38 @@ public class UserApiController {
     public List<UserProfit> getRandomProfits() {
         return tradeBotService.getRandomProfits();
     }
+
+    //start trade-bot
+    @GetMapping("/bot-info")
+    public ResponseEntity<TradeBotDTO> getBotDTO(Authentication authentication) {
+        return new ResponseEntity<>(tradeBotService.getBotDTO(authentication), HttpStatusCode.valueOf(200));
+    }
+
+    @PostMapping("/generate-order")
+    public ResponseEntity<UserTradeBotOrder> generateRandomOrder(Authentication authentication, @RequestBody TradeBotOrderRequest request) {
+        return tradeBotService.generateTradeBotOrder(authentication, request);
+    }
+
+    @PostMapping("/start-generating")
+    public TradeBotDTO startGeneratingOrders(Authentication authentication) {
+        return tradeBotService.startGenerating(authentication);
+    }
+
+    @PostMapping("/stop-generating")
+    public void stopGeneratingOrders(Authentication authentication) {
+        tradeBotService.stopGenerating(authentication);
+    }
+
+    @GetMapping("/get-trade-bot-orders")
+    public List<UserTradeBotOrder> getTradeBotOrders(Authentication authentication) {
+        return tradeBotService.getTradeBotOrders(authentication);
+    }
+
+    @GetMapping("/coin-balance")
+    public double getTradeBotOrders(Authentication authentication,
+                                    @RequestParam(name = "coinSymbol") String coinSymbol) {
+        return tradeBotService.getCoinBalance(authentication, coinSymbol);
+    }
+    //end trade-bot
 }
 

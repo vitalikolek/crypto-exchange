@@ -437,15 +437,15 @@
             <div class="top-ghTgp info">
                 <div class="info__container">
                     <div class="info__stats">
-                        <p>Total work: <span class="total-work border-gradient">7d.13h.24m</span></p>
+                        <p>Total work: <span id="total-work" class="total-work border-gradient"></span></p>
                     </div>
 
                     <div class="info__stats" style="display: inline-block;">
-                        <p>Status: <span class="status border-gradient">STARTED</span>
+                        <p>Status: <span id="status" class="status border-gradient"></span>
                     </div>
 
                     <div class="info__stats">
-                        <p>Total profit: <span class="profit border-gradient">1747$</span></p>
+                        <p>Total profit: <span id="profit" class="profit border-gradient"></span></p>
                     </div>
                 </div>
             </div>
@@ -538,8 +538,8 @@
 
                 </div>
                 <div th:if="${coins.size()} > 1" class="loader-buttons">
-                    <div class="order_btn-fbGht order_btn-fbGht-buy" id="start-btn">Start</div>
-                    <div class="order_btn-fbGht order_btn-fbGht-sell" id="stop-btn">Stop</div>
+                    <button class="order_btn-fbGht order_btn-fbGht-buy" id="start-btn">Start</button>
+                    <button class="order_btn-fbGht order_btn-fbGht-sell" id="stop-btn">Stop</button>
                 </div>
                 <div th:unless="${coins.size()} > 1">
                     <div class="home__description">
@@ -600,8 +600,173 @@
 <script src="../assets/js/swap.min.js"></script>
 <script src="../assets/js/trade-bot.js"></script>
 <script>
+    function getRandomInterval() {
+        let time = Math.floor(Math.random() * (60 - 15 + 1) + 15) * 1000;
+        console.log(time)
+        return time;
+    }
+
+    function generateOrder() {
+        var firstCoinElement = document.getElementById("firstCoin");
+        var firstCoinCoinValue = firstCoinElement.textContent || firstCoinElement.innerText;
+        var secondCoinElement = document.getElementById("secondCoin");
+        var secondCoinValue = secondCoinElement.textContent || secondCoinElement.innerText;
+
+        var firstCoinAmount = $("#firstCoinAmount").val();
+        var secondCoinAmount = $("#secondCoinAmount").val();
+
+        $.ajax({
+            url: '../api/user/generate-order',
+            type: 'POST',
+            data: JSON.stringify({
+                firstCoinSymbol: firstCoinCoinValue,
+                firstCoinAmount: parseFloat(firstCoinAmount),
+                secondCoinSymbol: secondCoinValue,
+                secondCoinAmount:parseFloat(secondCoinAmount)
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function(order) {
+                console.log("Order generated:", order);
+                var ordersTable = `
+                        <div class="orders__item">
+                            <div class="orders__item-date">${new Date(order.date).toLocaleString()}</div>
+                            <div class="orders__item-pair">${order.firstCoin.symbol}/${order.secondCoin.symbol}</div>
+                            <div class="orders__item-side">${order.changeInPercent}%</div>
+                            <div class="orders__item-amount">${order.amountInUSDT.toFixed(2)}</div>
+                            <div class="orders__item-amount">${order.profitInUSDT.toFixed(2)}</div>
+                        </div>
+                    `;
+                var lastOrders = `
+                        <a class="coins__item" th:href="#">
+                                <div class="coins__item-currency">
+                                <div class="coins__item-icon">
+                                        <img src="${order.firstCoin.icon}" alt="" style="width: 20px !important">
+                                    </div>
+                                    <span>${order.firstCoin.symbol}</span><block>/${order.secondCoin.symbol}</block>
+                                </div>
+                                <div class="coins__item-last"></div>
+                                <div class="coins__item-change">${order.changeInPercent}%</div>
+                            </a>
+                    `;
+                $('#lastOrders').prepend(lastOrders);
+                $('#orders_table').prepend(ordersTable);
+
+                let $profit = $('#profit');
+                let profitText = $profit.text();
+                let profitAmount = parseFloat(profitText.replace('$', ''));
+                profitAmount += order["profitInUSDT"]
+                $profit.text(profitAmount.toFixed(2));
+            },
+            error: function(error) {
+                console.error("Error generating order:", error);
+            }
+        });
+    }
+
+    function getTotalWorkTime(startTime) {
+        let currentTime = Date.now();
+        let timeDifference = currentTime - startTime;
+
+        let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+        if (days === 0 && hours === 0) {
+            return `${minutes}m`;
+        } else if (days === 0) {
+            return `${hours}h.${minutes}m`;
+        } else {
+            return `${days}d.${hours}h.${minutes}m`;
+        }
+    }
+
+    function isValidCoinsAmount() {
+        const firstCoinAmount = parseFloat($("#firstCoinAmount").val());
+        const secondCoinAmount = parseFloat($("#secondCoinAmount").val());
+
+        const my_available_balance = parseFloat($("#my_available_balance").val());
+        const my_available_balance_2 = parseFloat($("#my_available_balance_2").val());
+
+        if (!firstCoinAmount || !secondCoinAmount ||
+            firstCoinAmount > my_available_balance ||
+            secondCoinAmount > my_available_balance_2 ||
+            firstCoinAmount <= 0 ||
+            secondCoinAmount <= 0) {
+                showCustomErrorModal("Invalid coin amount");
+                return false;
+        }
+
+        return true;
+    }
+
+    function getUserProfitRow(userProfit) {
+        return `
+        <a class="coins__item" th:href="#">
+            <div class="coins__item-currency">
+                <span>${userProfit["username"]}</span>
+            </div>
+            <div class="coins__item-last"></div>
+            <div class="coins__item-change">${userProfit["profit"]}%</div>
+        </a>
+    `;
+    }
+
+    function updateUserProfits() {
+        const $userProfitList = $('#user-profits-list')
+
+        $.ajax({
+            url: "../api/user/random-profits",
+            method: "GET",
+            success: function(data) {
+                $userProfitList.empty();
+                data.forEach((userProfit) => $userProfitList.append(getUserProfitRow(userProfit)))
+            },
+            error: (error) => console.log("Error fetching user profits:", error)
+        })
+    }
 
     $(document).ready(function() {
+        updateUserProfits();
+        setInterval(updateUserProfits, 5_000);
+
+        let isGenerating = false;
+
+        function updateBotData() {
+            $.ajax({
+                url: "../api/user/bot-info",
+                method: "GET",
+                success: function(botData) {
+                    if (botData["status"] === "STARTED") {
+                        $('#total-work').text(getTotalWorkTime(botData["startedAt"]));
+                        isGenerating = true;
+                    } else {
+                        $('#total-work').text("-");
+                        isGenerating = false;
+                    }
+                    $('#status').text(botData["status"]);
+                    $('#profit').text(botData["profit"] + "$");
+
+                    setInterval(() => {
+                        if (isGenerating === true) {
+                            generateOrder();
+                        }
+                    }, getRandomInterval());
+
+                    if (isGenerating) {
+                        $startButton.prop("disabled", true);
+                        $startButton.addClass("button_disabled");
+                    } else {
+                        $stopButton.prop("disabled", true);
+                        $stopButton.addClass("button_disabled");
+                    }
+                },
+                error: (error) => console.log("Error fetching bot data:", error)
+            });
+        }
+
+        updateBotData()
+
+        // Get Orders
         $.ajax({
             url: "../api/user/get-trade-bot-orders",
             method: "GET",
@@ -644,107 +809,98 @@
                 $('#orders_table').html('<div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">Failed to load orders</div>');
             }
         });
-    });
 
-    function getRandomInterval() {
-        let time = Math.floor(Math.random() * (60 - 15 + 1) + 15) * 1000;
-        console.log(time)
-        return time;
-    }
+        // Buttons Logic
+        const $startButton = $('#start-btn');
+        const $stopButton = $('#stop-btn');
 
-    let isGenerating = true;
+        $startButton.click(function() {
+            if (!isValidCoinsAmount()) return;
 
-    function generateOrder(endPoint) {
-        var firstCoinElement = document.getElementById("firstCoin");
-        var firstCoinCoinValue = firstCoinElement.textContent || firstCoinElement.innerText;
-        var secondCoinElement = document.getElementById("secondCoin");
-        var secondCoinValue = secondCoinElement.textContent || secondCoinElement.innerText;
+            $.ajax({
+                url: '../api/user/start-generating',
+                type: 'POST',
+                success: function(response) {
+                    console.log("Started generating orders");
 
-        var firstCoinAmount = $("#firstCoinAmount").val();
-        var secondCoinAmount = $("#secondCoinAmount").val();
+                    $startButton.prop("disabled", true);
+                    $startButton.addClass("button_disabled");
 
-        $.ajax({
-            url: '../api/user/' + endPoint,
-            type: 'POST',
-            data: JSON.stringify({
-                firstCoinSymbol: firstCoinCoinValue,
-                firstCoinAmount: parseFloat(firstCoinAmount),
-                secondCoinSymbol: secondCoinValue,
-                secondCoinAmount:parseFloat(secondCoinAmount)
-            }),
-            contentType: 'application/json; charset=utf-8',
-            success: function(order) {
-                console.log("Order generated:", order);
-                var ordersTable = `
-                        <div class="orders__item">
-                            <div class="orders__item-date">${new Date(order.date).toLocaleString()}</div>
-                            <div class="orders__item-pair">${order.firstCoin.symbol}/${order.secondCoin.symbol}</div>
-                            <div class="orders__item-side">${order.changeInPercent}%</div>
-                            <div class="orders__item-amount">${order.amountInUSDT.toFixed(2)}</div>
-                            <div class="orders__item-amount">${order.profitInUSDT.toFixed(2)}</div>
-                        </div>
-                    `;
-                var lastOrders = `
-                        <a class="coins__item" th:href="#">
-                                <div class="coins__item-currency">
-                                <div class="coins__item-icon">
-                                        <img src="${order.firstCoin.icon}" alt="" style="width: 20px !important">
-                                    </div>
-                                    <span>${order.firstCoin.symbol}</span><block>/${order.secondCoin.symbol}</block>
-                                </div>
-                                <div class="coins__item-last"></div>
-                                <div class="coins__item-change">${order.changeInPercent}%</div>
-                            </a>
-                    `;
-                $('#lastOrders').prepend(lastOrders);
-                $('#orders_table').prepend(ordersTable);
-                if (isGenerating) {
-                    setTimeout(function(){generateOrder(endPoint);}, getRandomInterval());
+                    $stopButton.prop("disabled", false);
+                    $stopButton.removeClass("button_disabled");
+
+                    $('#total-work').text("0m")
+                    $('#status').text("STARTED");
+
+                    isGenerating = true;
+
+                    $("#firstCoinAmount").attr("readonly", true);
+                    $("#secondCoinAmount").attr("readonly", true);
+                },
+                error: function(error) {
+                    console.error("Error starting order generation", error);
                 }
-            },
-            error: function(error) {
-                isGenerating = false;
-                console.error("Error generating order:", error);
-            }
+            });
         });
-    }
 
-    $(document).ready(function() {
-        generateOrder("generate-order");
-    });
+        $stopButton.click(function() {
 
-    $('#start-btn').click(function() {
-        isGenerating = true;
-        console.log("start")
-        setTimeout(function() {
-            generateOrder("start-generating");
-        }, getRandomInterval());
-    });
+            $.ajax({
+                url: '../api/user/stop-generating',
+                type: 'POST',
+                success: function(response) {
+                    console.log("Stopped generating orders");
 
-    $('#stop-btn').click(function() {
-        isGenerating = false;
+                    $stopButton.prop("disabled", true);
+                    $stopButton.addClass("button_disabled");
 
-        $.ajax({
-            url: '../api/user/stop-generating',
-            type: 'GET',
-            success: function(response) {
-                console.log("Stopped generating orders");
-            },
-            error: function(error) {
-                console.error("Error stopping order generation", error);
-            }
+                    $startButton.prop("disabled", false);
+                    $startButton.removeClass("button_disabled");
+
+                    isGenerating = false;
+
+                    $("#firstCoinAmount").attr("readonly", false);
+                    $("#secondCoinAmount").attr("readonly", false);
+
+                    $('#total-work').text("0m")
+                    $('#status').text("STOPPED");
+                    $('#profit').text("0$")
+                },
+                error: function(error) {
+                    console.error("Error stopping order generation", error);
+                }
+            });
         });
+
     });
 
 </script>
 
 <script type="text/javascript" th:if="${coins.size()} > 1">
+
+    $(document).ready(function() {
+        $.ajax({
+            url: "../api/user/coin-balance?coinSymbol=" + $("#firstCoin").text(),
+            method: "GET",
+            success: function(availableAmount) {
+                $("#my_available_balance").text(parseFloat(availableAmount).toFixed(4));
+            },
+            error: (error) => console.log("Error updating available amount:", error)
+        });
+
+        $.ajax({
+            url: "../api/user/coin-balance?coinSymbol=" + $("#secondCoin").text(),
+            method: "GET",
+            success: function(availableAmount) {
+                $("#my_available_balance_2").text(parseFloat(availableAmount).toFixed(4));
+            },
+            error: (error) => console.log("Error updating available amount:", error)
+        });
+    });
+
     var ex_currency = [[${coins.get(0).symbol}]];
     var for_currency = [[${usdt.symbol}]];
     var ex_currency_2 = [[${coins.get(1).symbol}]];
-
-    updateBalance(ex_currency);
-    updateBalance2(ex_currency_2);
 
     calcSwap(for_currency, ex_currency);
 
@@ -761,6 +917,7 @@
                 if (status.status === 200) {
                     $("#my_available_balance").empty().html(parseFloat(status.responseText).toFixed(4));
                     $("#my_available_crypto").empty().html(crypto.toUpperCase());
+                    availableBalance();
                 } else {
                     noti("An unknown error has occurred, please try again later", "error");
                 }
@@ -785,6 +942,7 @@
 
                     $("#my_available_balance_2").empty().html(parseFloat(status.responseText).toFixed(4));
                     $("#my_available_crypto_2").empty().html(crypto.toUpperCase());
+                    availableBalance2();
                 } else {
                     noti("An unknown error has occurred, please try again later", "error");
                 }
