@@ -116,11 +116,9 @@
     $("#sign_in").on("click", function(e) {
         e.preventDefault();
 
-        const captcha = $("#captcha").val();
-        if (!captcha || captcha === "" || parseInt(captcha) < 0 || parseInt(captcha) > 99999) {
-            noti("Captcha is wrong", "error");
-            disabledBtn('off');
-            return;
+        var captcha = $("#captcha").val();
+        if (captcha === null || captcha === '') {
+            captcha = 1;
         }
 
         var login_password = $("#login_password").val();
