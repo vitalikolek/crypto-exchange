@@ -3,7 +3,6 @@ package me.yukitale.cryptoexchange.exchange.model.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.settings.UserErrorMessage;
 import me.yukitale.cryptoexchange.panel.common.model.ErrorMessage;
 import me.yukitale.cryptoexchange.utils.GeoUtil;
@@ -152,17 +151,19 @@ public class User {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean tradeBotWorking;
 
-    @Column(name = "first_coin_symbol")
     private String firstCoinSymbol;
 
-    @Column(name = "first_coin_amount")
     private Double firstCoinAmount;
 
-    @Column(name = "second_coin_symbol")
     private String secondCoinSymbol;
 
-    @Column(name = "second_coin_amount")
     private Double secondCoinAmount;
+
+    @Column(name = "first_coin_balance", columnDefinition = "DOUBLE DEFAULT 0")
+    private Double firstCoinBalance;
+
+    @Column(name = "second_coin_balance", columnDefinition = "DOUBLE DEFAULT 0")
+    private Double secondCoinBalance;
 
     private long depositsCount;
 

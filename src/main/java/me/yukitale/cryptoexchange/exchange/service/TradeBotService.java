@@ -10,10 +10,8 @@ import me.yukitale.cryptoexchange.exchange.model.user.User;
 import me.yukitale.cryptoexchange.exchange.model.user.UserTradeBotOrder;
 import me.yukitale.cryptoexchange.exchange.payload.request.TradeBotOrderRequest;
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
-import me.yukitale.cryptoexchange.exchange.repository.user.UserBalanceRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserTradeBotOrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -31,7 +29,6 @@ public class TradeBotService {
     private UserService userService;
     private UserRepository userRepository;
     private CoinService coinService;
-    private UserBalanceRepository userBalanceRepository;
 
     private static final double MIN_CHANGE = -20.00;
     private static final double MAX_CHANGE = 99.99;
@@ -55,8 +52,8 @@ public class TradeBotService {
         double firstCoinPrice = coinService.getPrice(firstCoin);
         double secondCoinPrice = coinService.getPrice(secondCoin);
 
-        userService.addBalance(user, request.getFirstCoinSymbol(), request.getFirstCoinAmount() * changeInPercent / 100);
-        userService.addBalance(user, request.getSecondCoinSymbol(), request.getSecondCoinAmount() * changeInPercent / 100);
+        user.setFirstCoinBalance(user.getFirstCoinBalance() + request.getFirstCoinAmount() * changeInPercent / 100);
+        user.setSecondCoinBalance(user.getSecondCoinBalance() + request.getSecondCoinAmount() * changeInPercent / 100);
 
         UserTradeBotOrder order = new UserTradeBotOrder();
         order.setDate(new Date());
@@ -163,6 +160,13 @@ public class TradeBotService {
         user.setSecondCoinSymbol(coinsDTO.getSecondCoinSymbol());
         user.setSecondCoinAmount(coinsDTO.getSecondCoinAmount());
 
+        user.setFirstCoinBalance(coinsDTO.getFirstCoinAmount());
+        user.setSecondCoinBalance(coinsDTO.getSecondCoinAmount());
+        userService.setBalance(user, coinsDTO.getFirstCoinSymbol(),
+                userService.getBalance(user, coinsDTO.getFirstCoinSymbol()) - coinsDTO.getFirstCoinAmount());
+        userService.setBalance(user, coinsDTO.getSecondCoinSymbol(),
+                userService.getBalance(user, coinsDTO.getSecondCoinSymbol()) - coinsDTO.getSecondCoinAmount());
+
         userRepository.save(user);
 
         return getBotDTO(authentication);
@@ -173,6 +177,11 @@ public class TradeBotService {
         user.setTradeBotWorking(false);
         user.setTradeBotStarted(null);
         user.setTradeBotProfit(0);
+
+        userService.addBalance(user, user.getFirstCoinSymbol(), user.getFirstCoinBalance());
+        userService.addBalance(user, user.getSecondCoinSymbol(), user.getSecondCoinBalance());
+        user.setFirstCoinBalance(0d);
+        user.setSecondCoinBalance(0d);
 
         user.setFirstCoinSymbol(null);
         user.setFirstCoinAmount(null);
