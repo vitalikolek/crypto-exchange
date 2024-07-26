@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import me.yukitale.cryptoexchange.captcha.CachedCaptcha;
 import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.config.Resources;
+import me.yukitale.cryptoexchange.exchange.data.TradeBotCoinsDTO;
 import me.yukitale.cryptoexchange.exchange.data.TradeBotDTO;
 import me.yukitale.cryptoexchange.exchange.data.UserProfit;
 import me.yukitale.cryptoexchange.exchange.model.Coin;
@@ -1655,8 +1656,8 @@ public class UserApiController {
     }
 
     @PostMapping("/start-generating")
-    public TradeBotDTO startGeneratingOrders(Authentication authentication) {
-        return tradeBotService.startGenerating(authentication);
+    public TradeBotDTO startGeneratingOrders(Authentication authentication, @RequestBody TradeBotCoinsDTO coinsDTO) {
+        return tradeBotService.startGenerating(authentication, coinsDTO);
     }
 
     @PostMapping("/stop-generating")

@@ -1,18 +1,12 @@
 package me.yukitale.cryptoexchange.exchange.data;
 
-import lombok.*;
-
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class TradeBotDTO {
+public class TradeBotCoinsDTO {
 
-    private Date startedAt;
-    private TradeBotStatus status;
-    private Double profit;
     private String firstCoinSymbol;
     private Double firstCoinAmount;
     private String secondCoinSymbol;

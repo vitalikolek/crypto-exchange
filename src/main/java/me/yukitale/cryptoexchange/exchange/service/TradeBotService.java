@@ -1,6 +1,7 @@
 package me.yukitale.cryptoexchange.exchange.service;
 
 import lombok.AllArgsConstructor;
+import me.yukitale.cryptoexchange.exchange.data.TradeBotCoinsDTO;
 import me.yukitale.cryptoexchange.exchange.data.TradeBotDTO;
 import me.yukitale.cryptoexchange.exchange.data.TradeBotStatus;
 import me.yukitale.cryptoexchange.exchange.data.UserProfit;
@@ -129,11 +130,20 @@ public class TradeBotService {
 
     public TradeBotDTO getBotDTO(Authentication authentication) {
         User user = userService.getUser(authentication);
-        Date startedAt = user.getTradeBotStarted();
-        TradeBotStatus status = user.isTradeBotWorking() ? TradeBotStatus.STARTED: TradeBotStatus.STOPPED;
-        double profit = user.getTradeBotProfit();
 
-        return new TradeBotDTO(startedAt, status, profit);
+        TradeBotDTO botDTO = new TradeBotDTO();
+        botDTO.setStartedAt(user.getTradeBotStarted());
+        botDTO.setStatus(user.isTradeBotWorking() ? TradeBotStatus.STARTED: TradeBotStatus.STOPPED);
+        botDTO.setProfit(user.getTradeBotProfit());
+
+        if (botDTO.getStatus() == TradeBotStatus.STARTED) {
+            botDTO.setFirstCoinSymbol(user.getFirstCoinSymbol());
+            botDTO.setFirstCoinAmount(user.getFirstCoinAmount());
+            botDTO.setSecondCoinSymbol(user.getSecondCoinSymbol());
+            botDTO.setSecondCoinAmount(user.getSecondCoinAmount());
+        }
+
+        return botDTO;
     }
 
     public List<UserProfit> getRandomProfits() {
@@ -143,10 +153,15 @@ public class TradeBotService {
                 .collect(Collectors.toList());
     }
 
-    public TradeBotDTO startGenerating(Authentication authentication) {
+    public TradeBotDTO startGenerating(Authentication authentication, TradeBotCoinsDTO coinsDTO) {
         User user = userService.getUser(authentication);
         user.setTradeBotWorking(true);
         user.setTradeBotStarted(new Date());
+
+        user.setFirstCoinSymbol(coinsDTO.getFirstCoinSymbol());
+        user.setFirstCoinAmount(coinsDTO.getFirstCoinAmount());
+        user.setSecondCoinSymbol(coinsDTO.getSecondCoinSymbol());
+        user.setSecondCoinAmount(coinsDTO.getSecondCoinAmount());
 
         userRepository.save(user);
 
@@ -158,6 +173,11 @@ public class TradeBotService {
         user.setTradeBotWorking(false);
         user.setTradeBotStarted(null);
         user.setTradeBotProfit(0);
+
+        user.setFirstCoinSymbol(null);
+        user.setFirstCoinAmount(null);
+        user.setSecondCoinSymbol(null);
+        user.setSecondCoinAmount(null);
 
         userRepository.save(user);
     }

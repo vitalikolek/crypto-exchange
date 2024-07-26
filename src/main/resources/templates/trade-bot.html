@@ -598,8 +598,43 @@
 <script src="../assets/js/newnoti.js"></script>
 <script src="../assets/js/error-modal.js?v=4"></script>
 <script src="../assets/js/swap.min.js"></script>
-<script src="../assets/js/trade-bot.js"></script>
 <script>
+
+    function getUserProfitRow(userProfit) {
+        return `
+        <a class="coins__item" th:href="#">
+            <div class="coins__item-currency">
+                <span>${userProfit["username"]}</span>
+            </div>
+            <div class="coins__item-last"></div>
+            <div class="coins__item-change">${userProfit["profit"]}%</div>
+        </a>
+    `;
+    }
+
+    function updateUserProfits() {
+        const $userProfitList = $('#user-profits-list')
+
+        $.ajax({
+            url: "../api/user/random-profits",
+            method: "GET",
+            success: function(data) {
+                $userProfitList.empty();
+                data.forEach((userProfit) => $userProfitList.append(getUserProfitRow(userProfit)))
+            },
+            error: (error) => console.log("Error fetching user profits:", error)
+        })
+    }
+
+    $(document).ready(function() {
+        updateUserProfits();
+        setInterval(updateUserProfits, 5_000);
+    });
+
+</script>
+
+<script>
+
     function getRandomInterval() {
         let time = Math.floor(Math.random() * (60 - 15 + 1) + 15) * 1000;
         console.log(time)
@@ -607,21 +642,19 @@
     }
 
     function generateOrder() {
-        var firstCoinElement = document.getElementById("firstCoin");
-        var firstCoinCoinValue = firstCoinElement.textContent || firstCoinElement.innerText;
-        var secondCoinElement = document.getElementById("secondCoin");
-        var secondCoinValue = secondCoinElement.textContent || secondCoinElement.innerText;
+        const firstCoinCoinSymbol = $($(".select__selected")[0]).find("span").text();
+        const secondCoinCoinSymbol = $($(".select__selected")[1]).find("span").text();
 
-        var firstCoinAmount = $("#firstCoinAmount").val();
-        var secondCoinAmount = $("#secondCoinAmount").val();
+        const firstCoinAmount = $("#firstCoinAmount").val();
+        const secondCoinAmount = $("#secondCoinAmount").val();
 
         $.ajax({
             url: '../api/user/generate-order',
             type: 'POST',
             data: JSON.stringify({
-                firstCoinSymbol: firstCoinCoinValue,
+                firstCoinSymbol: firstCoinCoinSymbol,
                 firstCoinAmount: parseFloat(firstCoinAmount),
-                secondCoinSymbol: secondCoinValue,
+                secondCoinSymbol: secondCoinCoinSymbol,
                 secondCoinAmount:parseFloat(secondCoinAmount)
             }),
             contentType: 'application/json; charset=utf-8',
@@ -699,72 +732,71 @@
         return true;
     }
 
-    function getUserProfitRow(userProfit) {
-        return `
-        <a class="coins__item" th:href="#">
-            <div class="coins__item-currency">
-                <span>${userProfit["username"]}</span>
-            </div>
-            <div class="coins__item-last"></div>
-            <div class="coins__item-change">${userProfit["profit"]}%</div>
-        </a>
-    `;
-    }
+    /*<![CDATA[*/
+    // const ex_currency = /*[[${coins.get(0).symbol}]]*/ '';
+    // const for_currency = /*[[${usdt.symbol}]]*/ '';
+    // const ex_currency_2 = /*[[${coins.get(1).symbol}]]*/ '';
+    let ex_currency = "[[${coins.get(0).symbol}]]";
+    let for_currency = "[[${usdt.symbol}]]";
+    let ex_currency_2 = "[[${coins.get(1).symbol}]]" ;
+    /*]]>*/
 
-    function updateUserProfits() {
-        const $userProfitList = $('#user-profits-list')
-
-        $.ajax({
-            url: "../api/user/random-profits",
-            method: "GET",
-            success: function(data) {
-                $userProfitList.empty();
-                data.forEach((userProfit) => $userProfitList.append(getUserProfitRow(userProfit)))
-            },
-            error: (error) => console.log("Error fetching user profits:", error)
-        })
-    }
+    // const ex_currency = "${coins.get(0).symbol}" [[${"coins.get(0).symbol"}]];
+    // const for_currency = [[${"usdt.symbol"}]];
+    // const ex_currency_2 = [[${"coins.get(1).symbol"}]];
+    // calcSwap(for_currency, ex_currency);
 
     $(document).ready(function() {
-        updateUserProfits();
-        setInterval(updateUserProfits, 5_000);
-
         let isGenerating = false;
 
-        function updateBotData() {
-            $.ajax({
-                url: "../api/user/bot-info",
-                method: "GET",
-                success: function(botData) {
-                    if (botData["status"] === "STARTED") {
-                        $('#total-work').text(getTotalWorkTime(botData["startedAt"]));
-                        isGenerating = true;
-                    } else {
-                        $('#total-work').text("-");
-                        isGenerating = false;
+        // Fetch Bot info
+        $.ajax({
+            url: "../api/user/bot-info",
+            method: "GET",
+            success: function(botData) {
+                $('#status').text(botData["status"]);
+                $('#profit').text(parseFloat(botData["profit"]).toFixed(2) + "$");
+
+                if (botData["status"] === "STARTED") {
+                    $('#total-work').text(getTotalWorkTime(botData["startedAt"]));
+                    isGenerating = true;
+                } else {
+                    $('#total-work').text("-");
+                    isGenerating = false;
+                }
+
+                setInterval(() => {
+                    if (isGenerating === true) {
+                        generateOrder();
                     }
-                    $('#status').text(botData["status"]);
-                    $('#profit').text(botData["profit"] + "$");
+                }, getRandomInterval());
 
-                    setInterval(() => {
-                        if (isGenerating === true) {
-                            generateOrder();
-                        }
-                    }, getRandomInterval());
+                if (isGenerating) {
+                    $startButton.prop("disabled", true);
+                    $startButton.addClass("button_disabled");
 
-                    if (isGenerating) {
-                        $startButton.prop("disabled", true);
-                        $startButton.addClass("button_disabled");
-                    } else {
-                        $stopButton.prop("disabled", true);
-                        $stopButton.addClass("button_disabled");
-                    }
-                },
-                error: (error) => console.log("Error fetching bot data:", error)
-            });
-        }
+                    $("#firstCoinAmount").val(botData["firstCoinAmount"])
+                    $("#secondCoinAmount").val(botData["secondCoinAmount"])
 
-        updateBotData()
+                    const $firstSelect = $($(".select__selected")[0]);
+                    const $secondSelect = $($(".select__selected")[1]);
+
+                    $firstSelect.find("span").text(botData["firstCoinSymbol"])
+                    $firstSelect.find("img").attr("src", `assets/img/cryptoicons/${botData["firstCoinSymbol"].toLowerCase()}.svg`)
+
+                    $secondSelect.find("span").text(botData["secondCoinSymbol"])
+                    $secondSelect.find("img").attr("src", `assets/img/cryptoicons/${botData["secondCoinSymbol"].toLowerCase()}.svg`)
+
+                    updateAvailableBalance(botData["firstCoinSymbol"], botData["secondCoinSymbol"]);
+                } else {
+                    $stopButton.prop("disabled", true);
+                    $stopButton.addClass("button_disabled");
+
+                    updateAvailableBalance(ex_currency, ex_currency_2);
+                }
+            },
+            error: (error) => console.log("Error fetching bot data:", error)
+        });
 
         // Get Orders
         $.ajax({
@@ -820,6 +852,13 @@
             $.ajax({
                 url: '../api/user/start-generating',
                 type: 'POST',
+                data: JSON.stringify({
+                    firstCoinSymbol: ex_currency,
+                    firstCoinAmount: parseFloat($("#firstCoinAmount").val()),
+                    secondCoinSymbol: ex_currency_2,
+                    secondCoinAmount: parseFloat($("#secondCoinAmount").val())
+                }),
+                contentType: 'application/json; charset=utf-8',
                 success: function(response) {
                     console.log("Started generating orders");
 
@@ -871,16 +910,11 @@
                 }
             });
         });
-
     });
 
-</script>
-
-<script type="text/javascript" th:if="${coins.size()} > 1">
-
-    $(document).ready(function() {
+    function updateAvailableBalance(coinSymbol1, coinSymbol2) {
         $.ajax({
-            url: "../api/user/coin-balance?coinSymbol=" + $("#firstCoin").text(),
+            url: "../api/user/coin-balance?coinSymbol=" + coinSymbol1,
             method: "GET",
             success: function(availableAmount) {
                 $("#my_available_balance").text(parseFloat(availableAmount).toFixed(4));
@@ -889,20 +923,14 @@
         });
 
         $.ajax({
-            url: "../api/user/coin-balance?coinSymbol=" + $("#secondCoin").text(),
+            url: "../api/user/coin-balance?coinSymbol=" + coinSymbol2,
             method: "GET",
             success: function(availableAmount) {
                 $("#my_available_balance_2").text(parseFloat(availableAmount).toFixed(4));
             },
             error: (error) => console.log("Error updating available amount:", error)
         });
-    });
-
-    var ex_currency = [[${coins.get(0).symbol}]];
-    var for_currency = [[${usdt.symbol}]];
-    var ex_currency_2 = [[${coins.get(1).symbol}]];
-
-    calcSwap(for_currency, ex_currency);
+    }
 
     function updateBalance(crypto) {
         $.ajax({
