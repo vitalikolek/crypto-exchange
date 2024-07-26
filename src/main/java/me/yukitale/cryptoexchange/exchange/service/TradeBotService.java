@@ -30,8 +30,8 @@ public class TradeBotService {
     private UserRepository userRepository;
     private CoinService coinService;
 
-    private static final double MIN_CHANGE = -20.00;
-    private static final double MAX_CHANGE = 99.99;
+    private static final double MIN_CHANGE = -5.46;
+    private static final double MAX_CHANGE = 20.99;
     private final Random random = new Random();
 
     public ResponseEntity<UserTradeBotOrder> generateTradeBotOrder(Authentication authentication, TradeBotOrderRequest request) {
@@ -179,7 +179,7 @@ public class TradeBotService {
         boolean isValidFirstCoinAmount = coinsDTO.getFirstCoinAmount() > 0 && coinsDTO.getFirstCoinAmount() <=
                 userService.getBalance(user, coinsDTO.getFirstCoinSymbol());
         boolean isValidSecondCoinAmount = coinsDTO.getSecondCoinAmount() > 0 && coinsDTO.getSecondCoinAmount() <=
-                userService.getBalance(user, coinsDTO.getFirstCoinSymbol());
+                userService.getBalance(user, coinsDTO.getSecondCoinSymbol());
 
         if (!isValidFirstCoinAmount) {
             throw new IllegalArgumentException("Invalid " + coinsDTO.getFirstCoinSymbol() + " amount");

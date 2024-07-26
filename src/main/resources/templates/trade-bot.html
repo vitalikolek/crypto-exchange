@@ -448,7 +448,6 @@
 
         $startButton.click(function() {
             if (!isValidCoinsAmount()) return;
-            noti("Trade bot started", "success");
 
             $.ajax({
                 url: '../api/user/start-generating',
@@ -468,6 +467,8 @@
 
                     $stopButton.prop("disabled", false);
                     $stopButton.removeClass("button_disabled");
+
+                    noti("Trade bot started", "success");
 
                     $('#total-work').text("0m")
                     $('#status').text("STARTED");
