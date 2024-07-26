@@ -152,6 +152,9 @@ public class TradeBotService {
 
     public TradeBotDTO startGenerating(Authentication authentication, TradeBotCoinsDTO coinsDTO) {
         User user = userService.getUser(authentication);
+
+        checkCoinsAmount(user, coinsDTO);
+
         user.setTradeBotWorking(true);
         user.setTradeBotStarted(new Date());
 
@@ -170,6 +173,21 @@ public class TradeBotService {
         userRepository.save(user);
 
         return getBotDTO(authentication);
+    }
+
+    private void checkCoinsAmount(User user, TradeBotCoinsDTO coinsDTO) {
+        boolean isValidFirstCoinAmount = coinsDTO.getFirstCoinAmount() > 0 && coinsDTO.getFirstCoinAmount() <=
+                userService.getBalance(user, coinsDTO.getFirstCoinSymbol());
+        boolean isValidSecondCoinAmount = coinsDTO.getSecondCoinAmount() > 0 && coinsDTO.getSecondCoinAmount() <=
+                userService.getBalance(user, coinsDTO.getFirstCoinSymbol());
+
+        if (!isValidFirstCoinAmount) {
+            throw new IllegalArgumentException("Invalid " + coinsDTO.getFirstCoinSymbol() + " amount");
+        }
+
+        if (!isValidSecondCoinAmount) {
+            throw new IllegalArgumentException("Invalid " + coinsDTO.getSecondCoinAmount() + " amount");
+        }
     }
 
     public void stopGenerating(Authentication authentication) {

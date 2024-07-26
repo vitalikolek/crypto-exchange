@@ -1,7 +1,6 @@
 package me.yukitale.cryptoexchange.exchange.controller.api;
 
 import jakarta.servlet.http.HttpServletRequest;
-import me.yukitale.cryptoexchange.captcha.CachedCaptcha;
 import me.yukitale.cryptoexchange.common.types.CoinType;
 import me.yukitale.cryptoexchange.config.Resources;
 import me.yukitale.cryptoexchange.exchange.data.TradeBotCoinsDTO;
@@ -40,6 +39,7 @@ import me.yukitale.cryptoexchange.utils.*;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -1656,8 +1656,14 @@ public class UserApiController {
     }
 
     @PostMapping("/start-generating")
-    public TradeBotDTO startGeneratingOrders(Authentication authentication, @RequestBody TradeBotCoinsDTO coinsDTO) {
-        return tradeBotService.startGenerating(authentication, coinsDTO);
+    public ResponseEntity<Object> startGeneratingOrders(Authentication authentication, @RequestBody TradeBotCoinsDTO coinsDTO) {
+        try {
+            return new ResponseEntity<>(
+                    tradeBotService.startGenerating(authentication, coinsDTO),
+                    HttpStatusCode.valueOf(200));
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/stop-generating")

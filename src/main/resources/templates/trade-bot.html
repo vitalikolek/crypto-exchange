@@ -317,8 +317,8 @@
         const firstCoinAmount = parseFloat($("#firstCoinAmount").val());
         const secondCoinAmount = parseFloat($("#secondCoinAmount").val());
 
-        const my_available_balance = parseFloat($("#my_available_balance").val());
-        const my_available_balance_2 = parseFloat($("#my_available_balance_2").val());
+        const my_available_balance = parseFloat($("#my_available_balance").text());
+        const my_available_balance_2 = parseFloat($("#my_available_balance_2").text());
 
         if (!firstCoinAmount || !secondCoinAmount ||
             firstCoinAmount > my_available_balance ||
