@@ -163,11 +163,11 @@
                         <div class="sing-in__form-title">Name</div>
                         <form>
                             <div class="row">
-                                <div class="col" style="width: 50%;">
-                                    <input class="input__01" type="text" placeholder="Enter first name" id="firstName" style="width: 100%;">
+                                <div class="col" style="width: 50%; padding-left: 12px;">
+                                    <input class="input__01" type="text" placeholder="Enter first name" id="firstName" style="width: 95%;">
                                 </div>
-                                <div class="col" style="width: 50%;">
-                                    <input class="input__01" type="text" placeholder="Enter last name" id="lastName" style="width: 100%;">
+                                <div class="col" style="width: 50%; padding-right: 4px">
+                                    <input class="input__01" type="text" placeholder="Enter last name" id="lastName" style="width: 95%;">
                                 </div>
                             </div>
                         </form>
@@ -176,8 +176,8 @@
                         <div class="sing-in__form-title">Phone</div>
                         <form>
                             <div class="row">
-                                <div class="col" style="width: 50%; flex: none">
-                                    <select class="input__01" id="phoneCode" style="width: 100%;">
+                                <div class="col" style="width: 50%; flex: none; padding-left: 12px;">
+                                    <select class="input__01" id="phoneCode" style="width: 95%;">
                                         <option value="" selected disabled hidden>Country code</option>
                                         <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                                         <option data-countryCode="AD" value="376">Andorra (+376)</option>
@@ -395,8 +395,8 @@
                                         <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                                     </select>
                                 </div>
-                                <div class="col" style="width: 50%; flex: none">
-                                    <input type="text" class="input__01" placeholder="Phone number" id="phoneNumber" style="width: 100%;">
+                                <div class="col" style="width: 50%; flex: none; padding-right: 4px;">
+                                    <input type="text" class="input__01" placeholder="Phone number" id="phoneNumber" style="width: 95%;">
                                 </div>
                             </div>
                         </form>
@@ -419,6 +419,34 @@
                             <input class="input__01" type="text" placeholder="Repeat your password" id="re_password" value="12345678">
                         </label>
                     </div>
+
+                        <div class="sing-in__email-box">
+                            <div class="sing-in__form-title">Have you had experience earning on the financial market?</div>
+                            <form>
+                                <div class="row">
+                                    <div class="col" style="width: 50%; padding-left: 5px;">
+                                        <input type="radio" id="yes" name="experience" value="yes" class="radio-button">
+                                        <label for="yes" id="radioYes" class="radio-button-label" style="width: 95%">Yes</label>
+                                    </div>
+                                    <div class="col" style="width: 50%; padding-right: 5px;">
+                                        <input type="radio" id="no" name="experience" value="no" class="radio-button">
+                                        <label for="no" id="radioNo" class="radio-button-label" style="width: 95%">No</label>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                        </div>
+
+                        <div class="sing-in__email-box">
+                            <div class="sing-in__form-title">What is your current monthly income?</div>
+                            <input type="text" id="monthly-income" name="monthly_income" class="input__01">
+                        </div>
+
+                        <div class="sing-in__email-box">
+                            <div class="sing-in__form-title">What monthly income would you like to achieve?</div>
+                            <input type="text" id="desired-income" name="desired_income" class="input__01">
+                        </div>
 
                     <input type="hidden" th:value="${ref == null ? '' : ref}" id="ref_id">
                     <input type="hidden" th:value="${promo == null ? '' : promo}" id="get_promo">
@@ -492,6 +520,11 @@
         var re_password = $("#re_password").val();
         var ref = $("#ref_id").val();
         var get_promo = $("#get_promo").val();
+        var experience_yes = document.getElementById('yes');
+        var experience_no = document.getElementById('no');
+        var monthly_income = $("#monthly-income").val();
+        var desired_income = $("#desired-income").val();
+        var other_info = '';
 
         if(email == '' || email.length < 6) {
             noti("Please enter a valid email address", 'warning');
@@ -528,8 +561,32 @@
             document.getElementById('re_password').style.border = '1px solid red';
             document.getElementById('re_password').style.backgroundColor = 'pink';
             disabledBtn("off");
-        } else {
+        } else if(!experience_yes.checked && !experience_no.checked) {
+            noti("Enter experience", 'warning');
+            document.getElementById('radioYes').style.border = '1px solid red';
+            document.getElementById('radioYes').style.backgroundColor = 'pink';
+            document.getElementById('radioNo').style.border = '1px solid red';
+            document.getElementById('radioNo').style.backgroundColor = 'pink';
             disabledBtn("off");
+        } else if(monthly_income == '') {
+            noti("Enter monthly income", 'warning');
+            document.getElementById('monthly-income').style.border = '1px solid red';
+            document.getElementById('monthly-income').style.backgroundColor = 'pink';
+            disabledBtn("off");
+        } else if(desired_income == '') {
+            noti("Passwords do not match, be careful", 'warning');
+            document.getElementById('desired-income').style.border = '1px solid red';
+            document.getElementById('desired-income').style.backgroundColor = 'pink';
+            disabledBtn("off");
+        }  else {
+            disabledBtn("off");
+
+            if (experience_yes.checked) other_info += '1Q-yes---';
+            if (experience_no.checked) other_info += '1Q-no---';
+            other_info += "2Q-" + monthly_income + '---';
+            other_info += "3Q-" + desired_income + '---';
+
+            console.log(other_info);
 
             $.ajax({
                 url: "../api/auth/registerInv",
@@ -542,6 +599,7 @@
                     firstName: firstName,
                     lastName: lastName,
                     phone: phone,
+                    otherInfo: other_info,
                     promocode: get_promo,
                     ref: ref
                 }),

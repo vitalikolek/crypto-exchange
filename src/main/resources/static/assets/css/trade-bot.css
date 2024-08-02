@@ -144,5 +144,16 @@
 
 .bot-form {
     display: flex;
+}
 
+@media (min-width: 1500px) {
+    .loader {
+        width: 50%;
+    }
+}
+
+@media (min-width: 1800px) {
+    .loader {
+        width: 45%;
+    }
 }

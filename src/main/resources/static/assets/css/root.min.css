@@ -17479,7 +17479,7 @@ background: #2f3138;
   }
 
   .sing-in__right {
-    height: 1050px;
+    height: 180vh;
   }
   .sing-in__form {
     margin-top: 5px;
@@ -18417,4 +18417,30 @@ label {
 }
 .order__slider-input {
     margin: 0 0 30px 0;
+}
+
+.radio-button {
+  display: none;
+}
+
+.radio-button-label {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #7044EE;
+  border: 1px solid #7044EE;
+  color: #FFFFFF;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.radio-button-label:hover {
+  background-color: #8467d7;
+}
+
+.radio-button:checked + .radio-button-label {
+  background-color: #8467d7;
 }

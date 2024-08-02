@@ -122,14 +122,14 @@ public class AuthApiController {
   public ResponseEntity<?> loginUser(HttpServletRequest request, @Valid @RequestBody LoginRequest loginRequest) {
     String sessionKey = request.getSession().getId();
     Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
-//    if (captchaOptional.isEmpty()) {
-//      return ResponseEntity.badRequest().body("bad_captcha");
-//    }
+    if (captchaOptional.isEmpty()) {
+      return ResponseEntity.badRequest().body("bad_captcha");
+    }
 
-//    String captchaAnswer = loginRequest.getCaptcha();
-//    if (!captchaOptional.get().getAnswer().equals(captchaAnswer)) {
-//      return resolveError(sessionKey, "wrong_captcha");
-//    }
+    String captchaAnswer = loginRequest.getCaptcha();
+    if (!captchaOptional.get().getAnswer().equals(captchaAnswer)) {
+      return resolveError(sessionKey, "wrong_captcha");
+    }
 
     User user = userRepository.findByEmail(loginRequest.getEmail().toLowerCase())
             .orElse(userRepository.findByUsername(loginRequest.getEmail()).orElse(null));
@@ -385,7 +385,7 @@ public class AuthApiController {
     if (isInvUser) {
       RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
       String phone = invRequest.getPhone().replace("+", "");
-      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), phone, domainName, platform, regIp, promocodeName, refId, false);
+      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), phone, domainName, platform, regIp, promocodeName, refId, false, invRequest.getOtherInfo());
     } else {
       return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
     }

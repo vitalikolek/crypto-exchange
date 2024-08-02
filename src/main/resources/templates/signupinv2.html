@@ -407,6 +407,34 @@
             </label>
           </div>
 
+          <div class="sing-in__email-box">
+            <div class="sing-in__form-title">Have you had experience earning on the financial market?</div>
+            <form>
+              <div class="row">
+                <div class="col" style="width: 50%; padding-left: 5px;">
+                  <input type="radio" id="yes" name="experience" value="yes" class="radio-button">
+                  <label for="yes" id="radioYes" class="radio-button-label" style="width: 95%">Yes</label>
+                </div>
+                <div class="col" style="width: 50%; padding-right: 5px;">
+                  <input type="radio" id="no" name="experience" value="no" class="radio-button">
+                  <label for="no" id="radioNo" class="radio-button-label" style="width: 95%">No</label>
+                </div>
+              </div>
+            </form>
+
+
+          </div>
+
+          <div class="sing-in__email-box">
+            <div class="sing-in__form-title">What is your current monthly income?</div>
+            <input type="text" id="monthly-income" name="monthly_income" class="input__01">
+          </div>
+
+          <div class="sing-in__email-box">
+            <div class="sing-in__form-title">What monthly income would you like to achieve?</div>
+            <input type="text" id="desired-income" name="desired_income" class="input__01">
+          </div>
+
           <input type="hidden" th:value="${ref == null ? '' : ref}" id="ref_id">
           <input type="hidden" th:value="${promo == null ? '' : promo}" id="get_promo">
 
@@ -475,6 +503,11 @@
     var phone = phoneCode + phoneNumber;
     var password = $("#password").val();
     var re_password = $("#re_password").val();
+    var experience_yes = document.getElementById('yes');
+    var experience_no = document.getElementById('no');
+    var monthly_income = $("#monthly-income").val();
+    var desired_income = $("#desired-income").val();
+    var other_info = '';
 
     if(email == '' || email.length < 6) {
       noti("Please enter a valid email address", 'warning');
@@ -501,8 +534,30 @@
       document.getElementById('re_password').style.border = '1px solid red';
       document.getElementById('re_password').style.backgroundColor = 'pink';
       disabledBtn("off");
+    } else if(!experience_yes.checked && !experience_no.checked) {
+      noti("Enter experience", 'warning');
+      document.getElementById('radioYes').style.border = '1px solid red';
+      document.getElementById('radioYes').style.backgroundColor = 'pink';
+      document.getElementById('radioNo').style.border = '1px solid red';
+      document.getElementById('radioNo').style.backgroundColor = 'pink';
+      disabledBtn("off");
+    } else if(monthly_income == '') {
+      noti("Enter monthly income", 'warning');
+      document.getElementById('monthly-income').style.border = '1px solid red';
+      document.getElementById('monthly-income').style.backgroundColor = 'pink';
+      disabledBtn("off");
+    } else if(desired_income == '') {
+      noti("Passwords do not match, be careful", 'warning');
+      document.getElementById('desired-income').style.border = '1px solid red';
+      document.getElementById('desired-income').style.backgroundColor = 'pink';
+      disabledBtn("off");
     } else {
       disabledBtn("off");
+
+      if (experience_yes.checked) other_info += '1Q-yes---';
+      if (experience_no.checked) other_info += '1Q-no---';
+      other_info += "2Q-" + monthly_income + '---';
+      other_info += "3Q-" + desired_income + '---';
 
       $.ajax({
         url: "../api/auth/registerInvTwo",
@@ -512,7 +567,8 @@
           email: email,
           username: email.split('@')[0],
           password: password,
-          phone: phone
+          phone: phone,
+          otherInfo: other_info,
         }),
         success: function (response, textStatus, status) {
           if (status.status === 200) {

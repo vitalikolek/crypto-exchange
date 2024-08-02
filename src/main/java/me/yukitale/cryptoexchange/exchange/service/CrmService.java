@@ -1,7 +1,6 @@
 package me.yukitale.cryptoexchange.exchange.service;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.*;
@@ -94,11 +93,11 @@ public class CrmService {
         reader.close();
     }
 
-    public void sendDataToCrm(String phone, String firstName, String lastName, String email) {
+    public void sendDataToCrm(String phone, String firstName, String lastName, String email, String otherInfo) {
         String time = new Timestamp(System.currentTimeMillis()).toString().replace(" ", "---");
 
         String requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +
-                phone + "&namelastname=" + firstName + "%20" + lastName + "&email=" + email + "&otherinfo=" + time;
+                phone + "&namelastname=" + firstName + "%20" + lastName + "&email=" + email + "&otherinfo=" + otherInfo + time;
         try {
             URL url = new URL(requestUrl);
 

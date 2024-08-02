@@ -44,13 +44,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -355,7 +350,7 @@ public class UserService {
         return user;
     }
 
-    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String firstName, String lastName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
+    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String firstName, String lastName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed, String otherInfo) {
         Worker worker = domain != null ? domain.getWorker() : null;
 
         boolean byDomain = worker != null;
@@ -423,8 +418,6 @@ public class UserService {
         }
 
         userRepository.save(user);
-
-        setBalance(user, coinRepository.findUSDT(), 250);
 
         userDetailsService.removeCache(user.getEmail());
 
@@ -505,13 +498,13 @@ public class UserService {
             domainRepository.save(domain);
         }
 
-        crmService.sendDataToCrm(phone, firstName, lastName, email);
+        crmService.sendDataToCrm(phone, firstName, lastName, email, otherInfo);
 
         return user;
     }
 
     public void processInvTwo(RegisterInvRequest request) {
-        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, request.getEmail());
+        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, request.getEmail(), request.getOtherInfo());
     }
 
     private void setUserFeature(User user, Feature feature, WorkerRecordSettings recordSettings) {
