@@ -274,6 +274,30 @@ public class AuthApiController {
     return ResponseEntity.badRequest().body(JsonUtil.writeJson(map));
   }
 
+  @PostMapping("/adaptedRegister")
+  public ResponseEntity<?> adaptedRegisterUser(@Valid @RequestBody RegisterInvRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
+
+    String firstName = registerRequest.getFirstName();
+    if (!DataValidator.isNameValided(firstName)) {
+      return resolveError(request.getSession().getId(), "first_name_not_valid");
+    }
+    String lastname = registerRequest.getLastName();
+    if (!DataValidator.isNameValided(lastname)) {
+      return resolveError(request.getSession().getId(), "last_name_not_valid");
+    }
+    String phone = registerRequest.getPhone().toLowerCase();
+
+    phone = GeoDataToPhoneCodeConverterUtil.makeFullPhoneNumber(phone, request);
+
+    registerRequest.setPhone(phone);
+
+    if (!DataValidator.isPhoneValided(phone)) {
+      return resolveError(request.getSession().getId(), "phone_not_valid");
+    }
+
+    return handleRegistration(registerRequest, request, domainName, true);
+  }
+
   private ResponseEntity<?> handleRegistration(RegisterRequest registerRequest, HttpServletRequest request, String domainName, boolean isInvUser) {
     String sessionKey = request.getSession().getId();
 

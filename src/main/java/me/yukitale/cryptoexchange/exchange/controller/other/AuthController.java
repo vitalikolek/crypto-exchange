@@ -111,6 +111,24 @@ public class AuthController {
         return "signupinv2";
     }
 
+    @GetMapping(value = "adsignup")
+    public String nsignupController(Authentication authentication, Model model, @RequestHeader(value = "host") String host,
+                                      @RequestParam(value = "ref", required = false) String ref, @RequestParam(value = "promo", required = false) String promo, @RequestParam(value = "error", required = false) String error) {
+        if (isAuthorized(authentication)) {
+            return "redirect:profile/wallet";
+        }
+
+        addDomainInfoAttribute(model, host);
+
+        model.addAttribute("ref", ref);
+
+        model.addAttribute("promo", promo);
+
+        model.addAttribute("error", error);
+
+        return "adsignup";
+    }
+
     @GetMapping(value = "signin")
     public String signinController(HttpServletRequest request, Authentication authentication, Model model, @RequestHeader(value = "host") String host, @RequestParam(value = "error", required = false) String error) {
         if (isAuthorized(authentication)) {

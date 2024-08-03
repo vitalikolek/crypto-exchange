@@ -45,11 +45,9 @@ public class User {
     private String email;
 
     @Size(min = 2, max = 32)
-    @Column(unique = true)
     private String firstName;
 
     @Size(min = 2, max = 32)
-    @Column(unique = true)
     private String lastName;
 
     @Column(unique = true)
