@@ -26,32 +26,32 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0.919934 38.0386C1.89383 35.5862 2.08883 32.7086 1.73823 30.114C1.69928 29.865 1.46562 29.6881 1.23188 29.7194C0.959194 29.7504 0.764187 29.9778 0.803143 30.2264C1.11479 32.678 0.958966 35.3977 0.0240289 37.7149C-0.0538826 37.9494 0.0630606 38.2122 0.296795 38.3018C0.569485 38.391 0.842023 38.2731 0.919934 38.0386Z" fill="black"></path>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0.906364 38.1686C2.58146 36.2317 5.42545 35.4399 7.95757 35.136C8.19131 35.1047 8.38609 34.8769 8.34713 34.6279C8.30818 34.3793 8.07429 34.2027 7.8016 34.2341C5.0747 34.5656 1.99735 35.4795 0.166433 37.5921C0.0106106 37.7863 0.0496424 38.0726 0.244421 38.2316C0.4392 38.3911 0.750541 38.3623 0.906364 38.1686Z" fill="black"></path>
                     </svg>
-                    Sign in
+                    <div style="all: unset" th:text="#{signin}">Sign in</div>
                 </div>
-                <div class="sing-in__des">Welcome back! Please enter your details</div>
+                <div class="sing-in__des" th:text="#{signin.welcome}">Welcome back! Please enter your details</div>
                 <div th:if="${error != null && error.equals('password_recovery_not_found')}" style="margin-top: 15px; color: red; font-size: 16px;" class="sing-in__des">Error: Password recovery request not found or expired, try again.</div>
                 <div th:if="${error != null && error.equals('user_not_found')}" style="margin-top: 15px; color: red; font-size: 16px;" class="sing-in__des">Error: The user with this email no longer exists.</div>
 
                 <div class="sing-in__form">
                     <div class="sing-in__email-box">
-                        <div class="sing-in__form-title">Email</div>
-                        <input id="login_email" class="input__01" type="text" placeholder="Enter your email">
+                        <div class="sing-in__form-title" th:text="#{email}">Email</div>
+                        <input id="login_email" class="input__01" type="text" th:placeholder="#{sign.enter.email}">
                     </div>
                     <div class="sing-in__email-box">
-                        <div class="sing-in__form-title">Password</div>
+                        <div class="sing-in__form-title" th:text="#{password}">Password</div>
                         <label class="input__01-password">
                             <svg width="11" height="12" viewbox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.625 5.25H9.0625V3.5625C9.0625 1.61719 7.44531 0 5.5 0C3.53125 0 1.9375 1.61719 1.9375 3.5625V5.25H1.375C0.742188 5.25 0.25 5.76562 0.25 6.375V10.875C0.25 11.5078 0.742188 12 1.375 12H9.625C10.2344 12 10.75 11.5078 10.75 10.875V6.375C10.75 5.76562 10.2344 5.25 9.625 5.25ZM7.1875 5.25H3.8125V3.5625C3.8125 2.64844 4.5625 1.875 5.5 1.875C6.41406 1.875 7.1875 2.64844 7.1875 3.5625V5.25Z" fill="#667085"></path>
                             </svg>
-                            <input class="input__01" type="password" placeholder="Enter your password" id="login_password">
+                            <input class="input__01" type="password" th:placeholder="#{sign.enter.password}" id="login_password">
                         </label>
                     </div>
 
                     <div class="sing-in__email-box">
-                        <div class="sing-in__form-title">Captcha verification</div>
+                        <div class="sing-in__form-title" th:text="#{sign.captcha.verification}">Captcha verification</div>
                         <img id="captcha_img" th:src="${captcha}">
                         <label class="input__01-title">
-                            <input class="input__01" type="number" placeholder="Enter captcha" id="captcha">
+                            <input class="input__01" type="number" th:placeholder="#{sign.enter.captcha}" id="captcha">
                         </label>
                     </div>
 
@@ -59,35 +59,27 @@
                         <label class="checkbox">
                             <input type="checkbox">
                             <span class="checkbox__style"></span>
-                            Remember me
+                            <div style="all: unset" th:text="#{signin.remember}">Remember me</div>
                         </label>
 
-                        <a class="sing-in__link" href="forgot-password">Forgot password</a>
+                        <a class="sing-in__link" href="forgot-password" th:text="#{sign.forgot.password}">Forgot password</a>
                     </div>
 
                     <div class="sing-in__btn-box">
-                        <button id="sign_in" class="buttons__01 buttons__01-sing-loader" type="submit">
+                        <button id="sign_in" class="buttons__01 buttons__01-sing-loader" type="submit" th:text="#{signin}">
                             Sign in
                         </button>
                     </div>
 
                     <div class="sing-in__have">
-                        Don’t have an account?
-                        <span><a href="signup">Sign up for free</a></span>
+                        <div style="all: unset" th:text="#{signin.account}">Don’t have an account?</div>
+                        <span><a href="signup" th:text="#{signin.signup}">Sign up for free</a></span>
 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="sing-in__right">
-            <picture><source srcset="assets/img/sing-in/trade.gif" type="image/webp"><picture><source srcset="assets/img/sing-in/trade.gif" type="image/webp"><img src="../assets/img/sing-in/trade.gif" alt=""></picture></picture>
-            <a class="sing-in__right-join">
-                <div class="sing-in__right-title">
-                    Trade with confidence
-                </div>
-                <div class="sing-in__right-description" th:text="'Your funds are always backed 1:1 on ' + ${site_name} + ' with our regularly published audits on our Proof of Reserves'"></div>
-            </a>
-        </div>
+        <div th:replace="~{fragments/sign-in-right.html :: sing}"></div>
     </div>
 </section>
 
