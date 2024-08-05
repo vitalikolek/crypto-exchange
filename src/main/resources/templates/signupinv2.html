@@ -149,23 +149,23 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.919934 38.0386C1.89383 35.5862 2.08883 32.7086 1.73823 30.114C1.69928 29.865 1.46562 29.6881 1.23188 29.7194C0.959194 29.7504 0.764187 29.9778 0.803143 30.2264C1.11479 32.678 0.958966 35.3977 0.0240289 37.7149C-0.0538826 37.9494 0.0630606 38.2122 0.296795 38.3018C0.569485 38.391 0.842023 38.2731 0.919934 38.0386Z" fill="black"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.906364 38.1686C2.58146 36.2317 5.42545 35.4399 7.95757 35.136C8.19131 35.1047 8.38609 34.8769 8.34713 34.6279C8.30818 34.3793 8.07429 34.2027 7.8016 34.2341C5.0747 34.5656 1.99735 35.4795 0.166433 37.5921C0.0106106 37.7863 0.0496424 38.0726 0.244421 38.2316C0.4392 38.3911 0.750541 38.3623 0.906364 38.1686Z" fill="black"></path>
           </svg>
-          Create your test trade Account
+          <div style="all: unset" th:text="#{signup.test}">Create your test trade Account</div>
         </div>
         <div class="sing-in__des">Welcome! Please enter your details</div>
         <div th:if="${error != null && error.equals('not_found')}" style="margin-top: 15px; color: red; font-size: 16px;" class="sing-in__des">Error: registration confirmation not found or expired, try registering again.</div>
         <div th:if="${error != null && error.equals('already_exists')}" style="margin-top: 15px; color: red; font-size: 16px;" class="sing-in__des">Error: A user with this email address or username is already registered.</div>
         <div class="sing-in__form">
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">Email</div>
-            <input class="input__01" type="text" placeholder="Enter your email" id="email">
+            <div class="sing-in__form-title" th:text="#{email}">Email</div>
+            <input class="input__01" type="text" th:placeholder="#{sign.enter.email}" id="email">
           </div>
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">Phone</div>
+            <div class="sing-in__form-title" th:text="#{signup.phone}">Phone</div>
             <form>
               <div class="row">
-                <div class="col" style="width: 50%; flex: none">
-                  <select class="input__01" id="phoneCode" style="width: 100%;">
-                    <option value="" selected disabled hidden>Country code</option>
+                <div class="col" style="width: 50%; flex: none; padding-left: 12px;">
+                  <select class="input__01" id="phoneCode" style="width: 95%;">
+                    <option value="" selected disabled hidden th:text="#{signup.phone.code}">Country code</option>
                     <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                     <option data-countryCode="AD" value="376">Andorra (+376)</option>
                     <option data-countryCode="AO" value="244">Angola (+244)</option>
@@ -382,56 +382,54 @@
                     <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                   </select>
                 </div>
-                <div class="col" style="width: 50%; flex: none">
-                  <input type="text" class="input__01" placeholder="Phone number" id="phoneNumber" style="width: 100%;">
+                <div class="col" style="width: 50%; flex: none; padding-right: 4px;">
+                  <input type="text" class="input__01" th:placeholder="#{signup.phone.number}" id="phoneNumber" style="width: 95%;">
                 </div>
               </div>
             </form>
           </div>
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">Password</div>
+            <div class="sing-in__form-title" th:text="#{password}">Password</div>
             <label class="input__01-password">
               <svg width="11" height="12" viewbox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.625 5.25H9.0625V3.5625C9.0625 1.61719 7.44531 0 5.5 0C3.53125 0 1.9375 1.61719 1.9375 3.5625V5.25H1.375C0.742188 5.25 0.25 5.76562 0.25 6.375V10.875C0.25 11.5078 0.742188 12 1.375 12H9.625C10.2344 12 10.75 11.5078 10.75 10.875V6.375C10.75 5.76562 10.2344 5.25 9.625 5.25ZM7.1875 5.25H3.8125V3.5625C3.8125 2.64844 4.5625 1.875 5.5 1.875C6.41406 1.875 7.1875 2.64844 7.1875 3.5625V5.25Z" fill="#667085"></path>
               </svg>
-              <input class="input__01" type="text" placeholder="Enter your password" id="password" value="12345678">
+              <input class="input__01" type="text" th:placeholder="#{sign.enter.password}" id="password" value="12345678">
             </label>
           </div>
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">Repeat password</div>
+            <div class="sing-in__form-title" th:text="#{signup.password}">Repeat password</div>
             <label class="input__01-password">
               <svg width="11" height="12" viewbox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.625 5.25H9.0625V3.5625C9.0625 1.61719 7.44531 0 5.5 0C3.53125 0 1.9375 1.61719 1.9375 3.5625V5.25H1.375C0.742188 5.25 0.25 5.76562 0.25 6.375V10.875C0.25 11.5078 0.742188 12 1.375 12H9.625C10.2344 12 10.75 11.5078 10.75 10.875V6.375C10.75 5.76562 10.2344 5.25 9.625 5.25ZM7.1875 5.25H3.8125V3.5625C3.8125 2.64844 4.5625 1.875 5.5 1.875C6.41406 1.875 7.1875 2.64844 7.1875 3.5625V5.25Z" fill="#667085"></path>
               </svg>
-              <input class="input__01" type="text" placeholder="Repeat your password" id="re_password" value="12345678">
+              <input class="input__01" type="text" th:placeholder="#{signup.password.more}" id="re_password" value="12345678">
             </label>
           </div>
 
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">Have you had experience earning on the financial market?</div>
+            <div class="sing-in__form-title" th:text="#{signup.question.first}">Have you had experience earning on the financial market?</div>
             <form>
               <div class="row">
                 <div class="col" style="width: 50%; padding-left: 5px;">
                   <input type="radio" id="yes" name="experience" value="yes" class="radio-button">
-                  <label for="yes" id="radioYes" class="radio-button-label" style="width: 95%">Yes</label>
+                  <label for="yes" id="radioYes" class="radio-button-label" style="width: 95%" th:text="#{yes}">Yes</label>
                 </div>
                 <div class="col" style="width: 50%; padding-right: 5px;">
                   <input type="radio" id="no" name="experience" value="no" class="radio-button">
-                  <label for="no" id="radioNo" class="radio-button-label" style="width: 95%">No</label>
+                  <label for="no" id="radioNo" class="radio-button-label" style="width: 95%" th:text="#{no}">No</label>
                 </div>
               </div>
             </form>
-
-
           </div>
 
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">What is your current monthly income?</div>
+            <div class="sing-in__form-title" th:text="#{signup.question.second}">What is your current monthly income?</div>
             <input type="text" id="monthly-income" name="monthly_income" class="input__01">
           </div>
 
           <div class="sing-in__email-box">
-            <div class="sing-in__form-title">What monthly income would you like to achieve?</div>
+            <div class="sing-in__form-title" th:text="#{signup.question.third}">What monthly income would you like to achieve?</div>
             <input type="text" id="desired-income" name="desired_income" class="input__01">
           </div>
 
@@ -439,13 +437,12 @@
           <input type="hidden" th:value="${promo == null ? '' : promo}" id="get_promo">
 
           <div class="sing-in__btn-box" id="create_account">
-            <a href="#" class="buttons__01 buttons__01-sing-loader">Create account</a>
+            <a href="#" class="buttons__01 buttons__01-sing-loader" th:text="#{signup.create}">Create account</a>
           </div>
 
           <div class="sing-in__have sing-in__have-bef-top">
-            Already have an account?
-            <span><a href="signin">Sign in now</a></span>
-
+            <div style="all: unset" th:text="#{signup.have}">Already have an account?</div>
+            <span><a href="signin" th:text="#{signup.have.more}">Sign in now</a></span>
           </div>
 
         </div>
@@ -453,19 +450,7 @@
       </div>
     </div>
 
-
-    <div class="sing-in__right">
-
-      <picture><source srcset="assets/img/sing-in/trade.gif" type="image/webp"><picture><source srcset="assets/img/sing-in/trade.gif" type="image/webp"><img src="../assets/img/sing-in/trade.gif" alt=""></picture></picture>
-      <a class="sing-in__right-join">
-        <div class="sing-in__right-title">
-          Trade with confidence
-        </div>
-        <div class="sing-in__right-description" th:text="'Your funds are always backed 1:1 on ' + ${site_name} + ' with our regularly published audits on our Proof of Reserves'"></div>
-      </a>
-    </div>
-
-
+    <div th:replace="~{fragments/sign-in-right.html :: sing}"></div>
 
   </div>
 </section>
