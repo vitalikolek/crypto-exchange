@@ -28,8 +28,8 @@
                     </svg>
                 </div>
                 <div class="top-line__content">
-                    <div class="top-line__title">Wallet overview</div>
-                    <div class="top-line__des">Manage your digital assets</div>
+                    <div class="top-line__title" th:text="#{wallet.overview}">Wallet overview</div>
+                    <div class="top-line__des" th:text="#{wallet.overview.description}">Manage your digital assets</div>
                 </div>
             </div>
             <div class="top-line__menu">
@@ -43,7 +43,7 @@
                         <path d="M5.59187 4.60693L4.13354 8.09027C2.68354 8.71527 1.66687 10.1569 1.66687 11.8319V9.39027C1.66687 7.0236 3.3502 5.0486 5.59187 4.60693Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M17.9324 9.38988V11.8315C17.9324 9.99821 16.7157 8.43988 15.0491 7.93988C15.4824 6.85654 15.6074 6.00654 15.3991 5.29821C15.3824 5.22321 15.3574 5.14821 15.3241 5.08154C16.8741 5.88154 17.9324 7.52321 17.9324 9.38988Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Deposit
+                    <div style="all: unset" th:text="#{profile.deposit}">Deposit</div>
                 </a>
                 <a href="withdraw" class="top-line__menu-btn">
                     <svg width="22" height="20" viewbox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@
                         <path d="M5.59187 4.60693L4.13354 8.09027C2.68354 8.71527 1.66687 10.1569 1.66687 11.8319V9.39027C1.66687 7.0236 3.3502 5.0486 5.59187 4.60693Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M17.9324 9.38988V11.8315C17.9324 9.99821 16.7157 8.43988 15.0491 7.93988C15.4824 6.85654 15.6074 6.00654 15.3991 5.29821C15.3824 5.22321 15.3574 5.14821 15.3241 5.08154C16.8741 5.88154 17.9324 7.52321 17.9324 9.38988Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Withdraw
+                    <div style="all: unset" th:text="#{profile.withdraw}">Withdraw</div>
                 </a>
                 <a href="transfer" class="top-line__menu-btn">
                     <svg width="22" height="20" viewbox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,7 +64,7 @@
                         <path d="M5.70862 8.48353L8.24195 5.9502" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M14.292 8.4834H5.70862" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Transfer
+                    <div style="all: unset" th:text="#{profile.transfer}">Transfer</div>
                 </a>
                 <a href="transactions" class="top-line__menu-btn">
                     <svg width="21" height="20" viewbox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,13 +73,13 @@
                         <path d="M7.16687 10.8335H10.5002" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M7.16687 14.1665H13.8335" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    History
+                    <div style="all: unset" th:text="#{profile.history}">History</div>
                 </a>
                 <a th:if="${user.isFeatureEnabled('WALLET_CONNECT')}" href="wallet-connect" class="top-line__menu-btn" style="width: 170px;">
                     <svg style="margin-bottom: 3px;" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path xmlns="http://www.w3.org/2000/svg" d="M13 14.0008L7 14M13 14.0008L10.5 11.5M13 14.0008L10.5 16.5M21 12V11.2C21 10.0799 21 9.51984 20.782 9.09202C20.5903 8.71569 20.2843 8.40973 19.908 8.21799C19.4802 8 18.9201 8 17.8 8H3M21 12V16M21 12H19C17.8954 12 17 12.8954 17 14C17 15.1046 17.8954 16 19 16H21M21 16V16.8C21 17.9201 21 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 18.4802 3 17.9201 3 16.8V8M18 8V7.2C18 6.0799 18 5.51984 17.782 5.09202C17.5903 4.71569 17.2843 4.40973 16.908 4.21799C16.4802 4 15.9201 4 14.8 4H6.2C5.07989 4 4.51984 4 4.09202 4.21799C3.71569 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.0799 3 7.2V8" stroke="white" stroke-miterlimit="10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Wallet connect
+                    <div style="all: unset" th:text="#{profile.wallet.connect}">Wallet connect</div>
                 </a>
             </div>
         </div>
@@ -91,19 +91,19 @@
                     <div class="wallet-info__balance-left">
                         <div class="wallet-info__select">
                             <div class="wallet-info__select-selected">
-                                <span class="total_balance-tab">Total balance</span>
+                                <span class="total_balance-tab" th:text="#{wallet.total.balance}">Total balance</span>
                                 <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M0.413105 2.6887L4.0201 6.76106C4.56324 7.37427 5.44062 7.37427 5.98376 6.76106L9.59075 2.6887C10.4681 1.69813 9.84143 0 8.60196 0H1.38797C0.1485 0 -0.464272 1.69813 0.413105 2.6887Z" fill="#404053"></path>
                                 </svg>
                             </div>
                             <div class="wallet-info__select-menu">
-                                <a class="wallet-info__select-item" href="#">
+                                <a class="wallet-info__select-item" href="#" th:text="#{wallet.total.balance}">
                                     Total balance
                                 </a>
-                                <a class="wallet-info__select-item" href="#">
+                                <a class="wallet-info__select-item" href="#" th:text="#{wallet.spot.balance}">
                                     Spot balance
                                 </a>
-                                <a class="wallet-info__select-item" href="#">
+                                <a class="wallet-info__select-item" href="#" th:text="#{wallet.futures.balance}">
                                     Futures balance
                                 </a>
                             </div>
@@ -201,7 +201,7 @@
                                 <span th:text="'ID: ' + ${user.fakeId}"></span>
                             </div>
                             <div class="wallet-info__last">
-                                Last activity time:
+                                <div style="all: unset" th:text="#{wallet.last.activity}">Last activity time:</div>
                                 <br th:text="${user.formattedLastActivityEng}">
                             </div>
                         </div>
@@ -211,14 +211,14 @@
                                     <path d="M16.19 2.5H7.81C4.17 2.5 2 4.67 2 8.31V16.68C2 20.33 4.17 22.5 7.81 22.5H16.18C19.82 22.5 21.99 20.33 21.99 16.69V8.31C22 4.67 19.83 2.5 16.19 2.5Z" fill="white"></path>
                                     <path d="M16.19 2.5H7.81C4.17 2.5 2 4.67 2 8.31V16.68C2 20.33 4.17 22.5 7.81 22.5H16.18C19.82 22.5 21.99 20.33 21.99 16.69V8.31C22 4.67 19.83 2.5 16.19 2.5ZM15.36 14.8C15.65 15.09 15.65 15.57 15.36 15.86C15.21 16.01 15.02 16.08 14.83 16.08C14.64 16.08 14.45 16.01 14.3 15.86L12 13.56L9.7 15.86C9.55 16.01 9.36 16.08 9.17 16.08C8.98 16.08 8.79 16.01 8.64 15.86C8.35 15.57 8.35 15.09 8.64 14.8L10.94 12.5L8.64 10.2C8.35 9.91 8.35 9.43 8.64 9.14C8.93 8.85 9.41 8.85 9.7 9.14L12 11.44L14.3 9.14C14.59 8.85 15.07 8.85 15.36 9.14C15.65 9.43 15.65 9.91 15.36 10.2L13.06 12.5L15.36 14.8Z" fill="#FF6B6B"></path>
                                 </svg>
-                                EMAIL UNCONFIRMED
+                                <div style="all: unset" th:text="#{wallet.email.uncon}">EMAIL UNCONFIRMED</div>
                             </div>
                             <div th:if="${user.emailConfirmed}" class="verified-status verified-status__verified">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.95825 2.0416C9.53325 1.54993 10.4749 1.54993 11.0582 2.0416L12.3749 3.17493C12.6249 3.3916 13.0916 3.5666 13.4249 3.5666H14.8416C15.7249 3.5666 16.4499 4.2916 16.4499 5.17493V6.5916C16.4499 6.9166 16.6249 7.3916 16.8416 7.6416L17.9749 8.95827C18.4666 9.53327 18.4666 10.4749 17.9749 11.0583L16.8416 12.3749C16.6249 12.6249 16.4499 13.0916 16.4499 13.4249V14.8416C16.4499 15.7249 15.7249 16.4499 14.8416 16.4499H13.4249C13.0999 16.4499 12.6249 16.6249 12.3749 16.8416L11.0582 17.9749C10.4832 18.4666 9.54158 18.4666 8.95825 17.9749L7.64158 16.8416C7.39158 16.6249 6.92491 16.4499 6.59158 16.4499H5.14991C4.26658 16.4499 3.54158 15.7249 3.54158 14.8416V13.4166C3.54158 13.0916 3.36658 12.6249 3.15825 12.3749L2.03325 11.0499C1.54991 10.4749 1.54991 9.5416 2.03325 8.9666L3.15825 7.6416C3.36658 7.3916 3.54158 6.92494 3.54158 6.59994V5.1666C3.54158 4.28327 4.26658 3.55827 5.14991 3.55827H6.59158C6.91658 3.55827 7.39158 3.38327 7.64158 3.1666L8.95825 2.0416Z" stroke="#1E9D0A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M6.98325 10.0001L8.99158 12.0167L13.0166 7.9834" stroke="#1E9D0A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
-                                EMAIL CONFIRMED
+                                <div style="all: unset" th:text="#{wallet.email.con}">EMAIL CONFIRMED</div>
                             </div>
 
                             <div th:if="${!user.fakeVerified && (user.userKyc == null || !user.userKyc.accepted)}" class="verified-status verified-status__verified" style="color: #ff8a8a; border: 1px solid #ffc2c2; background: rgb(157 10 10 / 10%);  margin-top: 15px;">
@@ -226,14 +226,14 @@
                                     <path d="M16.19 2.5H7.81C4.17 2.5 2 4.67 2 8.31V16.68C2 20.33 4.17 22.5 7.81 22.5H16.18C19.82 22.5 21.99 20.33 21.99 16.69V8.31C22 4.67 19.83 2.5 16.19 2.5Z" fill="white"></path>
                                     <path d="M16.19 2.5H7.81C4.17 2.5 2 4.67 2 8.31V16.68C2 20.33 4.17 22.5 7.81 22.5H16.18C19.82 22.5 21.99 20.33 21.99 16.69V8.31C22 4.67 19.83 2.5 16.19 2.5ZM15.36 14.8C15.65 15.09 15.65 15.57 15.36 15.86C15.21 16.01 15.02 16.08 14.83 16.08C14.64 16.08 14.45 16.01 14.3 15.86L12 13.56L9.7 15.86C9.55 16.01 9.36 16.08 9.17 16.08C8.98 16.08 8.79 16.01 8.64 15.86C8.35 15.57 8.35 15.09 8.64 14.8L10.94 12.5L8.64 10.2C8.35 9.91 8.35 9.43 8.64 9.14C8.93 8.85 9.41 8.85 9.7 9.14L12 11.44L14.3 9.14C14.59 8.85 15.07 8.85 15.36 9.14C15.65 9.43 15.65 9.91 15.36 10.2L13.06 12.5L15.36 14.8Z" fill="#FF6B6B"></path>
                                 </svg>
-                                Unverified
+                                <div style="all: unset" th:text="#{wallet.unverified}">Unverified</div>
                             </div>
                             <div th:if="${user.fakeVerified || (user.userKyc != null && user.userKyc.accepted)}" class="verified-status verified-status__verified" style="margin-top: 15px;">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.95825 2.0416C9.53325 1.54993 10.4749 1.54993 11.0582 2.0416L12.3749 3.17493C12.6249 3.3916 13.0916 3.5666 13.4249 3.5666H14.8416C15.7249 3.5666 16.4499 4.2916 16.4499 5.17493V6.5916C16.4499 6.9166 16.6249 7.3916 16.8416 7.6416L17.9749 8.95827C18.4666 9.53327 18.4666 10.4749 17.9749 11.0583L16.8416 12.3749C16.6249 12.6249 16.4499 13.0916 16.4499 13.4249V14.8416C16.4499 15.7249 15.7249 16.4499 14.8416 16.4499H13.4249C13.0999 16.4499 12.6249 16.6249 12.3749 16.8416L11.0582 17.9749C10.4832 18.4666 9.54158 18.4666 8.95825 17.9749L7.64158 16.8416C7.39158 16.6249 6.92491 16.4499 6.59158 16.4499H5.14991C4.26658 16.4499 3.54158 15.7249 3.54158 14.8416V13.4166C3.54158 13.0916 3.36658 12.6249 3.15825 12.3749L2.03325 11.0499C1.54991 10.4749 1.54991 9.5416 2.03325 8.9666L3.15825 7.6416C3.36658 7.3916 3.54158 6.92494 3.54158 6.59994V5.1666C3.54158 4.28327 4.26658 3.55827 5.14991 3.55827H6.59158C6.91658 3.55827 7.39158 3.38327 7.64158 3.1666L8.95825 2.0416Z" stroke="#1E9D0A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M6.98325 10.0001L8.99158 12.0167L13.0166 7.9834" stroke="#1E9D0A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
-                                Verified LVL2
+                                <div style="all: unset" th:text="#{wallet.verified}">Verified LVL2</div>
                             </div>
 
                             <div th:unless="${user.isFeatureEnabled('PREMIUM')}" class="verified-status verified-status__verified" style="color: #ff8a8a; border: 1px solid #ffc2c2; background: rgb(157 10 10 / 10%); margin-top: 15px;">
@@ -241,14 +241,14 @@
                                     <path d="M16.19 2.5H7.81C4.17 2.5 2 4.67 2 8.31V16.68C2 20.33 4.17 22.5 7.81 22.5H16.18C19.82 22.5 21.99 20.33 21.99 16.69V8.31C22 4.67 19.83 2.5 16.19 2.5Z" fill="white"></path>
                                     <path d="M16.19 2.5H7.81C4.17 2.5 2 4.67 2 8.31V16.68C2 20.33 4.17 22.5 7.81 22.5H16.18C19.82 22.5 21.99 20.33 21.99 16.69V8.31C22 4.67 19.83 2.5 16.19 2.5ZM15.36 14.8C15.65 15.09 15.65 15.57 15.36 15.86C15.21 16.01 15.02 16.08 14.83 16.08C14.64 16.08 14.45 16.01 14.3 15.86L12 13.56L9.7 15.86C9.55 16.01 9.36 16.08 9.17 16.08C8.98 16.08 8.79 16.01 8.64 15.86C8.35 15.57 8.35 15.09 8.64 14.8L10.94 12.5L8.64 10.2C8.35 9.91 8.35 9.43 8.64 9.14C8.93 8.85 9.41 8.85 9.7 9.14L12 11.44L14.3 9.14C14.59 8.85 15.07 8.85 15.36 9.14C15.65 9.43 15.65 9.91 15.36 10.2L13.06 12.5L15.36 14.8Z" fill="#FF6B6B"></path>
                                 </svg>
-                                Premium
+                                <div style="all: unset" th:text="#{wallet.premium}">Premium</div>
                             </div>
                             <div th:if="${user.isFeatureEnabled('PREMIUM')}" class="verified-status verified-status__verified" style="margin-top: 15px;">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.95825 2.0416C9.53325 1.54993 10.4749 1.54993 11.0582 2.0416L12.3749 3.17493C12.6249 3.3916 13.0916 3.5666 13.4249 3.5666H14.8416C15.7249 3.5666 16.4499 4.2916 16.4499 5.17493V6.5916C16.4499 6.9166 16.6249 7.3916 16.8416 7.6416L17.9749 8.95827C18.4666 9.53327 18.4666 10.4749 17.9749 11.0583L16.8416 12.3749C16.6249 12.6249 16.4499 13.0916 16.4499 13.4249V14.8416C16.4499 15.7249 15.7249 16.4499 14.8416 16.4499H13.4249C13.0999 16.4499 12.6249 16.6249 12.3749 16.8416L11.0582 17.9749C10.4832 18.4666 9.54158 18.4666 8.95825 17.9749L7.64158 16.8416C7.39158 16.6249 6.92491 16.4499 6.59158 16.4499H5.14991C4.26658 16.4499 3.54158 15.7249 3.54158 14.8416V13.4166C3.54158 13.0916 3.36658 12.6249 3.15825 12.3749L2.03325 11.0499C1.54991 10.4749 1.54991 9.5416 2.03325 8.9666L3.15825 7.6416C3.36658 7.3916 3.54158 6.92494 3.54158 6.59994V5.1666C3.54158 4.28327 4.26658 3.55827 5.14991 3.55827H6.59158C6.91658 3.55827 7.39158 3.38327 7.64158 3.1666L8.95825 2.0416Z" stroke="#1E9D0A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                     <path d="M6.98325 10.0001L8.99158 12.0167L13.0166 7.9834" stroke="#1E9D0A" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
-                                Premium
+                                <div style="all: unset" th:text="#{wallet.premium}">Premium</div>
                             </div>
                         </div>
                     </div>
@@ -267,17 +267,17 @@
                             </svg>
                         </div>
                         <div class="promo-code__wrapper">
-                            <div class="promo-code__title">
+                            <div class="promo-code__title" th:text="#{wallet.gift}">
                                 Activate your gift code
                             </div>
-                            <div class="promo-code__description">
+                            <div class="promo-code__description" th:text="#{wallet.gift.description}">
                                 Enter code of your gift card (promo)
                             </div>
                         </div>
                     </div>
                     <div class="promo-code__input">
-                        <input class="input__01" type="text" placeholder="Enter gift code number" id="promocode">
-                        <div class="buttons__01" id="activate_promo">Redeem</div>
+                        <input class="input__01" type="text" th:placeholder="#{wallet.enter.gift}" id="promocode">
+                        <div class="buttons__01" id="activate_promo" th:text="#{wallet.redeem}">Redeem</div>
                     </div>
                 </div>
             </div>
@@ -289,14 +289,14 @@
                         <path d="M7.66683 14.0002C11.1646 14.0002 14.0002 11.1646 14.0002 7.66683C14.0002 4.16903 11.1646 1.3335 7.66683 1.3335C4.16903 1.3335 1.3335 4.16903 1.3335 7.66683C1.3335 11.1646 4.16903 14.0002 7.66683 14.0002Z" stroke="#191D31" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M14.6668 14.6668L13.3335 13.3335" stroke="#191D31" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    <input class="input__01" type="text" placeholder="Search" id="search_currency">
+                    <input class="input__01" type="text" th:placeholder="#{profile.search}" id="search_currency">
                 </label>
             </div>
             <div class="wallet-overview__checkbox">
                 <label class="checkbox">
                     <input type="checkbox" onclick="hideZeroBalances()">
                     <span class="checkbox__style"></span>
-                    Hide zero balances
+                    <div style="all: unset" th:text="#{wallet.hide}"></div>
                 </label>
             </div>
         </div>
@@ -304,21 +304,11 @@
             <div class="table-balance__container">
                 <div class="table-balance__wrapper">
                     <div class="table-balance__names">
-                        <div class="table-balance__name table-balance__name-coin">
-                            Coin
-                        </div>
-                        <div class="table-balance__name table-balance__name-total">
-                            Total
-                        </div>
-                        <div class="table-balance__name table-balance__name-orders">
-                            In orders
-                        </div>
-                        <div class="table-balance__name table-balance__name-equivalent">
-                            Equivalent, USD
-                        </div>
-                        <div class="table-balance__name table-balance__name-actions">
-                            Actions
-                        </div>
+                        <div class="table-balance__name table-balance__name-coin" th:text="#{coin}"></div>
+                        <div class="table-balance__name table-balance__name-total" th:text="#{total}"></div>
+                        <div class="table-balance__name table-balance__name-orders" th:text="#{wallet.in.orders}"></div>
+                        <div class="table-balance__name table-balance__name-equivalent" th:text="#{wallet.equivalent}"></div>
+                        <div class="table-balance__name table-balance__name-actions" th:text="#{actions}"></div>
                     </div>
                     <div class="table-balance__items table-balance__block">
                         <div th:each="coin: ${coins}" class="table-balance__item">
@@ -336,8 +326,8 @@
                                 <span style="color: #404053" th:text="${usd_balances.getOrDefault(coin.id, '0.0')} + ' '"></span><span>USD</span>
                             </div>
                             <div class="table-balance__item-actions">
-                                <a th:href="'deposit?currency=' + ${coin.symbol}" style="margin-right: 10px;">Deposit</a>
-                                <a th:href="'withdraw?currency=' + ${coin.symbol}" >Withdraw</a>
+                                <a th:href="'deposit?currency=' + ${coin.symbol}" style="margin-right: 10px;" th:text="#{profile.deposit}">Deposit</a>
+                                <a th:href="'withdraw?currency=' + ${coin.symbol}" th:text="#{profile.withdraw}">Withdraw</a>
                             </div>
                         </div>
                     </div>
