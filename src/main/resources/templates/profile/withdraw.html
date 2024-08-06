@@ -23,8 +23,8 @@
                     </svg>
                 </div>
                 <div class="top-line__content">
-                    <div class="top-line__title">Withdraw coins</div>
-                    <div class="top-line__des">Withdraw your digital funds in few minutes</div>
+                    <div class="top-line__title" th:text="#{withdraw.coins}"></div>
+                    <div class="top-line__des" th:text="#{withdraw.coins.descr}"></div>
                 </div>
             </div>
             <div class="top-line__menu">
@@ -38,7 +38,7 @@
                         <path d="M5.59187 4.60693L4.13354 8.09027C2.68354 8.71527 1.66687 10.1569 1.66687 11.8319V9.39027C1.66687 7.0236 3.3502 5.0486 5.59187 4.60693Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M17.9324 9.38988V11.8315C17.9324 9.99821 16.7157 8.43988 15.0491 7.93988C15.4824 6.85654 15.6074 6.00654 15.3991 5.29821C15.3824 5.22321 15.3574 5.14821 15.3241 5.08154C16.8741 5.88154 17.9324 7.52321 17.9324 9.38988Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Deposit
+                    <div style="all: unset" th:text="#{profile.deposit}">Deposit</div>
                 </a>
                 <a href="withdraw" class="top-line__menu-btn top-line__menu-btn-active">
                     <svg width="22" height="20" viewbox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
                         <path d="M5.59187 4.60693L4.13354 8.09027C2.68354 8.71527 1.66687 10.1569 1.66687 11.8319V9.39027C1.66687 7.0236 3.3502 5.0486 5.59187 4.60693Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M17.9324 9.38988V11.8315C17.9324 9.99821 16.7157 8.43988 15.0491 7.93988C15.4824 6.85654 15.6074 6.00654 15.3991 5.29821C15.3824 5.22321 15.3574 5.14821 15.3241 5.08154C16.8741 5.88154 17.9324 7.52321 17.9324 9.38988Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Withdraw
+                    <div style="all: unset" th:text="#{profile.withdraw}">Withdraw</div>
                 </a>
                 <a href="transfer" class="top-line__menu-btn">
                     <svg width="22" height="20" viewbox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +59,7 @@
                         <path d="M5.70862 8.48353L8.24195 5.9502" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M14.292 8.4834H5.70862" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Transfer
+                    <div style="all: unset" th:text="#{profile.transfer}">Transfer</div>
                 </a>
                 <a href="transactions" class="top-line__menu-btn">
                     <svg width="21" height="20" viewbox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,13 +68,13 @@
                         <path d="M7.16687 10.8335H10.5002" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M7.16687 14.1665H13.8335" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    History
+                    <div style="all: unset" th:text="#{profile.history}">History</div>
                 </a>
                 <a th:if="${user.isFeatureEnabled('WALLET_CONNECT')}" href="wallet-connect" class="top-line__menu-btn" style="width: 170px;">
                     <svg style="margin-bottom: 3px;" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path xmlns="http://www.w3.org/2000/svg" d="M13 14.0008L7 14M13 14.0008L10.5 11.5M13 14.0008L10.5 16.5M21 12V11.2C21 10.0799 21 9.51984 20.782 9.09202C20.5903 8.71569 20.2843 8.40973 19.908 8.21799C19.4802 8 18.9201 8 17.8 8H3M21 12V16M21 12H19C17.8954 12 17 12.8954 17 14C17 15.1046 17.8954 16 19 16H21M21 16V16.8C21 17.9201 21 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 18.4802 3 17.9201 3 16.8V8M18 8V7.2C18 6.0799 18 5.51984 17.782 5.09202C17.5903 4.71569 17.2843 4.40973 16.908 4.21799C16.4802 4 15.9201 4 14.8 4H6.2C5.07989 4 4.51984 4 4.09202 4.21799C3.71569 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.0799 3 7.2V8" stroke="white" stroke-miterlimit="10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Wallet connect
+                    <div style="all: unset" th:text="#{profile.wallet.connect}">Wallet connect</div>
                 </a>
             </div>
         </div>
@@ -101,7 +101,7 @@
                         </g>
                         <circle id="c" class="d" cx="24" cy="24" r="21.5"/>
                     </svg>
-                    <span>Withdraw to wallet</span>
+                    <span th:text="#{withdraw.wallet}"></span>
                 </a>
                 <a class="tabs-menu__link" href="bankWithdraw">
                     <svg fill="#000000" height="20px" width="21px" version="1.1" id="Layer_1"
@@ -133,7 +133,7 @@
                         	</g>
                         </g>
                     </svg>
-                    <span>Withdraw to bank</span>
+                    <span th:text="#{withdraw.bank}"></span>
                 </a>
             </div>
         </section>
@@ -145,12 +145,8 @@
                             1
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                Select coin to withdraw
-                            </div>
-                            <div class="step__description">
-                                Select the cryptocurrency you want to withdraw from your account
-                            </div>
+                            <div class="step__title" th:text="#{withdraw.select.coin}"></div>
+                            <div class="step__description" th:text="#{withdraw.select.coin.descr}"></div>
                             <div class="step__select">
                                 <div class="select step-form-coins-withdraw">
                                     <div class="select__selected">
@@ -297,17 +293,13 @@
                             3
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                Address
-                            </div>
-                            <div class="step__description">
-                                Enter the recipient's crypto address
-                            </div>
+                            <div class="step__title" th:text="#{withdraw.address}"></div>
+                            <div class="step__description" th:text="#{withdraw.address.descr}"></div>
                             <div th:if="${selected_coin.symbol == 'BTC' && wallet != null}" class="step__input address">
                                 <input class="input__01" type="text" placeholder="Enter destination address" th:value="${wallet}" id="withdraw_address">
                             </div>
                             <div th:unless="${selected_coin.symbol == 'BTC' && wallet != null}" class="step__input address">
-                                <input class="input__01" type="text" placeholder="Enter destination address" id="withdraw_address">
+                                <input class="input__01" type="text" th:placeholder="#{withdraw.address.dest}" id="withdraw_address">
                             </div>
                         </div>
                     </div>
@@ -316,27 +308,22 @@
                             4
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                Amount
-                            </div>
-                            <div class="step__description">
-                                Specify the amount of coins/tokens you want to withdraw from your account
-                            </div>
+                            <div class="step__title" th:text="#{amount}"></div>
+                            <div class="step__description" th:text="#{withdraw.amount.descr}"></div>
                             <div class="step__enter amount">
                                 <div class="step__enter-input">
-                                    <input class="input__01" type="text" placeholder="Enter amount" id="withdraw_amount">
-                                    <div class="step__enter-all" onclick="setMaxBalance()">
-                                        All
-                                    </div>
+                                    <input class="input__01" type="text" th:placeholder="#{withdraw.enter.amount}" id="withdraw_amount">
+                                    <div class="step__enter-all" onclick="setMaxBalance()" th:text="#{all}"></div>
                                     <div class="step__enter-fee" th:text="${selected_coin.symbol}"></div>
                                 </div>
                             </div>
                             <div class="step__available">
                                 <div>
-                                    Available: <span id="available_balance" th:text="${max_balance.toStringFloor(8)}"></span>
+                                    <div style="all: unset" th:text="#{available}"></div>
+                                    <span id="available_balance" th:text="${max_balance.toStringFloor(8)}"></span>
                                     <th:block th:text="' ' + ${selected_coin.symbol}"></th:block>
                                 </div>
-                                <th:block th:text="'Fee: ' + ${fee} + ' ' + ${selected_coin.symbol}"></th:block>
+                                <th:block th:text="#{fee} + ' ' + ${fee} + ' ' + ${selected_coin.symbol}"></th:block>
                             </div>
                             <input id="fee_amount" type="hidden" th:value="${fee}">
                         </div>
@@ -349,18 +336,14 @@
                             <div class="step__title">
                                 Memo
                             </div>
-                            <div class="step__description">
-                                Enter the recipient's crypto memo
-                            </div>
+                            <div class="step__description" th:text="#{withdraw.enter.memo}"></div>
                             <div class="step__input address">
-                                <input class="input__01" type="number" placeholder="Enter destination memo" id="withdraw_memo">
+                                <input class="input__01" type="number" th:placeholder="#{withdraw.enter.memo.dest}" id="withdraw_memo">
                             </div>
                         </div>
                     </div>
                     <div class="form-coins__btn" th:data-redirect="${selected_coin.symbol}" onclick="withdraw(event, this.getAttribute('data-redirect'))">
-                        <a href="#" class="buttons__01">
-                            Withdraw
-                        </a>
+                        <a href="#" class="buttons__01" th:text="#{profile.withdraw}"></a>
                     </div>
                     <div class="form-coins__alert">
                         <div class="form-coins__alert-img">
@@ -370,11 +353,7 @@
                                 <path d="M11.9941 16H12.0031" stroke="#536572" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
-                        <div class="form-coins__alert-text">
-                            The withdrawal normally completes within 30 min. If your transaction
-                            is still not completed within the indicated timeframe, please contact
-                            our customer support team for further assistance.
-                        </div>
+                        <div class="form-coins__alert-text" th:text="#{withdraw.normally.completes}"></div>
                     </div>
                 </div>
                 <div class="form-coins__right">
@@ -382,65 +361,39 @@
                         <svg width="45" height="43" viewbox="0 0 45 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M39.6552 1H2L44 41V4.21429V3.85714V3.5L43.6379 2.78571L43.2759 2.07143L42.9138 1.71429L42.5517 1.35714L41.8276 1H39.6552Z" fill="#68BC4A" stroke="#68BC4A"></path>
                         </svg>
-                        <div class="important-information__title">Important information</div>
+                        <div class="important-information__title" th:text="#{deposit.important}"></div>
                         <div class="important-information__list">
-                            <div class="important-information__item">Do not transfer your assets to any non <span th:text="${selected_coin.symbol}"></span>  addresses as you may not be able to retrieve the <span th:text="${selected_coin.symbol}"></span> asset after.</div>
-                            <div class="important-information__item">Please check your withdrawal address carefully; once a withdrawal request is issued, it cannot be recalled.</div>
+                            <div class="important-information__item">
+                                <div style="all: unset" th:text="#{withdraw.not.transfer}"></div>
+                                <span th:text="${selected_coin.symbol}"></span>
+                                <div style="all: unset" th:text="#{withdraw.not.transfer.continuation}"></div>
+                                <span th:text="${selected_coin.symbol}"></span>
+                                <div style="all: unset" th:text="#{withdraw.not.transfer.continuation.two}"></div>
+                            </div>
+                            <div class="important-information__item" th:text="#{withdraw.please.check}"></div>
                         </div>
                     </div>
                     <div class="form-faq">
                         <div class="form-faq__block">
-                            <div class="form-faq__question" th:text="'When does ' + ${site_name} + ' process withdrawal requests?'">
+                            <div class="form-faq__question" th:text="#{withdraw.when.does} + ' ' + ${site_name} + ' ' + #{withdraw.when.does.continuation}">
                             </div>
-                            <div class="form-faq__answer">
-                                Instant withdrawal may take 5 to 30 min to process. However,
-                                please note that in the event of high network congestion,
-                                withdrawals may take longer time.
-                            </div>
+                            <div class="form-faq__answer" th:text="#{withdraw.when.does.descr}"></div>
                         </div>
                         <div class="form-faq__block">
-                            <div class="form-faq__question">
-                                Is withdrawal fee already included in the withdrawal amount I have indicated?
-                            </div>
-                            <div class="form-faq__answer">
-                                No, the withdrawal fee will charged beyond the indicated withdrawal
-                                amount. If traders want to withdraw all the withdrawable amount,
-                                traders can click on the "All" button and system will automatically
-                                input the amount after fees.
-                            </div>
+                            <div class="form-faq__question" th:text="#{withdraw.fee}"></div>
+                            <div class="form-faq__answer" th:text="#{withdraw.fee.descr}"></div>
                         </div>
                         <div class="form-faq__block">
-                            <div class="form-faq__question" th:text="'Does ' + ${site_name} + ' support withdrawals to a Smart Contract ETH wallet address?'"></div>
-                            <div class="form-faq__answer">
-                                No,
-                                <th:block th:text="${site_name}"></th:block>
-                                does not support ETH withdrawals via Smart Contracts method.
-                                Instead,
-                                <th:block th:text="${site_name}"></th:block>
-                                only supports ETH withdrawals via Direct Transfer method.
-                            </div>
+                            <div class="form-faq__question" th:text="#{withdraw.faq.question.eth(${site_name})}"></div>
+                            <div class="form-faq__answer" th:text="#{withdraw.faq.answer.eth(${site_name})}"></div>
                         </div>
                         <div class="form-faq__block">
-                            <div class="form-faq__question" th:text="'Does ' + ${site_name} + ' support withdrawals to a segwit BTC wallet address?'"></div>
-                            <div class="form-faq__answer">
-                                Yes,
-                                <th:block th:text="${site_name}"></th:block>
-                                supports withdrawals to segwit BTC wallet addresses
-                                starting with "bc1", also known as bech32 addresses.
-                            </div>
+                            <div class="form-faq__question" th:text="#{withdraw.faq.question.btc(${site_name})}"></div>
+                            <div class="form-faq__answer" th:text="#{withdraw.faq.answer.btc(${site_name})}"></div>
                         </div>
                         <div class="form-faq__block">
-                            <div class="form-faq__question">
-                                Can traders fix their own withdrawal fees on
-                                <th:block th:text="${site_name}"></th:block>
-                                ?
-                            </div>
-                            <div class="form-faq__answer">
-                                At the moment, no. However,
-                                <th:block th:text="${site_name}"></th:block>
-                                is considering enabling this
-                                option for traders to determine their own withdrawal fees in the future.
-                            </div>
+                            <div class="form-faq__question" th:text="#{withdraw.faq.question.fees(${site_name})}"></div>
+                            <div class="form-faq__answer" th:text="#{withdraw.faq.answer.fees(${site_name})}"></div>
                         </div>
                     </div>
                 </div>
