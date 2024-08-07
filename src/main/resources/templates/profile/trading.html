@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title th:text="'Trading platform | ' + ${site_domain}"></title>
     <link rel="icon" th:href="${site_icon}">
-    <link rel="stylesheet" href="assets/css/root.min.css?v=2">
+    <link rel="stylesheet" href="../assets/css/root.min.css?v=2">
     <link rel="stylesheet" href="../assets/css/support-widget.css?v=1">
-    <link rel="stylesheet" href="assets/css/toastr.css">
+    <link rel="stylesheet" href="../assets/css/toastr.css">
 </head>
 <body>
 <header th:replace="~{fragments/profile-header.html :: header}"></header>
-<link rel="stylesheet" type="text/css" href="assets/css/new_trading.css">
+<link rel="stylesheet" type="text/css" href="../assets/css/new_trading.css">
 <main th:with="selectedCoinPrice = ${coin_service.getWorkerPriceFormatted(user.worker, selected_coin.symbol)}, selectedCoinChangePercent = ${coin_service.getWorkerPriceChangePercent(user.worker, selected_coin.symbol)}">
     <div class="trade__container-ghTgp">
         <div class="trade__box-ghTgp">
@@ -836,7 +836,7 @@
 <script src="../assets/js/new_tr_main.js"></script>
 <script src="../assets/js/new_tr_order.js"></script>
 <script src="../assets/js/jquery-3.4.1.min.js"></script>
-<script src="trading_core/socket.io.js"></script>
-<script src="trading_core/ajax.js"></script>
-<script src="trading_core/lightweight-charts.standalone.production.js"></script>
-<script src="trading_core/trade.js?v=44"></script>
+<script src="../trading_core/socket.io.js"></script>
+<script src="../trading_core/ajax.js"></script>
+<script src="../trading_core/lightweight-charts.standalone.production.js"></script>
+<script src="../trading_core/trade.js?v=44"></script>

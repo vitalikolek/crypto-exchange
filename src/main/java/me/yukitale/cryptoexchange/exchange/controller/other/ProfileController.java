@@ -2,12 +2,18 @@ package me.yukitale.cryptoexchange.exchange.controller.other;
 
 import me.yukitale.cryptoexchange.exchange.model.user.*;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
+import me.yukitale.cryptoexchange.exchange.service.TradeBotService;
 import me.yukitale.cryptoexchange.panel.admin.model.payments.PaymentSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.coins.AdminCoinSettingsRepository;
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
 import me.yukitale.cryptoexchange.panel.common.model.CoinSettings;
+import me.yukitale.cryptoexchange.panel.worker.model.FastPump;
+import me.yukitale.cryptoexchange.panel.worker.model.StablePump;
 import me.yukitale.cryptoexchange.panel.worker.model.Worker;
 import me.yukitale.cryptoexchange.panel.worker.model.settings.other.WorkerSettings;
+import me.yukitale.cryptoexchange.panel.worker.repository.FastPumpRepository;
+import me.yukitale.cryptoexchange.panel.worker.repository.StablePumpRepository;
+import me.yukitale.cryptoexchange.utils.JsonUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -66,6 +72,12 @@ public class ProfileController {
     private CoinRepository coinRepository;
 
     @Autowired
+    private FastPumpRepository fastPumpRepository;
+
+    @Autowired
+    private StablePumpRepository stablePumpRepository;
+
+    @Autowired
     private DomainRepository domainRepository;
 
     @Autowired
@@ -91,6 +103,9 @@ public class ProfileController {
 
     @Autowired
     private WestWalletService westWalletService;
+
+    @Autowired
+    private TradeBotService tradeBotService;
 
     @GetMapping(value = "")
     public RedirectView emptyController() {
@@ -786,6 +801,116 @@ public class ProfileController {
         model.addAttribute("max_balance", new MyDecimal(userService.getBalance(user, selectedCoin)));
 
         return "profile/bankWithdraw";
+    }
+
+    @GetMapping(value = "trading")
+    public String tradingController(Model model, Authentication authentication, HttpServletRequest request, @RequestParam(value = "currency", required = false) String coinSymbol, @RequestHeader("host") String host) {
+        userService.createAction(authentication, request, "Go to the /trading");
+
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        User user = addUserAttribute(model, authentication);
+
+        Coin selectedCoin = StringUtils.isBlank(coinSymbol) ? coinRepository.findFirst() : coinRepository.findBySymbol(coinSymbol).orElseGet(() -> coinRepository.findFirst());
+
+        if (selectedCoin.isStable()) {
+            selectedCoin = coinRepository.findFirst();
+        }
+
+        Coin usdtCoin = coinRepository.findUSDT();
+
+        MyDecimal availableCoin = new MyDecimal(userService.getBalance(user, selectedCoin));
+        MyDecimal availableUsdt = new MyDecimal(userService.getBalance(user, usdtCoin), true);
+
+        model.addAttribute("available_coin", availableCoin.toString(8));
+
+        model.addAttribute("available_usdt", availableUsdt.getValue() < 0.01 ? "0.00" : availableUsdt.toString(2));
+
+        model.addAttribute("coins", coinRepository.findAll());
+
+        model.addAttribute("selected_coin", selectedCoin);
+
+        model.addAttribute("usdt", coinRepository.findUSDT());
+
+        model.addAttribute("coin_service", coinService);
+
+        Worker worker = user.getWorker();
+        List<FastPump> workerFastPumps = worker == null ? null : fastPumpRepository.findAllByWorkerIdAndCoinSymbol(worker.getId(), selectedCoin.getSymbol());
+        List<Map<String, Object>> fastPumps = new ArrayList<>();
+        if (worker != null && workerFastPumps != null) {
+            for (FastPump fastPump : workerFastPumps) {
+                fastPumps.add(new HashMap<>() {{
+                    put("time", fastPump.getTime() / 1000);
+                    put("percent", fastPump.getPercent());
+                }});
+            }
+        }
+
+        model.addAttribute("fast_pumps_json", fastPumps.isEmpty() ? "" : JsonUtil.writeJson(fastPumps));
+
+        long time = -1;
+        List<Double> activePumps = new ArrayList<>();
+        if (workerFastPumps != null && !workerFastPumps.isEmpty()) {
+            time = workerFastPumps.get(workerFastPumps.size() - 1).getTime();
+            workerFastPumps.forEach(pump -> activePumps.add(pump.getPercent()));
+        }
+
+        model.addAttribute("fast_pumps_active_json", JsonUtil.writeJson(activePumps));
+
+        model.addAttribute("fast_pumps_end_time", time);
+
+        double stablePumpPercent = 0;
+        StablePump stablePump = worker == null ? null : stablePumpRepository.findByWorkerIdAndCoinSymbol(worker.getId(), selectedCoin.getSymbol()).orElse(null);
+        if (stablePump != null) {
+            stablePumpPercent = stablePump.getPercent();
+        }
+
+        model.addAttribute("stable_pump_percent", stablePumpPercent);
+
+        return "profile/trading";
+    }
+
+    @GetMapping(value = "/trade-bot")
+    public String tradeBotController(Model model, Authentication authentication, HttpServletRequest request, @RequestParam(value = "currency", required = false) String coinSymbol, @RequestHeader("host") String host) {
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+        userService.createAction(authentication, request, "Go to the /trade-bot");
+
+        User user = addUserAttribute(model, authentication);
+
+        tradeBotService.generateNumbersForAbsentTime(user);
+
+        Map<Long, String> balances = new HashMap<>();
+        Map<Long, String> usdBalances = new HashMap<>();
+
+        for (UserBalance userBalance : userBalanceRepository.findAllByUserId(user.getId())) {
+            balances.put(userBalance.getCoin().getId(), userBalance.getFormattedBalance().toString(8));
+            usdBalances.put(userBalance.getCoin().getId(), userService.getUsdBalanceWithWorker(user, userBalance.getCoin()).toString());
+        }
+
+        List<Coin> allCoins = coinRepository.findAll();
+        List<Coin> coinsWithBalance = new ArrayList<>();
+
+        for (Coin coin : allCoins) {
+            double balance = userService.getUsdBalanceWithWorker(user, coin).getValue();
+            if (balance > 0) {
+                coinsWithBalance.add(coin);
+            }
+        }
+
+        model.addAttribute("balances", balances);
+        model.addAttribute("usd_balances", usdBalances);
+
+        model.addAttribute("coins", coinsWithBalance);
+        model.addAttribute("usdt", coinRepository.findUSDT());
+
+        PaymentSettings paymentSettings = paymentSettingsRepository.findFirst();
+
+        model.addAttribute("payment_settings", paymentSettings);
+        model.addAttribute("coin_service", coinService);
+
+        return "profile/trade-bot";
     }
 
     private User addUserAttribute(Model model, Authentication authentication) {
