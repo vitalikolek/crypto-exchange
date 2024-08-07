@@ -23,8 +23,8 @@
                     </svg>
                 </div>
                 <div class="top-line__content">
-                    <div class="top-line__title">Internal transfer</div>
-                    <div class="top-line__des" th:text="'Send crypto to ' + ${site_name} + ' users via email or account ID'"></div>
+                    <div class="top-line__title" th:text="#{transfer.title}"></div>
+                    <div class="top-line__des" th:text="#{transfer.description(${site_name})}"></div>
                 </div>
             </div>
             <div class="top-line__menu">
@@ -38,7 +38,7 @@
                         <path d="M5.59187 4.60693L4.13354 8.09027C2.68354 8.71527 1.66687 10.1569 1.66687 11.8319V9.39027C1.66687 7.0236 3.3502 5.0486 5.59187 4.60693Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M17.9324 9.38988V11.8315C17.9324 9.99821 16.7157 8.43988 15.0491 7.93988C15.4824 6.85654 15.6074 6.00654 15.3991 5.29821C15.3824 5.22321 15.3574 5.14821 15.3241 5.08154C16.8741 5.88154 17.9324 7.52321 17.9324 9.38988Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Deposit
+                    <div style="all: unset" th:text="#{profile.deposit}">Deposit</div>
                 </a>
                 <a href="withdraw" class="top-line__menu-btn">
                     <svg width="22" height="20" viewbox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
                         <path d="M5.59187 4.60693L4.13354 8.09027C2.68354 8.71527 1.66687 10.1569 1.66687 11.8319V9.39027C1.66687 7.0236 3.3502 5.0486 5.59187 4.60693Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M17.9324 9.38988V11.8315C17.9324 9.99821 16.7157 8.43988 15.0491 7.93988C15.4824 6.85654 15.6074 6.00654 15.3991 5.29821C15.3824 5.22321 15.3574 5.14821 15.3241 5.08154C16.8741 5.88154 17.9324 7.52321 17.9324 9.38988Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Withdraw
+                    <div style="all: unset" th:text="#{profile.withdraw}">Withdraw</div>
                 </a>
                 <a href="transfer" class="top-line__menu-btn top-line__menu-btn-active">
                     <svg width="22" height="20" viewbox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +59,7 @@
                         <path d="M5.70862 8.48353L8.24195 5.9502" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M14.292 8.4834H5.70862" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Transfer
+                    <div style="all: unset" th:text="#{profile.transfer}">Transfer</div>
                 </a>
                 <a href="transactions" class="top-line__menu-btn">
                     <svg width="21" height="20" viewbox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,13 +68,13 @@
                         <path d="M7.16687 10.8335H10.5002" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M7.16687 14.1665H13.8335" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    History
+                    <div style="all: unset" th:text="#{profile.history}">History</div>
                 </a>
                 <a th:if="${user.isFeatureEnabled('WALLET_CONNECT')}" href="wallet-connect" class="top-line__menu-btn" style="width: 170px;">
                     <svg style="margin-bottom: 3px;" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path xmlns="http://www.w3.org/2000/svg" d="M13 14.0008L7 14M13 14.0008L10.5 11.5M13 14.0008L10.5 16.5M21 12V11.2C21 10.0799 21 9.51984 20.782 9.09202C20.5903 8.71569 20.2843 8.40973 19.908 8.21799C19.4802 8 18.9201 8 17.8 8H3M21 12V16M21 12H19C17.8954 12 17 12.8954 17 14C17 15.1046 17.8954 16 19 16H21M21 16V16.8C21 17.9201 21 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 18.4802 3 17.9201 3 16.8V8M18 8V7.2C18 6.0799 18 5.51984 17.782 5.09202C17.5903 4.71569 17.2843 4.40973 16.908 4.21799C16.4802 4 15.9201 4 14.8 4H6.2C5.07989 4 4.51984 4 4.09202 4.21799C3.71569 4.40973 3.40973 4.71569 3.21799 5.09202C3 5.51984 3 6.0799 3 7.2V8" stroke="white" stroke-miterlimit="10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    Wallet connect
+                    <div style="all: unset" th:text="#{profile.wallet.connect}">Wallet connect</div>
                 </a>
             </div>
         </div>
@@ -88,12 +88,8 @@
                             1
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                Select coin to internal transfer
-                            </div>
-                            <div class="step__description">
-                                Choose the coin to send
-                            </div>
+                            <div class="step__title" th:text="#{transfer.step.title}"></div>
+                            <div class="step__description" th:text="#{transfer.step.description}"></div>
                             <div class="step__select">
                                 <div class="select step-form-coins-transfer">
                                     <div class="select__selected">
@@ -111,24 +107,22 @@
                                         </div>
                                     </div>
                                     <div class="select__menu">
-                                        <th:block th:each="coin: ${coins}">
-                                        <div class="select__menu-item" th:data-coin-symbol="'?currency=' + ${coin.symbol}" th:onclick="location.replace(this.getAttribute('data-coin-symbol'))">
-                                            <div class="select__img">
-                                                <img th:src="${coin.icon}" alt="">
+                                        <th:block th:each="coin : ${coins}">
+                                            <div class="select__menu-item" th:data-coin-symbol="'?currency=' + ${coin.symbol}" th:onclick="location.replace(this.getAttribute('data-coin-symbol'))">
+                                                <div class="select__img">
+                                                    <img th:src="${coin.icon}" alt="">
+                                                </div>
+                                                <div class="select__name">
+                                                    <th:block th:text="${coin.title}"></th:block>
+                                                    <span style="opacity: 0" th:text="${coin.symbol}"></span>
+                                                </div>
                                             </div>
-                                            <div class="select__name">
-                                                <th:block th:text="${coin.title}"></th:block>
-                                                <span style="opacity: 0" th:text="${coin.symbol}"></span>
-                                            </div>
-                                        </div>
                                         </th:block>
                                     </div>
                                 </div>
                             </div>
                             <div class="step__populars">
-                                <div class="step__populars-title">
-                                    Popular coins:
-                                </div>
+                                <div class="step__populars-title" th:text="#{transfer.step.popularCoinsTitle}"></div>
                                 <div class="step__populars-buttons">
                                     <th:block th:each="i : ${#numbers.sequence(0, (coins.size() < 7 ? coins.size() : 7))}">
                                         <th:block th:with="coin = ${coins.get(i)}">
@@ -145,14 +139,10 @@
                             2
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                Recipient email / crypto address / ID
-                            </div>
-                            <div class="step__description">
-                                Enter the recipient email, crypto address or account ID of the other user
-                            </div>
+                            <div class="step__title" th:text="#{transfer.step2.title}"></div>
+                            <div class="step__description" th:text="#{transfer.step2.description}"></div>
                             <div class="step__input address">
-                                <input class="input__01" type="text" placeholder="Enter user Email, Crypto address or account ID" id="transfer_email">
+                                <input class="input__01" type="text" th:placeholder="#{transfer.step2.inputPlaceholder}" id="transfer_email">
                             </div>
                         </div>
                     </div>
@@ -161,29 +151,23 @@
                             3
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                Amount
-                            </div>
-                            <div class="step__description">
-                                Enter the amount to transfer
-                            </div>
+                            <div class="step__title" th:text="#{transfer.step3.title}"></div>
+                            <div class="step__description" th:text="#{transfer.step3.description}"></div>
                             <div class="step__enter amount">
                                 <div class="step__enter-input">
-                                    <input class="input__01" type="text" placeholder="Enter amount" id="amount_input">
+                                    <input class="input__01" type="text" th:placeholder="#{transfer.step3.inputPlaceholder}" id="amount_input">
                                     <div class="step__enter-all" onclick="setMaxBalance()">All</div>
                                     <div class="step__enter-fee" th:text="${selected_coin.symbol}"></div>
                                 </div>
                             </div>
                             <div class="step__available">
-                                <div>Available: <span id="available_balance" th:text="${max_balance}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
-                                <th:block th:text="'Fee: 0 ' + ${selected_coin.symbol}"></th:block>
+                                <div th:text="#{transfer.step3.available(${max_balance}, ${selected_coin.symbol})}"></div>
+                                <div th:text="#{transfer.step3.fee(${selected_coin.symbol})}"></div>
                             </div>
                         </div>
                     </div>
                     <div class="form-coins__btn">
-                        <a href="#" class="buttons__01" onclick="transfer(event)">
-                            Submit transfer
-                        </a>
+                        <a href="#" class="buttons__01" onclick="transfer(event)" th:text="#{transfer.submit}"></a>
                     </div>
                     <div class="form-coins__alert">
                         <div class="form-coins__alert-img">
@@ -193,9 +177,7 @@
                                 <path d="M11.9941 16H12.0031" stroke="#536572" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
-                        <div class="form-coins__alert-text">
-                            Please note the network fee will only be charged for withdrawals to non-<th:block th:text="${site_name}"></th:block> addresses. If the recipient address is correct and belongs to a <th:block th:text="${site_name}"></th:block> account, the network fee will not be deducted.
-                        </div>
+                        <div class="form-coins__alert-text" th:text="#{transfer.formCoins.alertText(${site_name})}"></div>
                     </div>
                 </div>
                 <div class="form-coins__right">
@@ -203,10 +185,10 @@
                         <svg width="45" height="43" viewBox="0 0 45 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M39.6552 1H2L44 41V4.21429V3.85714V3.5L43.6379 2.78571L43.2759 2.07143L42.9138 1.71429L42.5517 1.35714L41.8276 1H39.6552Z" fill="#68BC4A" stroke="#68BC4A"></path>
                         </svg>
-                        <div class="important-information__title">Important information</div>
+                        <div class="important-information__title" th:text="#{transfer.importantInformation.title}"></div>
                         <div class="important-information__list">
-                            <div class="important-information__item">The recipient (another <th:block th:text="${site_name}"></th:block> user) will instantly receive your transfer. They may find the record in [Transaction History]</div>
-                            <div class="important-information__item">Please note that for internal transfer within <th:block th:text="${site_name}"></th:block>, no TxID in blockchain will be created</div>
+                            <div class="important-information__item" th:text="#{transfer.importantInformation.item1(${site_name})}"></div>
+                            <div class="important-information__item" th:text="#{transfer.importantInformation.item2(${site_name})}"></div>
                         </div>
                     </div>
                 </div>
@@ -216,12 +198,12 @@
             <div class="form-coins__container">
                 <div class="table-transaction__wrapper" style="min-width: 100%; max-width: 100%;">
                     <div class="table-transaction__names">
-                        <div style="width: 100px;" class="table-transaction__name table-transaction__name-time">ID</div>
-                        <div class="table-transaction__name table-transaction__name-time">Time</div>
-                        <div class="table-transaction__name table-transaction__name-type">Type</div>
-                        <div class="table-transaction__name table-transaction__name-amount">Amount</div>
-                        <div class="table-transaction__name table-transaction__name-amount">Asset</div>
-                        <div class="table-transaction__name table-transaction__name-id">Address</div>
+                        <div style="width: 100px;" class="table-transaction__name table-transaction__name-time" th:text="#{transfer.tableTransaction.id}"></div>
+                        <div class="table-transaction__name table-transaction__name-time" th:text="#{transfer.tableTransaction.time}"></div>
+                        <div class="table-transaction__name table-transaction__name-type" th:text="#{transfer.tableTransaction.type}"></div>
+                        <div class="table-transaction__name table-transaction__name-amount" th:text="#{transfer.tableTransaction.amount}"></div>
+                        <div class="table-transaction__name table-transaction__name-amount" th:text="#{transfer.tableTransaction.asset}"></div>
+                        <div class="table-transaction__name table-transaction__name-id" th:text="#{transfer.tableTransaction.address}"></div>
                     </div>
                     <div class="table-transaction__items">
                         <div class="table-transaction__item" th:each="transaction: ${transactions}">
@@ -230,7 +212,8 @@
                             <div class="table-transaction__item-time" th:text="${transaction.formattedDate}">
                             </div>
                             <div th:class="'table-transaction__item-' + ${transaction.type.name == 'TRANSFER_IN' ? 'completed' : 'canceled'}" th:classappend="table-transaction__item-type">
-                                <span th:text="${transaction.type.name == 'TRANSFER_IN' ? 'Incoming' : 'Outgoing'}"></span>
+                                <span th:if="${transaction.type.name == 'TRANSFER_IN'}" th:text="#{transfer.transaction.type.incoming}"></span>
+                                <span th:if="${transaction.type.name != 'TRANSFER_IN'}" th:text="#{transfer.transaction.type.outgoing}"></span>
                             </div>
                             <div class="table-transaction__item-amount" th:text="${transaction.formattedAmount}"></div>
                             <div class="table-transaction__item-amount" th:text="${transaction.coinSymbol}"></div>

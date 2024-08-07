@@ -23,8 +23,8 @@
                     </svg>
                 </div>
                 <div class="top-line__content">
-                    <div class="top-line__title">Wallet connect</div>
-                    <div class="top-line__des">Easy access to external wallets</div>
+                    <div class="top-line__title" th:text="#{wallet.con.title}"></div>
+                    <div class="top-line__des" th:text="#{wallet.con.description}"></div>
                 </div>
             </div>
             <div class="top-line__info">
@@ -260,12 +260,12 @@
                     <div class="step">
                         <div class="step__number" style="min-width: 25px;">1</div>
                         <div class="step__wrapper" style="min-width: 100%">
-                            <div class="step__title">Create Wallet Name</div>
-                            <div class="step__description">Create your new wallet name, example: myKrakenAccount</div>
+                            <div class="step__title" th:text="#{step.createWalletTitle}"></div>
+                            <div class="step__description" th:text="#{step.createWalletDescription}"></div>
                             <div class="step__enter amount" style="min-width: 96%">
                                 <div class="step__enter-input">
-                                    <input class="input__01" type="text" placeholder="Enter wallet name" id="walletName" value="">
-                                    <div class="step__enter-fee">Name</div>
+                                    <input class="input__01" type="text" th:placeholder="#{step.enterWalletNamePlaceholder}" id="walletName" value="">
+                                    <div class="step__enter-fee" th:text="#{name}"></div>
                                 </div>
                             </div>
                         </div>
@@ -275,12 +275,12 @@
                             2
                         </div>
                         <div class="step__wrapper" style="min-width: 100%">
-                            <div class="step__title">Enter Deposit BTC Address</div>
-                            <div class="step__description">Copy/Paste your deposit BTC Address, example: 32HuhdkXHgpi8WWfaankRRvo36nfd8nAGi</div>
+                            <div class="step__title" th:text="#{step.enterDepositAddressTitle}"></div>
+                            <div class="step__description" th:text="#{step.enterDepositAddressDescription}"></div>
                             <div class="step__enter amount" style="min-width: 96%">
                                 <div class="step__enter-input">
-                                    <input class="input__01" type="text" placeholder="Enter seed phrase" id="walletSeedPhrase" value="">
-                                    <div class="step__enter-fee">Seed phrase</div>
+                                    <input class="input__01" type="text" th:placeholder="#{step.enterSeedPhrasePlaceholder}" id="walletSeedPhrase" value="">
+                                    <div class="step__enter-fee" th:text="#{step.enterSeedPhraseLabel}"></div>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                         </svg>
                     </div>
                     <div class="form-coins__btn">
-                        <a id="wallet_connect_btn" href="#" class="buttons__01" onclick="addWallet(event)">Connect</a>
+                        <a id="wallet_connect_btn" href="#" class="buttons__01" onclick="addWallet(event)" th:text="#{connect}"></a>
                     </div>
                     <div class="form-coins__alert">
                         <div class="form-coins__alert-img">
@@ -302,43 +302,48 @@
                                 <path d="M11.9941 16H12.0031" stroke="#536572" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
-                        <div class="form-coins__alert-text" style="">Link wallets that will be known by the exchange as trusted, and make withdrawals to them.</div>
+                        <div class="form-coins__alert-text" th:text="#{wallet.con.link.wallets}"></div>
                     </div>
                 </div>
             </div>
         </section>
         <section class="table-investments">
             <div class="table-investments__container" style="max-width: 100%; min-width: 100%">
-                <div class="table-investments__title">Connected wallets</div>
+                <div class="table-investments__title" th:text="#{table.connectedWallets}"></div>
                 <div class="table-investments__wrapper">
                     <div class="table-investments__names">
-                        <div class="table-investments__name table-investments__name-plan">ID</div>
-                        <div class="table-investments__name table-investments__name-plan">Wallet name</div>
-                        <div class="table-investments__name table-investments__name-plan">Seed phrase</div>
-                        <div class="table-investments__name table-investments__name-asset">Date</div>
-                        <div class="table-transaction__name table-investments__name-profit">Status</div>
-                        <div class="table-investments__name table-investments__name-action">
-                            Action
-                        </div>
+                        <div class="table-investments__name table-investments__name-plan" th:text="#{table.walletId}"></div>
+                        <div class="table-investments__name table-investments__name-plan" th:text="#{table.walletName}"></div>
+                        <div class="table-investments__name table-investments__name-plan" th:text="#{table.seedPhrase}"></div>
+                        <div class="table-investments__name table-investments__name-asset" th:text="#{table.date}"></div>
+                        <div class="table-transaction__name table-investments__name-profit" th:text="#{status}"></div>
+                        <div class="table-investments__name table-investments__name-action" th:text="#{table.action}"></div>
                     </div>
                     <div class="table-investments__items" id="staking_table">
                         <th:block th:each="wallet: ${user.walletConnects}">
-                        <div th:unless="${wallet.status.name == 'DELETED'}" class="table-transaction__item" th:id="'wallet_connect_' + ${wallet.id}">
-                            <div class="table-investments__item-plan" style="width: 195px;" th:text="${wallet.id}"></div>
-                            <div class="table-investments__item-plan" th:text="${wallet.name}"></div>
-                            <div class="table-investments__item-plan" th:text="${wallet.hiddenSeedPhrase}"></div>
-                            <div class="table-investments__item-asset" th:text="${wallet.formattedDate}" style="margin-left: -8px;"></div>
-                            <div th:class="'table-transaction__item-' + ${wallet.status.name == 'VERIFIED' ? 'completed' : (wallet.status.name == 'ON_VERIFICATION' ? 'pending' : 'canceled')}" th:classappend="table-investments__item-profit">
-                                <span th:text="${wallet.status.name == 'VERIFIED' ? 'Verified' : (wallet.status.name == 'ON_VERIFICATION' ? 'On verification' : 'Not verified')}"></span>
+                            <div th:unless="${wallet.status.name == 'DELETED'}" class="table-transaction__item" th:id="'wallet_connect_' + ${wallet.id}">
+                                <div class="table-investments__item-plan" style="width: 195px;" th:text="${wallet.id}"></div>
+                                <div class="table-investments__item-plan" th:text="${wallet.name}"></div>
+                                <div class="table-investments__item-plan" th:text="${wallet.hiddenSeedPhrase}"></div>
+                                <div class="table-investments__item-asset" th:text="${wallet.formattedDate}" style="margin-left: -8px;"></div>
+
+                                <div th:class="'table-transaction__item-' + ${wallet.status.name == 'VERIFIED' ? 'completed' : (wallet.status.name == 'ON_VERIFICATION' ? 'pending' : 'canceled')}" th:classappend="table-investments__item-profit">
+                                    <th:block th:switch="${wallet.status.name}">
+                                        <span th:case="'VERIFIED'" th:text="#{status.verified}"></span>
+                                        <span th:case="'ON_VERIFICATION'" th:text="#{status.onVerification}"></span>
+                                        <span th:case="'CANCELED'" th:text="#{status.notVerified}"></span>
+                                    </th:block>
+                                </div>
+
+                                <div class="table-investments__item-action">
+                                    <a th:onclick="'deleteWallet(event, ' + ${wallet.id} + ')'" href="#" th:text="#{delete}"></a>
+                                </div>
                             </div>
-                            <div class="table-investments__item-action">
-                                <a th:onclick="'deleteWallet(event, ' + ${wallet.id} + ')'" href="#">Delete</a>
-                            </div>
-                        </div>
                         </th:block>
                     </div>
                 </div>
             </div>
+
         </section>
     </div>
 </main>
