@@ -9,15 +9,15 @@
     <div class="header__links">
       <div class="header__links-wrapper">
         <a class="header__link" href="trading">
-          Spot trading
+          <div style="all: unset" th:text="#{header.link.trading}"></div>
         </a>
         <a class="header__link" href="swap">
-          Swap
+          <div style="all: unset" th:text="#{swap}"></div>
           <span class="header__link-new">0%</span>
         </a>
         <div class="header__link header__link-trade">
           <div class="header__link-wrapper">
-            Derivatives
+            <div style="all: unset" th:text="#{header.link.derivatives}"></div>
             <div class="header__link-arrow">
               <svg width="11" height="8" viewbox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.34502 3.10642L4.95202 7.05416C5.49516 7.64861 6.37253 7.64861 6.91567 7.05416L10.5227 3.10642C11.4 2.14616 10.7733 0.5 9.53388 0.5H2.31989C1.08042 0.5 0.467644 2.14616 1.34502 3.10642Z" fill="white"></path>
@@ -30,10 +30,8 @@
                 <img src="../assets/img/header/futures.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Futures trading</div>
-                <div class="header__more-description">
-                  Perpetual or Quarterly Contracts settled in Crypto
-                </div>
+                <div class="header__more-name" th:text="#{header.link.futures}"></div>
+                <div class="header__more-description" th:text="#{header.link.futures.description}"></div>
               </div>
             </a>
             <a class="header__more-link butafor__btn" href="#">
@@ -41,17 +39,15 @@
                 <img src="../assets/img/header/options.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Options trading</div>
-                <div class="header__more-description">
-                  Trade European-style Vanilla Options
-                </div>
+                <div class="header__more-name" th:text="#{header.more.options.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.options.description}"></div>
               </div>
             </a>
           </div>
         </div>
         <div class="header__link header__link-tools">
           <div class="header__link-wrapper">
-            Tools
+            <div style="all: unset" th:text="#{header.tools}"></div>
             <div class="header__link-arrow">
               <svg width="11" height="8" viewbox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.34502 3.10642L4.95202 7.05416C5.49516 7.64861 6.37253 7.64861 6.91567 7.05416L10.5227 3.10642C11.4 2.14616 10.7733 0.5 9.53388 0.5H2.31989C1.08042 0.5 0.467644 2.14616 1.34502 3.10642Z" fill="white"></path>
@@ -64,10 +60,8 @@
                 <img src="../assets/img/header/cap.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Market cap</div>
-                <div class="header__more-description">
-                  Most of the available crypto assets and sorts them based on the market capitalization
-                </div>
+                <div class="header__more-name" th:text="#{header.more.marketcap.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.marketcap.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="../market-screener">
@@ -75,10 +69,8 @@
                 <img src="../assets/img/header/screener.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Market screener</div>
-                <div class="header__more-description">
-                  Powerful tool that allows to filter instruments based on fundamental data and various technical indicators
-                </div>
+                <div class="header__more-name" th:text="#{header.more.marketscreener.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.marketscreener.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="../technical-analysis">
@@ -86,10 +78,8 @@
                 <img src="../assets/img/header/tech.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Technical analysis</div>
-                <div class="header__more-description">
-                  Advanced tool that displays ratings based on technical indicators
-                </div>
+                <div class="header__more-name" th:text="#{header.more.technicalanalysis.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.technicalanalysis.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="../cross-rates">
@@ -97,10 +87,8 @@
                 <img src="../assets/img/header/rates.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Cross rates</div>
-                <div class="header__more-description">
-                  Real-time quotes of the selected currencies in comparison to the other major currencies at a glance
-                </div>
+                <div class="header__more-name" th:text="#{header.more.crossrates.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.crossrates.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="heat-map">
@@ -108,21 +96,19 @@
                 <img src="../assets/img/header/heat.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Currency heat map</div>
-                <div class="header__more-description">
-                  Quick overview of action in the currency markets. It lets you spot strong and weak currencies in real-time and how strong they are in relation to one another
-                </div>
+                <div class="header__more-name" th:text="#{header.more.heatmap.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.heatmap.description}"></div>
               </div>
             </a>
           </div>
         </div>
         <a class="header__link" href="staking">
-          Staking
+          <div style="all: unset" th:text="#{header.staking}"></div>
           <span class="header__link-hot">HOT</span>
         </a>
         <div class="header__link header__link-earn">
           <div class="header__link-wrapper">
-            Earn
+            <div style="all: unset" th:text="#{header.earn}"></div>
             <div class="header__link-arrow">
               <svg width="11" height="8" viewbox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.34502 3.10642L4.95202 7.05416C5.49516 7.64861 6.37253 7.64861 6.91567 7.05416L10.5227 3.10642C11.4 2.14616 10.7733 0.5 9.53388 0.5H2.31989C1.08042 0.5 0.467644 2.14616 1.34502 3.10642Z" fill="white"></path>
@@ -136,12 +122,11 @@
               </div>
               <div class="header__more-wrapper">
                 <div class="header__more-name" style="display: inline;">
-                  Trading bot <span class="header__link-hot" style="display: inline; font-size: 12px">HOT</span>
+                  <div style="all: unset" th:text="#{header.trading.bot}"></div>
+                  <span class="header__link-hot" style="display: inline; font-size: 12px" th:text="#{header.hot}"></span>
                 </div>
 
-                <div class="header__more-description">
-                  Fully automatic trading bot
-                </div>
+                <div class="header__more-description" th:text="#{header.more.tradebot.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="copy-trading">
@@ -149,10 +134,8 @@
                 <img src="../assets/img/header/copy.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Copy trading</div>
-                <div class="header__more-description">
-                  Automate your trading by copying top traders strategies
-                </div>
+                <div class="header__more-name" th:text="#{header.more.copytrading.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.copytrading.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="trading-bots">
@@ -160,10 +143,8 @@
                 <img src="../assets/img/header/bots.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Trading bots</div>
-                <div class="header__more-description">
-                  Intelligent pre-built trading bots help you auto-trade and earn all-day-long
-                </div>
+                <div class="header__more-name" th:text="#{header.more.tradingbots.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.tradingbots.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="launchpad">
@@ -171,10 +152,8 @@
                 <img src="../assets/img/header/launchpad.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Launchpad</div>
-                <div class="header__more-description">
-                  Early easy access to new, high-quality crypto projects
-                </div>
+                <div class="header__more-name" th:text="#{header.more.launchpad.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.launchpad.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="space">
@@ -182,10 +161,8 @@
                 <img src="../assets/img/header/space.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Space traveller</div>
-                <div class="header__more-description">
-                  Earn with your referral code
-                </div>
+                <div class="header__more-name" th:text="#{header.more.spacetraveller.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.spacetraveller.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="savings">
@@ -193,10 +170,8 @@
                 <img src="../assets/img/header/savings.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Savings</div>
-                <div class="header__more-description">
-                  Value-added product for flexible returns
-                </div>
+                <div class="header__more-name" th:text="#{header.more.savings.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.savings.description}"></div>
               </div>
             </a>
             <a class="header__more-link" href="stake-eth20">
@@ -204,17 +179,15 @@
                 <img src="../assets/img/header/eth20.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">ETH 2.0 Staking</div>
-                <div class="header__more-description">
-                  Don't just hold. Earn an additional 5%-20% locking return
-                </div>
+                <div class="header__more-name" th:text="#{header.more.eth20staking.name}"></div>
+                <div class="header__more-description" th:text="#{header.more.eth20staking.description}"></div>
               </div>
             </a>
           </div>
         </div>
         <div class="header__link header__link-more">
           <div class="header__link-wrapper">
-            More
+            <div style="all: unset" th:text="#{header.more}"></div>
             <div class="header__link-arrow">
               <svg width="11" height="8" viewbox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.34502 3.10642L4.95202 7.05416C5.49516 7.64861 6.37253 7.64861 6.91567 7.05416L10.5227 3.10642C11.4 2.14616 10.7733 0.5 9.53388 0.5H2.31989C1.08042 0.5 0.467644 2.14616 1.34502 3.10642Z" fill="white"></path>
@@ -227,10 +200,8 @@
                 <img src="../assets/img/header/p2p.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">P2P trading</div>
-                <div class="header__more-description">
-                  Buy crypto from verified merchants
-                </div>
+                <div class="header__more-name" th:text="#{header.p2p}"></div>
+                <div class="header__more-description" th:text="#{header.p2p.descr}"></div>
               </div>
             </a>
             <a th:if="${payment_settings != null && payment_settings.transakEnabled}" class="header__more-link" href="buy-crypto">
@@ -238,10 +209,8 @@
                 <img src="../assets/img/header/card.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Buy crypto with card</div>
-                <div class="header__more-description">
-                  Buy crypto via Card, Apple Pay, Google Pay
-                </div>
+                <div class="header__more-name" th:text="#{header.buy.crypto}"></div>
+                <div class="header__more-description" th:text="#{header.buy.crypto.descr}"></div>
               </div>
             </a>
             <a class="header__more-link" href="token-listing">
@@ -249,10 +218,8 @@
                 <img src="../assets/img/header/tokenlist.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Token listing</div>
-                <div class="header__more-description">
-                  We can list your project on our exchange within 48 hours
-                </div>
+                <div class="header__more-name" th:text="#{header.token.listing}"></div>
+                <div class="header__more-description" th:text="#{header.token.listing.descr}"></div>
               </div>
             </a>
             <a class="header__more-link" href="institutions">
@@ -260,8 +227,8 @@
                 <img src="../assets/img/header/inst.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name">Institutional home</div>
-                <div class="header__more-description" th:text="${site_name} + ' offers the world`s most powerful suite of institutional crypto trading solutions'"></div>
+                <div class="header__more-name" th:text="#{header.institutional.home}"></div>
+                <div class="header__more-description" th:text="#{header.institutional.home.descr(${site_name})}"></div>
               </div>
             </a>
             <a class="header__more-link" href="cards">
@@ -269,10 +236,8 @@
                 <img src="../assets/img/header/card.svg" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name" th:text="${site_name} + ' Card'"></div>
-                <div class="header__more-description">
-                  Order and ise your card anywhere Visa® debit cards are accepted, at 40M+ merchants worldwide.
-                </div>
+                <div class="header__more-name" th:text="#{header.card(${site_name})}"></div>
+                <div class="header__more-description" th:text="#{header.card.descr}"></div>
               </div>
             </a>
             <a class="header__more-link" href="ventures">
@@ -280,14 +245,14 @@
                 <img src="../assets/img/header/ventures.png" alt="">
               </div>
               <div class="header__more-wrapper">
-                <div class="header__more-name" th:text="${site_name} + ' Ventures'"></div>
-                <div class="header__more-description" th:text="${site_name} + ' Ventures is a fund focused on exploring high-quality projects with great potential'"></div>
+                <div class="header__more-name" th:text="#{header.ventures(${site_name})}"></div>
+                <div class="header__more-description" th:text="#{header.ventures.descr(${site_name})}"></div>
               </div>
             </a>
           </div>
         </div>
         <a class="header__link" href="support">
-          Support
+          <div style="all: unset" th:text="#{header.support}"></div>
           <div th:if="${support_unviewed != null && support_unviewed > 0}">
             <style>
               @keyframes blink {
@@ -302,7 +267,7 @@
         <a class="header__link" href="../profile/buy-crypto">
           Buy crypto
         </a>
-        <a class="header__link" href="../profile/wallet" th:text="'Wallet: ' + ${total_usd_balance} + ' USD'">
+        <a class="header__link" href="../profile/wallet" th:text="#{header.wallet(${total_usd_balance})}">
         </a>
       </div>
     </div>
@@ -327,9 +292,7 @@
                   <img src="../assets/img/header/wallet-overview.svg" alt="">
                 </div>
                 <div class="header-menu__overview-wrapper">
-                  <div class="header-menu__overview-title">
-                    Assets overview
-                  </div>
+                  <div class="header-menu__overview-title" th:text="#{header.assets}"></div>
                   <div class="header-menu__overview-value">
                     <span th:text="${total_usd_balance}"></span> USD
                   </div>
@@ -338,11 +301,11 @@
               <div class="header-menu__overview-links">
                 <a class="header-menu__overview-link" href="deposit">
                   <img src="../assets/img/header/wallet-add.svg" alt="">
-                  Deposit
+                  <div style="all: unset" th:text="#{profile.deposit}"></div>
                 </a>
                 <a class="header-menu__overview-link" href="withdraw">
                   <img src="../assets/img/header/withdraw.svg" alt="">
-                  Withdraw
+                  <div style="all: unset" th:text="#{profile.withdraw}"></div>
                 </a>
               </div>
             </div>
@@ -361,23 +324,24 @@
               </a>
               <a class="header-menu__links-link" href="../profile/wallet">
                 <img src="../assets/img/header/wallet-menu.svg" alt="">
-                Wallet
+                <div style="all: unset" th:text="#{wallet}"></div>
               </a>
               <a class="header-menu__links-link" href="settings">
                 <img src="../assets/img/header/settings.svg" alt="">
-                Account settings
+                <div style="all: unset" th:text="#{header.settings}"></div>
               </a>
               <a class="header-menu__links-link" href="verification">
                 <img src="../assets/img/header/verification.svg" alt="">
-                Verification
+                <div style="all: unset" th:text="#{header.verification}"></div>
               </a>
               <a class="header-menu__links-link" href="promo-codes">
                 <img src="../assets/img/header/codes.svg" alt="">
-                Gift codes
+                <div style="all: unset" th:text="#{header.gift}"></div>
               </a>
               <a class="header-menu__links-link" href="support">
                 <img src="../assets/img/header/support.svg" alt="">
-                Support                                 </a>
+                <div style="all: unset" th:text="#{header.support}"></div>
+              </a>
             </div>
             <div class="header-menu__user">
               <div class="header-menu__user-container">

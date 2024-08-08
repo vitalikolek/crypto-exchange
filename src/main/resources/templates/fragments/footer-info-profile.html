@@ -15,9 +15,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="footer__description">
-                    Innovative cryptocurrency exchange with advanced financial services. We rely on blockchain technology to provide everything you need for wise trading and investment.
-                </div>
+                <div class="footer__description" th:text="#{footer.descr}"></div>
                 <div style="font-family: Roboto-Regular, sans-serif; font-weight: 400; font-size: 12px; line-height: 15px; letter-spacing: 0.02em; color: rgba(232, 232, 232, 0.7); margin-bottom: 23px;">
                     <th:block th:if="${listing_request_enabled}">Listing Request: <span style="color: #6544c6;" th:text="${listing_request}"></span><br></th:block>
                     <th:block th:if="${partnership_enabled}">Partnership: <span style="color: #6544c6;" th:text="${partnership}"></span></th:block>
@@ -39,76 +37,66 @@
                 </a>
                 <br>
                 <br>
-                <div class="footer__label">Subscribe to our newsletter</div>
+                <div class="footer__label" th:text="#{footer.subscribe.label}"></div>
                 <div class="footer__wrapper">
-                    <input class="footer__input" type="email" placeholder="Enter email">
-                    <a class="footer__sing-up" id="footer_subscribe" href="#">
-                        Subscribe
-                    </a>
+                    <input class="footer__input" type="email" th:placeholder="#{footer.subscribe.placeholder}">
+                    <a class="footer__sing-up" id="footer_subscribe" href="#" th:text="#{footer.subscribe.button}"></a>
                 </div>
             </div>
             <div class="footer__links">
                 <div class="footer__links-block">
-                    <div class="footer__link-title">
-                        Products
-                    </div>
+                    <div class="footer__link-title" th:text="#{footer.products.title}"></div>
                     <div class="footer__links-wrapper">
-                        <a class="footer__link" href="../trading">Spot trading</a>
-                        <a class="footer__link butafor__btn" href="../profile/wallet">Futures trading</a>
-                        <a class="footer__link butafor__btn" href="../profile/wallet">Options trading</a>
-                        <a class="footer__link" href="../profile/wallet">Wallet</a>
-                        <a class="footer__link" href="swap">Instant swap</a>
-                        <a class="footer__link" href="p2p">P2P trading</a>
-                        <a class="footer__link" href="staking">DeFi Staking</a>
-                        <a class="footer__link" href="cards" th:text="${site_name} + ' Visa Card'"></a>
+                        <a class="footer__link" href="../trading" th:text="#{header.link.trading}"></a>
+                        <a class="footer__link butafor__btn" href="../profile/wallet" th:text="#{header.link.futures}"></a>
+                        <a class="footer__link butafor__btn" href="../profile/wallet" th:text="#{header.more.options.name}"></a>
+                        <a class="footer__link" href="../profile/wallet" th:text="#{wallet}"></a>
+                        <a class="footer__link" href="swap" th:text="#{footer.links.instantswap}"></a>
+                        <a class="footer__link" href="p2p" th:text="#{header.p2p}"></a>
+                        <a class="footer__link" href="staking" th:text="#{footer.links.defistaking}"></a>
+                        <a class="footer__link" href="cards" th:text="#{footer.links.cards(${site_name})}"></a>
                     </div>
                 </div>
 
                 <div class="footer__links-block">
-                    <div class="footer__link-title">
-                        Services
-                    </div>
+                    <div class="footer__link-title" th:text="#{footer.services.title}"></div>
                     <div class="footer__links-wrapper">
-                        <a class="footer__link" href="support">24/7 Support chat</a>
-                        <a class="footer__link" href="copy-trading">Copy trading</a>
-                        <a class="footer__link" href="trading-bots">Trading bots</a>
-                        <a class="footer__link" href="stake-eth20">ETH 2.0 staking</a>
-                        <a class="footer__link" href="launchpad">Launchpad</a>
-                        <a class="footer__link" href="savings">Savings</a>
-                        <a class="footer__link" href="ventures" th:text="${site_name} + ' ventures'"></a>
-                        <a th:if="${payment_settings != null && payment_settings.transakEnabled}" class="footer__link" href="buy-crypto">Buy crypto</a>
+                        <a class="footer__link" href="support" th:text="#{footer.services.support}"></a>
+                        <a class="footer__link" href="copy-trading" th:text="#{header.more.copytrading.name}"></a>
+                        <a class="footer__link" href="trading-bots" th:text="#{header.more.tradingbots.name}"></a>
+                        <a class="footer__link" href="stake-eth20" th:text="#{header.more.eth20staking.name}"></a>
+                        <a class="footer__link" href="launchpad" th:text="#{header.more.launchpad.name}"></a>
+                        <a class="footer__link" href="savings" th:text="#{header.more.savings.name}"></a>
+                        <a class="footer__link" href="ventures" th:text="#{header.ventures(${site_name})}"></a>
+                        <a th:if="${payment_settings != null && payment_settings.transakEnabled}" class="footer__link" href="buy-crypto" th:text="#{footer.services.buycrypto}"></a>
                     </div>
                 </div>
 
                 <div class="footer__links-block">
-                    <div class="footer__link-title">
-                        Information
-                    </div>
+                    <div class="footer__link-title" th:text="#{footer.information.title}">Information</div>
                     <div class="footer__links-wrapper">
-                        <a class="footer__link" href="../fees">Fees</a>
-                        <a class="footer__link" href="status">Platform status</a>
-                        <a class="footer__link" href="wallet-security">Wallet security</a>
-                        <a class="footer__link" href="../indices">Indices</a>
-                        <a class="footer__link" href="api-docs">Trading API</a>
-                        <a class="footer__link" href="token-listing">Token listing</a>
-                        <a class="footer__link" href="space">Referral system</a>
-                        <a class="footer__link" href="../bugbounty">Bug Bounty</a>
+                        <a class="footer__link" href="../fees" th:text="#{footer.information.fees}">Fees</a>
+                        <a class="footer__link" href="status" th:text="#{footer.information.platformstatus}">Platform status</a>
+                        <a class="footer__link" href="wallet-security" th:text="#{footer.information.walletsecurity}">Wallet security</a>
+                        <a class="footer__link" href="../indices" th:text="#{footer.information.indices}">Indices</a>
+                        <a class="footer__link" href="api-docs" th:text="#{footer.information.tradingapi}">Trading API</a>
+                        <a class="footer__link" href="token-listing" th:text="#{header.token.listing}">Token listing</a>
+                        <a class="footer__link" href="space" th:text="#{footer.information.referralsystem}">Referral system</a>
+                        <a class="footer__link" href="../bugbounty" th:text="#{footer.information.bugbounty}">Bug Bounty</a>
                     </div>
                 </div>
 
                 <div class="footer__links-block">
-                    <div class="footer__link-title">
-                        Legal
-                    </div>
+                    <div class="footer__link-title" th:text="#{footer.legal.title}">Legal</div>
                     <div class="footer__links-wrapper">
-                        <a class="footer__link" href="../terms">Terms of service</a>
-                        <a class="footer__link" href="../privacy-notice">Privacy notice</a>
-                        <a class="footer__link" href="../cookies-policy">Cookies policy</a>
-                        <a class="footer__link" href="../aml-kyc-policy">AML & KYC policy</a>
-                        <a class="footer__link" href="../risk">Risk Disclosure Statement</a>
-                        <a class="footer__link" href="../regulatory">Regulatory License</a>
-                        <a class="footer__link" href="../treatment">Special Treatment</a>
-                        <a class="footer__link" href="../law">Law Enforcement Requests</a>
+                        <a class="footer__link" href="../terms" th:text="#{signup.terms}">Terms of service</a>
+                        <a class="footer__link" href="../privacy-notice" th:text="#{footer.legal.privacy}">Privacy notice</a>
+                        <a class="footer__link" href="../cookies-policy" th:text="#{footer.legal.cookies}">Cookies policy</a>
+                        <a class="footer__link" href="../aml-kyc-policy" th:text="#{footer.legal.amlkyc}">AML & KYC policy</a>
+                        <a class="footer__link" href="../risk" th:text="#{footer.legal.risk}">Risk Disclosure Statement</a>
+                        <a class="footer__link" href="../regulatory" th:text="#{footer.legal.regulatory}">Regulatory License</a>
+                        <a class="footer__link" href="../treatment" th:text="#{footer.legal.specialtreatment}">Special Treatment</a>
+                        <a class="footer__link" href="../law" th:text="#{footer.legal.lawenforcement}">Law Enforcement Requests</a>
                     </div>
                 </div>
             </div>
@@ -116,8 +104,8 @@
 
         <div class="footer__bottom">
             <div class="footer__sub-text">
-                In acceding to or using the Platform and the Site, you represent and warrant that you are fully aware of the risks associated with the transactions involving Digital Assets or the use of Platform. You agree and understand that you are solely responsible for determining the nature, potential value, suitability, and appropriateness of these risks for yourself, and that the Company does not give advice or recommendations regarding any Digital Asset, including the suitability and appropriateness of, and investment strategies for, any Digital Asset. You agree and understand that you access and use the Platform and the Site at your own risk. <br>
-                <span th:text="${site_name} + ' 2024 © All right reserved'"></span>
+                <div style="all: unset" th:text="#{footer.sub.text}"></div><br>
+                <span th:text="#{footer.sub.text.more(${site_name})}"></span>
             </div>
         </div>
     </div>
