@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="landings/css/choose.min.css">
     <link rel="stylesheet" href="landings/css/trade.min.css">
     <link rel="stylesheet" href="landings/css/home.min.css">
+    <link rel="stylesheet" href="assets/css/language-select.css">
     <link rel="icon" th:href="${site_icon}">
     <link rel="shortcut icon" th:href="${site_icon}">
 </head>
@@ -47,14 +48,14 @@
                         <a class="header__link hot" href="profile/swap" th:text="#{swap}"></a>
                     </div>
                     <div class="header__right">
+                        <div th:replace="~{fragments/language-container.html :: container}"></div>
                         <a th:if="${user == null}" class="header__right-link" href="signin"
-                           th:text="#{login}"></a>
+                           th:text="#{login}" style="margin-left: 16px"></a>
                         <a th:if="${user == null}" class="header__right-up" href="signup" th:text="#{signup}">Sign
                             up</a>
                         <a th:if="${user != null}" class="header__right-up" href="profile/wallet"
                            th:text="#{profile}"></a>
                     </div>
-
                 </div>
                 <div class="header__btn-mobile">
                     <svg width="28" height="28" viewbox="0 0 100 100">

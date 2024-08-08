@@ -803,6 +803,18 @@ public class ProfileController {
         return "profile/bankWithdraw";
     }
 
+    @GetMapping(value = "heat-map")
+    public String heatMapController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
+        userService.createAction(authentication, request, "Go to the /heat-map");
+
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        addUserAttribute(model, authentication);
+
+        return "profile/heat-map";
+    }
+
     @GetMapping(value = "trading")
     public String tradingController(Model model, Authentication authentication, HttpServletRequest request, @RequestParam(value = "currency", required = false) String coinSymbol, @RequestHeader("host") String host) {
         userService.createAction(authentication, request, "Go to the /trading");

@@ -1,10 +1,8 @@
 package me.yukitale.cryptoexchange.exchange.controller.other;
 
-import me.yukitale.cryptoexchange.exchange.model.user.UserBalance;
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserBalanceRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
-import me.yukitale.cryptoexchange.exchange.service.TradeBotService;
 import me.yukitale.cryptoexchange.panel.admin.model.payments.PaymentSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import me.yukitale.cryptoexchange.exchange.model.Coin;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
 import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.service.CoinService;
@@ -35,10 +31,7 @@ import me.yukitale.cryptoexchange.utils.MyDecimal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -161,18 +154,6 @@ public class ExchangeController {
         model.addAttribute("coin_service", coinService);
 
         return "fees";
-    }
-
-    @GetMapping(value = "heat-map")
-    public String heatMapController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
-        userService.createAction(authentication, request, "Go to the /heat-map");
-
-        addDomainInfoAttribute(model, host);
-        addPaymentSettings(model);
-
-        addUserAttribute(model, authentication);
-
-        return "heat-map";
     }
 
     @GetMapping(value = "indices")
