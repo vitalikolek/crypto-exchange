@@ -24,8 +24,8 @@
                     </svg>
                 </div>
                 <div class="top-line__content">
-                    <div class="top-line__title">Instant swap</div>
-                    <div class="top-line__des">Convert top crypto and stablecoins with 0 fees and no slippage</div>
+                    <div class="top-line__title" th:text="#{swap.title}"></div>
+                    <div class="top-line__des" th:text="#{swap.subtitle}"></div>
                 </div>
             </div>
 
@@ -40,18 +40,12 @@
                             1
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                You send
-                            </div>
-                            <div class="step__description">
-                                Select the crypto asset you want to exchange
-                            </div>
+                            <div class="step__title" th:text="#{swap.you.send}"></div>
+                            <div class="step__description" th:text="#{swap.you.send.descr}"></div>
                             <div class="step__enter">
                                 <div class="step__enter-input">
-                                    <input class="input__01" type="number" placeholder="Enter amount" id="ex_amount">
-                                    <div class="step__enter-all" onclick="availableBalance()">
-                                        All
-                                    </div>
+                                    <input class="input__01" type="number" th:placeholder="#{withdraw.enter.amount}" id="ex_amount">
+                                    <div class="step__enter-all" onclick="availableBalance()" th:text="#{all}"></div>
                                 </div>
                                 <div class="select step-form-coins-send">
                                     <div class="select__selected">
@@ -81,7 +75,11 @@
                                 </div>
                             </div>
                             <div class="step__available">
-                                <div>Available: <span id="my_available_balance" onclick="availableBalance()">0</span> <span id="my_available_crypto" onclick="availableBalance()">BTC</span></div>
+                                <div>
+                                    <div style="all: unset" th:text="#{available}"></div>
+                                    <span id="my_available_balance" onclick="availableBalance()">0</span>
+                                    <span id="my_available_crypto" onclick="availableBalance()">BTC</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,15 +94,11 @@
                             2
                         </div>
                         <div class="step__wrapper">
-                            <div class="step__title">
-                                You receive
-                            </div>
-                            <div class="step__description">
-                                Select receive currency
-                            </div>
+                            <div class="step__title" th:text="#{swap.receive}"></div>
+                            <div class="step__description" th:text="#{swap.receive.descr}"></div>
                             <div class="step__enter">
                                 <div class="step__enter-input">
-                                    <input class="input__01" type="number" disabled="" placeholder="You will receive" id="ex_amount_from">
+                                    <input class="input__01" type="number" disabled="" th:placeholder="#{swap.will.receive}" id="ex_amount_from">
                                 </div>
                                 <div class="select step-form-coins-receive">
                                     <div class="select__selected">
@@ -137,13 +131,15 @@
                         </div>
                     </div>
                     <div class="form-coins__rate">
-                        <div>Reference exchange rate: <span id="rate_one">1</span> <span id="rate_one_currency">BTC</span> ~ <span id="rate_two"></span> <span id="rate_two_currency">USDT</span></div>
+                        <div>
+                            <div style="all: unset" th:text="#{swap.reference.exchange}"></div>
+                            <span id="rate_one">1</span>
+                            <span id="rate_one_currency">BTC</span> ~
+                            <span id="rate_two"></span> <span id="rate_two_currency">USDT</span>
+                        </div>
                     </div>
                     <div class="form-coins__btn">
-                        <a href="#" class="buttons__01" id="ex_btn">
-
-                            Submit Swap
-                        </a>
+                        <a href="#" class="buttons__01" id="ex_btn" th:text="#{swap.submit.swap}"></a>
                     </div>
                     <div class="form-coins__alert">
                         <div class="form-coins__alert-img">
@@ -153,55 +149,29 @@
                                 <path d="M11.9941 16H12.0031" stroke="#536572" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
-                        <div class="form-coins__alert-text">
-                            Once the conversion is complete, funds will be transferred directly to your spot account
-                        </div>
+                        <div class="form-coins__alert-text" th:text="#{swap.alert.text}"></div>
                     </div>
                 </div>
                 <div class="form-coins__right">
                     <div class="form-faq">
                         <div class="form-faq__block">
-                            <div class="form-faq__question">
-                                What coins are available in the swap tool?
-                            </div>
-                            <div class="form-faq__answer">
-                                The <th:block th:text="${site_name}"></th:block> swap tool currently supports all conversions between
-                                BTC, ETH, USDT, and USD. These represent the three most popular
-                                cryptocurrencies used for trading (BTC, ETH, USDT) as well as the
-                                most popular fiat currency (USD). More coins will also be added, so stay tuned!
-                            </div>
+                            <div class="form-faq__question" th:text="#{swap.faq.swapQuestion}"></div>
+                            <div class="form-faq__answer" th:text="#{swap.faq.swapAnswer(${site_name})}"></div>
                         </div>
 
                         <div class="form-faq__block">
-                            <div class="form-faq__question">
-                                How quick is the conversion?
-                            </div>
-                            <div class="form-faq__answer">
-                                Once you have set the conversion parameters and clicked the Swap button,
-                                you will receive a quote based on the current conversion rate, which will
-                                be valid for 7 seconds. If this time expires, you’ll have to click the Swap
-                                button again. If you are satisfied with the quote and click Confirm while
-                                the quote is still valid, the actual conversion should occur within seconds.
-                            </div>
+                            <div class="form-faq__question" th:text="#{swap.faq.conversionSpeedQuestion}"></div>
+                            <div class="form-faq__answer" th:text="#{swap.faq.conversionSpeedAnswer}"></div>
                         </div>
 
                         <div class="form-faq__block">
-                            <div class="form-faq__question">
-                                Are there any trading fees?
-                            </div>
-                            <div class="form-faq__answer">
-                                There are no fees for using Swap tool.
-                            </div>
+                            <div class="form-faq__question" th:text="#{swap.faq.tradingFeesQuestion}"></div>
+                            <div class="form-faq__answer" th:text="#{swap.faq.tradingFeesAnswer}"></div>
                         </div>
 
                         <div class="form-faq__block">
-                            <div class="form-faq__question">
-                                What are the minimum and maximum trade amounts?
-                            </div>
-                            <div class="form-faq__answer">
-                                Minimum and maximum trade amounts will be dependent on the coin
-                                / pair and can be previewed before entering in a trade amount.
-                            </div>
+                            <div class="form-faq__question" th:text="#{swap.faq.tradeAmountsQuestion}"></div>
+                            <div class="form-faq__answer" th:text="#{swap.faq.tradeAmountsAnswer}"></div>
                         </div>
                     </div>
                 </div>

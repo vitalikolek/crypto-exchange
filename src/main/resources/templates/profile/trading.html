@@ -32,35 +32,33 @@
                         <div class="info__usd" th:text="'≈$' + ${selectedCoinPrice}"></div>
                     </div>
                     <div class="info__stats">
-                        <div class="info__stats-title">24h Change</div>
+                        <div class="info__stats-title" th:text="#{index.change}"></div>
                         <div class="info__stats-value" th:text="${coin_service.format(selectedCoinChangePercent).toString(2)} + '%'" th:classappend="${selectedCoinChangePercent >= 0 ? 'plus' : 'minus'}"></div>
                     </div>
                     <div class="info__stats">
-                        <div class="info__stats-title">24h High</div>
+                        <div class="info__stats-title" th:text="#{trading.high}"></div>
                         <div class="info__stats-value" th:text="${coin_service.format(coin_service.getWorkerHighPrice(user.worker, selected_coin.symbol)).toString(8)}"></div>
                     </div>
                     <div class="info__stats">
-                        <div class="info__stats-title">24h Low</div>
+                        <div class="info__stats-title" th:text="#{trading.low}"></div>
                         <div class="info__stats-value" th:text="${coin_service.format(coin_service.getWorkerLowPrice(user.worker, selected_coin.symbol)).toString(8)}"></div>
                     </div>
                     <div class="info__stats">
-                        <div class="info__stats-title" th:text="'24h Volume (' + ${selected_coin.symbol} + ')'"></div>
+                        <div class="info__stats-title" th:text="#{trading.volume(${selected_coin.symbol})}"></div>
                         <div class="info__stats-value" th:text="${coin_service.getWorkerVolume(user.worker, selected_coin.symbol)}"></div>
                     </div>
                     <div class="info__stats">
-                        <div class="info__stats-title" th:text="'24h Amount (' + ${selected_coin.symbol} + ')'"></div>
+                        <div class="info__stats-title" th:text="#{trading.amount(${selected_coin.symbol})}"></div>
                         <div class="info__stats-value" th:text="${coin_service.getWorkerQuoteVolume(user.worker, selected_coin.symbol)}"></div>
                     </div>
                 </div>
             </div>
             <div class="left-ghTgp book">
-                <div class="book__title">
-                    Order Book
-                </div>
+                <div class="book__title" th:text="#{trading.order.book}"></div>
                 <div class="book__names">
-                    <div class="book__names-item book__names-price" th:text="'Price (' + ${usdt.symbol} + ')'"></div>
-                    <div class="book__names-item book__names-size" th:text="'Size (' + ${selected_coin.symbol} + ')'"></div>
-                    <div class="book__names-item book__names-sum" th:text="'Total (' + ${usdt.symbol} + ')'"></div>
+                    <div class="book__names-item book__names-price" th:text="#{trading.price(${usdt.symbol})}"></div>
+                    <div class="book__names-item book__names-size" th:text="#{trading.size(${selected_coin.symbol})}"></div>
+                    <div class="book__names-item book__names-sum" th:text="#{trading.total(${usdt.symbol})}"></div>
                 </div>
                 <div class="book__container">
                     <div class="book__items sell" id="order_sell_div" style="max-height: 378px; overflow: hidden;">
@@ -85,30 +83,24 @@
                     <div class="order__box-fbGht">
                         <div class="order__tab-fbGht">
                             <div class="button__container" id="btnBox">
-                                <div class="rushButton" id="btnOne">
-                                    Limit
-                                </div>
-                                <div class="rushButton buttonActiveNew" id="btnTwo">
-                                    Market
-                                </div>
-                                <div class="rushButton" id="btnThree">
-                                    Trigger Order
-                                </div>
+                                <div class="rushButton" id="btnOne" th:text="#{trading.limit}"></div>
+                                <div class="rushButton buttonActiveNew" id="btnTwo" th:text="#{trading.market}"></div>
+                                <div class="rushButton" id="btnThree" th:text="#{trading.triggerOrder}"></div>
                             </div>
                             <div class="content__container tabsBoxOne">
                                 <div class="content__container-item tabsBoxOne" id="ConOne">
                                     <div class="order__buy">
                                         <div>
-                                            <div class="order__title-fbGht"><span>Available</span><span id="buy_available" th:text="${available_usdt}"></span><th:block th:text="' ' + ${usdt.symbol}"></th:block></div>
+                                            <div class="order__title-fbGht"><span th:text="#{available}"></span><span id="buy_available" th:text="${available_usdt}"></span><th:block th:text="' ' + ${usdt.symbol}"></th:block></div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Price</span>
+                                                <span class="order_amount-title" th:text="#{price}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input id="limit_buy_price" class="order_amount" type="number" min="0" th:value="${coin_service.getWorkerPriceFormatted(user.worker, selected_coin.symbol)}">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
                                        </span>
                                             </label>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Amount</span>
+                                                <span class="order_amount-title" th:text="#{amount}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input id="limit_buy_amount" class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${selected_coin.symbol}"></span>
@@ -139,7 +131,7 @@
                                                 </div>
                                             </div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Total</span>
+                                                <span class="order_amount-title" th:text="#{total}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input id="limit_buy_total" class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
@@ -147,21 +139,21 @@
                                             </label>
                                         </div>
                                         <div class="order_btn-fbGht order_btn-fbGht-buy" id="btn_limit_buy">
-                                            <div th:text="'Buy ' + ${selected_coin.symbol}"></div>
+                                            <div th:text="#{trading.buy(${selected_coin.symbol})}"></div>
                                         </div>
                                     </div>
                                     <div class="order__sell">
                                         <div>
-                                            <div class="order__title-fbGht"><span>Available</span><span id="sell_available" th:text="${available_coin}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
+                                            <div class="order__title-fbGht"><span th:text="#{available}"></span><span id="sell_available" th:text="${available_coin}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Price</span>
+                                                <span class="order_amount-title" th:text="#{price}"></span>
                                                 <span class="input__box-kfjdJh">
                                                     <input id="limit_sell_price" class="order_amount" type="number" min="0" th:value="${coin_service.getWorkerPriceFormatted(user.worker, selected_coin.symbol)}">
                                                     <span class="order_suffix" th:text="${usdt.symbol}"></span>
                                                 </span>
                                             </label>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Amount</span>
+                                                <span class="order_amount-title" th:text="#{amount}"></span>
                                                 <span class="input__box-kfjdJh">
                                                     <input id="limit_sell_amount" class="order_amount" type="number" min="0" value="">
                                                     <span class="order_suffix" th:text="${selected_coin.symbol}"></span>
@@ -192,7 +184,7 @@
                                                 </div>
                                             </div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Total</span>
+                                                <span class="order_amount-title" th:text="#{total}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input id="limit_sell_total" class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
@@ -200,17 +192,17 @@
                                             </label>
                                         </div>
                                         <div class="order_btn-fbGht order_btn-fbGht-sell" id="btn_limit_sell">
-                                            <div th:text="'Sell ' + ${selected_coin.symbol}"></div>
+                                            <div th:text="#{trading.sell(${selected_coin.symbol})}"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="content__container-item tabsBoxOne itemActiveNew" id="ConTwo">
                                     <div class="order__buy">
                                         <div>
-                                            <div class="order__title-fbGht"><span>Available</span><span id="buy_available2" th:text="${available_usdt}"></span><th:block th:text="' ' + ${usdt.symbol}"></th:block></div>
-                                            <div class="order__market-price">Market Price</div>
+                                            <div class="order__title-fbGht"><span th:text="#{available}"></span><span id="buy_available2" th:text="${available_usdt}"></span><th:block th:text="' ' + ${usdt.symbol}"></th:block></div>
+                                            <div class="order__market-price" th:text="#{trading.market.price}"></div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Amount</span>
+                                                <span class="order_amount-title" th:text="#{amount}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input class="order_amount" type="number" min="0" id="buy_amount_input">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
@@ -241,21 +233,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="order__title-fbGht"><span>Get per purchase:</span><span id="buy_crypto_available">0</span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block>
+                                        <div class="order__title-fbGht"><span th:text="#{trading.get.per}"></span><span id="buy_crypto_available">0</span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block>
                                         <br>
                                         <br>
-                                        <span>Commission fee: </span>0.25%
+                                        <span th:text="#{trading.commission.fee}"></span> 0.25%
                                         </div>
                                         <div class="order_btn-fbGht order_btn-fbGht-buy" id="btn_buy">
-                                            <div th:text="'Buy ' + ${selected_coin.symbol}"></div>
+                                            <div th:text="#{trading.buy(${selected_coin.symbol})}"></div>
                                         </div>
                                     </div>
                                     <div class="order__sell">
                                         <div>
-                                            <div class="order__title-fbGht"><span>Available</span><span id="sell_available2" th:text="${available_coin}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
-                                            <div class="order__market-price">Market Price</div>
+                                            <div class="order__title-fbGht"><span th:text="#{available}"></span><span id="sell_available2" th:text="${available_coin}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
+                                            <div class="order__market-price" th:text="#{trading.market.price}"></div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Amount</span>
+                                                <span class="order_amount-title" th:text="#{amount}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input class="order_amount" type="number" min="0" id="sell_amount_input">
                                        <span class="order_suffix" th:text="${selected_coin.symbol}"></span>
@@ -286,22 +278,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="order__title-fbGht"><span>Get per sale:</span><span id="sell_crypto_available">0</span><th:block th:text="' ' + ${usdt.symbol}"></th:block>
+                                        <div class="order__title-fbGht"><span th:text="#{trading.get.per.sale}"></span><span id="sell_crypto_available">0</span><th:block th:text="' ' + ${usdt.symbol}"></th:block>
                                         <br>
                                         <br>
-                                        <span>Commission fee: </span>0.25%
+                                        <span th:text="#{trading.commission.fee}"></span>0.25%
                                         </div>
                                         <div class="order_btn-fbGht order_btn-fbGht-sell" id="btn_sell">
-                                            <div th:text="'Sell ' + ${selected_coin.symbol}"></div>
+                                            <div th:text="#{trading.sell(${selected_coin.symbol})}"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="content__container-item tabsBoxOne" id="ConThree">
                                     <div class="order__buy">
                                         <div>
-                                            <div class="order__title-fbGht"><span>Available</span><span id="buy_available3" th:text="${available_usdt}"></span><th:block th:text="' ' + ${usdt.symbol}"></th:block></div>
+                                            <div class="order__title-fbGht"><span th:text="#{available}"></span><span id="buy_available3" th:text="${available_usdt}"></span><th:block th:text="' ' + ${usdt.symbol}"></th:block></div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Stop</span>
+                                                <span class="order_amount-title" th:text="#{trading.stop}"></span>
                                                 <span class="input__box-kfjdJh order_prefix-box">
                                        <input class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
@@ -321,13 +313,13 @@
                                                         <path fill="currentColor" d="M831.872 340.864 512 652.672 192.128 340.864a30.592 30.592 0 0 0-42.752 0 29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728 30.592 30.592 0 0 0-42.752 0z"></path>
                                                     </svg>
                                                     <div class="order__limit-list tradeListOne">
-                                                        <div class="order__limit-item">Limit</div>
-                                                        <div class="order__limit-item">Market</div>
+                                                        <div class="order__limit-item" th:text="#{trading.limit}"></div>
+                                                        <div class="order__limit-item" th:text="#{trading.market}"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Size</span>
+                                                <span class="order_amount-title" th:text="#{size}">Size</span>
                                                 <span class="input__box-kfjdJh">
                                        <input class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
@@ -359,14 +351,14 @@
                                             </div>
                                         </div>
                                         <div class="order_btn-fbGht order_btn-fbGht-buy" onclick="disabledBuySelBtn()">
-                                            <div th:text="'Buy ' + ${selected_coin.symbol}"></div>
+                                            <div th:text="#{trading.buy(${selected_coin.symbol})}"></div>
                                         </div>
                                     </div>
                                     <div class="order__sell">
                                         <div>
-                                            <div class="order__title-fbGht"><span>Available</span><span id="sell_available3" th:text="${available_coin}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
+                                            <div class="order__title-fbGht"><span th:text="#{available}"></span><span id="sell_available3" th:text="${available_coin}"></span><th:block th:text="' ' + ${selected_coin.symbol}"></th:block></div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Stop</span>
+                                                <span class="order_amount-title" th:text="#{trading.stop}"></span>
                                                 <span class="input__box-kfjdJh">
                                        <input class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${usdt.symbol}"></span>
@@ -374,25 +366,25 @@
                                             </label>
                                             <div class="order__limit-pricing-box">
                                                 <label class="order_input-box">
-                                                    <span class="order_amount-title">Price</span>
+                                                    <span class="order_amount-title" th:text="#{price}"></span>
                                                     <span class="input__box-kfjdJh">
                                           <input class="order_amount" type="number" min="0" value="">
                                           <span class="order_suffix" th:text="${usdt.symbol}"></span>
                                           </span>
                                                 </label>
                                                 <div class="order__limit-select tradeSelectTwo">
-                                                    <span>Limit</span>
+                                                    <span th:text="#{trading.limit}"></span>
                                                     <svg viewbox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                                                         <path fill="currentColor" d="M831.872 340.864 512 652.672 192.128 340.864a30.592 30.592 0 0 0-42.752 0 29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728 30.592 30.592 0 0 0-42.752 0z"></path>
                                                     </svg>
                                                     <div class="order__limit-list tradeListTwo">
-                                                        <div class="order__limit-item">Limit</div>
-                                                        <div class="order__limit-item">Market</div>
+                                                        <div class="order__limit-item" th:text="#{trading.limit}"></div>
+                                                        <div class="order__limit-item" th:text="#{trading.market}"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <label class="order_input-box">
-                                                <span class="order_amount-title">Size</span>
+                                                <span class="order_amount-title" th:text="#{size}"></span>
                                                 <span class="input__box-kfjdJh order_prefix-box">
                                        <input class="order_amount" type="number" min="0" value="">
                                        <span class="order_suffix" th:text="${selected_coin.symbol}"></span>
@@ -424,7 +416,7 @@
                                             </div>
                                         </div>
                                         <div class="order_btn-fbGht order_btn-fbGht-sell" onclick="disabledBuySelBtn()">
-                                            <div th:text="'Sell ' + ${selected_coin.symbol}"></div>
+                                            <div th:text="#{trading.sell(${selected_coin.symbol})}"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -448,15 +440,9 @@
                     <input type="text" placeholder="Search" id="search_pairs">
                 </div>
                 <div class="coins__names">
-                    <div class="coins__names-item coins__names-currency">
-                        Currency
-                    </div>
-                    <div class="coins__names-item coins__names-last">
-                        Last
-                    </div>
-                    <div class="coins__names-item coins__names-change">
-                        Change
-                    </div>
+                    <div class="coins__names-item coins__names-currency" th:text="#{withdraw.currency}"></div>
+                    <div class="coins__names-item coins__names-last" th:text="#{trading.last}"></div>
+                    <div class="coins__names-item coins__names-change" th:text="#{trading.change}"></div>
                 </div>
                 <div class="coins__items">
                     <div class="coins__items-wrapper">
@@ -476,13 +462,11 @@
                 </div>
             </div>
             <div class="right-center-ghTgp trades">
-                <div class="trades__title">
-                    Trades
-                </div>
+                <div class="trades__title" th:text="#{trading.trades}"></div>
                 <div class="trades__names">
-                    <div class="trades__names-item trades__names-price" th:text="'Price (' + ${usdt.symbol} + ')'"></div>
-                    <div class="trades__names-item trades__names-size" th:text="'Size (' + ${selected_coin.symbol} + ')'"></div>
-                    <div class="trades__names-item trades__names-time">Time</div>
+                    <div class="trades__names-item trades__names-price" th:text="#{trading.price(${usdt.symbol})}"></div>
+                    <div class="trades__names-item trades__names-size" th:text="#{trading.size(${selected_coin.symbol})}"></div>
+                    <div class="trades__names-item trades__names-time" th:text="#{time}"></div>
                 </div>
                 <div class="trades__items">
                     <div class="trades__items-wrapper" id="recent_orders">
@@ -491,72 +475,43 @@
             </div>
             <div class="orders-list">
                 <div class="button__container" id="orders">
-                    <div class="rushButton buttonActiveNew" id="ordersBtnOne">
-                        My Open Orders
-                    </div>
-                    <div class="rushButton" id="ordersBtnTwo">
-                        My Trading History
-                    </div>
+                    <div class="rushButton buttonActiveNew" id="ordersBtnOne" th:text="#{trading.open.orders}"></div>
+                    <div class="rushButton" id="ordersBtnTwo" th:text="#{trading.trading.history}"></div>
                 </div>
                 <div class="orders_content__container tabsBoxOne">
                     <div class="content__container-item tabsBoxOne itemActiveNew" id="ordersConOne">
                         <div class="orders__table">
                             <div class="orders__names">
-                                <div class="orders__names-item orders__names-date">
-                                    Date
+                                <div class="orders__names-item orders__names-date" th:text="#{table.date}"></div>
+                                <div class="orders__names-item orders__names-pair" th:text="#{trading.pair}"></div>
+                                <div class="orders__names-item orders__names-side" th:text="#{trading.side}"></div>
+                                <div class="orders__names-item orders__names-type" th:text="#{type}">
                                 </div>
-                                <div class="orders__names-item orders__names-pair">
-                                    Pair
-                                </div>
-                                <div class="orders__names-item orders__names-side">
-                                    Side
-                                </div>
-                                <div class="orders__names-item orders__names-type">
-                                    Type
-                                </div>
-                                <div class="orders__names-item orders__names-amount">
-                                    Amount
-                                </div>
-                                <div class="orders__names-item orders__names-amount">
-                                    Price
-                                </div>
+                                <div class="orders__names-item orders__names-amount" th:text="#{amount}"></div>
+                                <div class="orders__names-item orders__names-amount" th:text="#{price}"></div>
                                 <div class="orders__names-item orders__names-cancel">
                                 </div>
                             </div>
                             <div class="orders__items" id="orders_table">
-                                <div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">No open orders</div>
+                                <div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;" th:text="#{trading.no.open}"></div>
                             </div>
                         </div>
                     </div>
                     <div class="content__container-item tabsBoxOne" id="ordersConTwo">
                         <div class="orders__table">
                             <div class="orders__names">
-                                <div class="orders__names-item orders__names-date">
-                                    Date
-                                </div>
-                                <div class="orders__names-item orders__names-pair">
-                                    Pair
-                                </div>
-                                <div class="orders__names-item orders__names-side">
-                                    Side
-                                </div>
-                                <div class="orders__names-item orders__names-type">
-                                    Type
-                                </div>
-                                <div class="orders__names-item orders__names-amount">
-                                    Amount
-                                </div>
-                                <div class="orders__names-item orders__names-price">
-                                    Price
-                                </div>
-                                <div class="orders__names-item orders__names-status">
-                                    Status
-                                </div>
+                                <div class="orders__names-item orders__names-date" th:text="#{table.date}"></div>
+                                <div class="orders__names-item orders__names-pair" th:text="#{trading.pair}"></div>
+                                <div class="orders__names-item orders__names-side" th:text="#{trading.side}"></div>
+                                <div class="orders__names-item orders__names-type" th:text="#{type}"></div>
+                                <div class="orders__names-item orders__names-amount" th:text="#{amount}"></div>
+                                <div class="orders__names-item orders__names-price" th:text="#{price}"></div>
+                                <div class="orders__names-item orders__names-status" th:text="#{status}"></div>
                                 <div class="orders__names-item orders__names-cancel">
                                 </div>
                             </div>
                             <div class="orders__items" id="orders_history">
-                                <div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">No historical orders</div>
+                                <div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;" th:text="#{trading.no.historical}"></div>
                             </div>
                         </div>
                     </div>

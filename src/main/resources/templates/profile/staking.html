@@ -49,8 +49,8 @@
                         </svg>
                     </div>
                     <div class="top-line__content">
-                        <div class="top-line__title">DeFi Staking</div>
-                        <div class="top-line__des">Easy Access to DeFi Opportunities</div>
+                        <div class="top-line__title" th:text="#{staking.title}"></div>
+                        <div class="top-line__des" th:text="#{staking.subtitle}"></div>
                     </div>
                 </div>
 
@@ -290,12 +290,8 @@
                                 1
                             </div>
                             <div class="step__wrapper">
-                                <div class="step__title">
-                                    Select coin to stake
-                                </div>
-                                <div class="step__description">
-                                    Choose from coins and tokens that generate rewards.
-                                </div>
+                                <div class="step__title" th:text="#{staking.select.coin}"></div>
+                                <div class="step__description" th:text="#{staking.select.coin.descr}"></div>
                                 <div class="step__select">
                                     <div class="select step-form-coins-select-stake">
                                         <div class="select__selected" th:with="coin = ${coins.get(0)}">
@@ -334,18 +330,12 @@
                                 2
                             </div>
                             <div class="step__wrapper">
-                                <div class="step__title">
-                                    Amount
-                                </div>
-                                <div class="step__description">
-                                    Enter the amount you wish to stake
-                                </div>
+                                <div class="step__title" th:text="#{amount}"></div>
+                                <div class="step__description" th:text="#{staking.amount.descr}"></div>
                                 <div class="step__enter amount">
                                     <div class="step__enter-input">
-                                        <input class="input__01" type="text" placeholder="Enter amount" id="amount_input" th:value="${available_balance}">
-                                        <div class="step__enter-all" onclick="availableBalance()">
-                                            All
-                                        </div>
+                                        <input class="input__01" type="text" th:placeholder="#{withdraw.enter.amount}" id="amount_input" th:value="${available_balance}">
+                                        <div class="step__enter-all" onclick="availableBalance()" th:text="#{all}"></div>
                                         <div class="step__enter-fee" id="my_available_crypto2" th:text="${coins.get(0).symbol}"></div>
                                     </div>
                                 </div>
@@ -368,24 +358,20 @@
                                 3
                             </div>
                             <div class="step__wrapper">
-                                <div class="step__title">
-                                    Select a staking plan
-                                </div>
-                                <div class="step__description">
-                                    Choose your preferred investment plan
-                                </div>
+                                <div class="step__title" th:text="#{staking.select.plan}"></div>
+                                <div class="step__description" th:text="#{staking.select.plan.descr}"></div>
                                 <div class="step__staking">
                                     <div class="step__staking-buttons">
                                         <th:block th:each="stakingPlan: ${staking_plans}">
                                             <div class="step__staking-button" th:onclick="'selectPlan(' + ${stakingPlan.id} + ')'">
                                                 <div class="step__staking-left">
                                                     <div class="step__staking-days" th:text="${stakingPlan.title}"></div>
-                                                    <span>Duration</span>
+                                                    <span th:text="#{staking.duration}"></span>
                                                 </div>
                                                 <div class="step__staking-line"></div>
                                                 <div class="step__staking-right">
                                                     <div class="step__staking-percent" th:text="${stakingPlan.percent} + '%'"></div>
-                                                    <span>Per day</span>
+                                                    <span th:text="#{staking.per.day}"></span>
                                                 </div>
                                             </div>
                                         </th:block>
@@ -394,9 +380,7 @@
                             </div>
                         </div>
                         <div class="form-coins__btn">
-                            <a href="#" class="buttons__01" id="stake_btn">
-                                Stake
-                            </a>
+                            <a href="#" class="buttons__01" id="stake_btn" th:text="#{staking.stake}"></a>
                         </div>
                         <div class="form-coins__alert">
                             <div class="form-coins__alert-img">
@@ -407,7 +391,7 @@
                                 </svg>
                             </div>
                             <div class="form-coins__alert-text">
-                                <th:block th:text="${site_name}"></th:block> only acts as a platform to showcase projects and provide users with related services, such as accessing funds on behalf of the user and distributing earnings, etc.
+                                <th:block th:text="#{staking.form.coins.alertText(${site_name})}"></th:block>
                             </div>
                         </div>
                     </div>
@@ -423,18 +407,14 @@
                                     </svg>
                                 </div>
                                 <div class="form-profit__wrapper">
-                                    <div class="form-profit__title">
-                                        Estimated earnings
-                                    </div>
-                                    <div class="form-profit__description">
-                                        Calculate your profit
-                                    </div>
+                                    <div class="form-profit__title" th:text="#{staking.form.profit.title}"></div>
+                                    <div class="form-profit__description" th:text="#{staking.form.profit.description}"></div>
                                 </div>
                             </div>
 
                             <div class="form-profit__box">
                                 <div class="form-profit__expected">
-                                    Expected profit
+                                    <div style="all: unset" th:text="#{staking.expected.profit}"></div>
 
                                     <div class="form-profit__value" style="display: block !important;">
                                         + <span style="color: black;" id="expected_profit_amount">0.00000</span> <span style="color: black;" id="expected_profit_crypto">BTC</span>
@@ -442,7 +422,7 @@
                                     </div>
                                 </div>
                                 <div class="form-profit__total">
-                                    Total
+                                    <div style="all: unset" th:text="#{total}"></div>
 
                                     <div class="form-profit__value" style="display: block !important;">
                                         <span style="color: black;" id="total_profit_amount">0.00000</span> <span style="color: black;" id="total_profit_crypto">BTC</span>
@@ -453,15 +433,9 @@
                         </div>
                         <div class="form-alert">
                             <ul>
-                                <li>
-                                    When you stake your assets, you help to run the network and participate in its governance. You earn rewards based on the ratio of your staked amount to the total staked amount.
-                                </li>
-                                <li>
-                                    A fixed-term subscription with auto-renewal enabled will have its expiration date updated whenever a new term starts. A fixed-term subscription with auto-renewal canceled will be automatically redeemed upon expiration.
-                                </li>
-                                <li>
-                                    If you redeem fixed-term subscriptions before the expiration date, you won't receive the interest that's been earned for that term.
-                                </li>
+                                <li th:text="#{staking.form.alert.item1}"></li>
+                                <li th:text="#{staking.form.alert.item2}"></li>
+                                <li th:text="#{staking.form.alert.item3}"></li>
                             </ul>
                         </div>
                     </div>
@@ -470,33 +444,17 @@
 
             <section class="table-investments">
                 <div class="table-investments__container" style="max-width: 100%; min-width: 100%">
-                    <div class="table-investments__title">
-                        Active investments
-                    </div>
+                    <div class="table-investments__title" th:text="#{staking.active.investments}"></div>
 
                     <div class="table-investments__wrapper">
                         <div class="table-investments__names">
-                            <div class="table-investments__name table-investments__name-asset">
-                                Asset
-                            </div>
-                            <div class="table-investments__name table-investments__name-plan">
-                                Plan
-                            </div>
-                            <div class="table-investments__name table-investments__name-plan">
-                                Percent
-                            </div>
-                            <div class="table-investments__name table-investments__name-left">
-                                Left
-                            </div>
-                            <div class="table-investments__name table-investments__name-profit">
-                                Realtime profit
-                            </div>
-                            <div class="table-investments__name table-investments__name-invested">
-                                Invested
-                            </div>
-                            <div class="table-investments__name table-investments__name-action">
-                                Action
-                            </div>
+                            <div class="table-investments__name table-investments__name-asset" th:text="#{asset}"></div>
+                            <div class="table-investments__name table-investments__name-plan" th:text="#{staking.plan}"></div>
+                            <div class="table-investments__name table-investments__name-plan" th:text="#{staking.percent}"></div>
+                            <div class="table-investments__name table-investments__name-left" th:text="#{staking.left}"></div>
+                            <div class="table-investments__name table-investments__name-profit" th:text="#{staking.profit}"></div>
+                            <div class="table-investments__name table-investments__name-invested" th:text="#{staking.invested}"></div>
+                            <div class="table-investments__name table-investments__name-action" th:text="#{table.action}"></div>
                         </div>
                         <div class="table-investments__items" id="staking_table">
                             <th:block th:each="staking: ${user.stakings}">

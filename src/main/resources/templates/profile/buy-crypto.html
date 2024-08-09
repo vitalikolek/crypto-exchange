@@ -24,12 +24,8 @@
                     </svg>
                 </div>
                 <div class="rs-buy-sell__top-wrapper">
-                    <div class="rs-buy-sell__top-title">
-                        Buy &amp; Sell Crypto via Fiat money
-                    </div>
-                    <div class="rs-buy-sell__top-description">
-                        Buy Crypto with your VISA, MasterCard, or Apple Pay credit cards
-                    </div>
+                    <div class="rs-buy-sell__top-title" th:text="#{buyCrypto.title}"></div>
+                    <div class="rs-buy-sell__top-description" th:text="#{buyCrypto.subtitle}"></div>
                 </div>
             </div>
         </div>
@@ -48,10 +44,8 @@
                         </svg>
                     </div>
                     <div class="form-profit__wrapper">
-                        <div class="form-profit__title">How to top up my account from a card or e-wallet?</div>
-                        <div style="margin-top: 10px; font-size: 14px; color: black" class="form-profit__description">Choose a suitable crypto exchange from the list below, go to it, select the desired coin and follow the further instructions for payment.
-                            <br>
-                            <strong>Copy the address</strong> of your desired coin in advance on the <a style="color: DodgerBlue; font-weight: bold" href="../profile/deposit">Deposits</a> page</div>
+                        <div class="form-profit__title" th:text="#{form.profit.title}"></div>
+                        <div style="margin-top: 10px; font-size: 14px; color: black" class="form-profit__description" th:utext="#{form.profit.description}"></div>
                     </div>
                 </div>
             </div>
@@ -60,121 +54,81 @@
                 <div class="form-coins__right" style="width: 100%">
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/changenow2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                ChangeNOW is a highly secure and trustworthy platform as it acts only as a temporary intermediary - it does not store your funds and doesn't require account creation for using its services.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://changenow.io/?from=eur&to=btc&fiatMode=true">
-                                Go to ChangeNOW
-                            </a>
+                            <img src="../assets/img/payments/changenow2.png" alt="ChangeNOW">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.changeNOW.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://changenow.io/?from=eur&to=btc&fiatMode=true" th:text="#{buyCrypto.go.to('ChangeNOW')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/simplex2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                Simplex by Nuvei is empowering the crypto industry with a full fiat infrastructure. We process crypto-to-credit card payments with a 100% guarantee – in case of a fraud chargeback, the merchant gets paid by us.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://buy.simplex.com/">
-                                Go to Simplex
-                            </a>
+                            <img src="../assets/img/payments/simplex2.png" alt="Simplex">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.simplex.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://buy.simplex.com/" th:text="#{buyCrypto.go.to('Simplex')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/moonpay2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                MoonPay offers a fast and simple way to buy and sell cryptocurrencies. Buy crypto with credit card, bank transfers or Apple Pay today.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://www.moonpay.com/buy">
-                                Go to MoonPay
-                            </a>
+                            <img src="../assets/img/payments/moonpay2.png" alt="MoonPay">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.moonPay.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://www.moonpay.com/buy" th:text="#{buyCrypto.go.to('MoonPay')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/transak2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                Transak is a leading Web3 onboarding infrastructure provider. Its API-driven solutions enable web3 platforms to onboard users to 130+ crypto assets from 150+ countries, abstracting away the complexity of user KYC, risk monitoring & compliance, payment methods and customer support.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://global.transak.com/">
-                                Go to Transak
-                            </a>
+                            <img src="../assets/img/payments/transak2.png" alt="Transak">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.transak.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://global.transak.com/" th:text="#{buyCrypto.go.to('Transak')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img style="min-width: 125px;" src="../assets/img/payments/mercuryo.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                A custodial wallet with built-in crypto on-ramp functionality. Designed to manage your crypto just like you do with fiat: buy, sell, hold, and spend a wide range of coins.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://exchange.mercuryo.io/">
-                                Go to Mercuryo
-                            </a>
+                            <img style="min-width: 125px;" src="../assets/img/payments/mercuryo.png" alt="Mercuryo">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.mercuryo.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://exchange.mercuryo.io/" th:text="#{buyCrypto.go.to('Mercuryo')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img style="min-width: 125px;" src="../assets/img/payments/coingate2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                CoinGate is a Lithuanian-based fintech company founded in 2014. The payment gateway offers cryptocurrency payment processing services for businesses of any sizes.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://coingate.com/buy-and-sell">
-                                Go to CoinGate
-                            </a>
+                            <img style="min-width: 125px;" src="../assets/img/payments/coingate2.png" alt="CoinGate">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.coingate.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://coingate.com/buy-and-sell" th:text="#{buyCrypto.go.to('CoinGate')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img style="min-width: 125px;" src="../assets/img/payments/changelly2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                Changelly is an ecosystem of products that allows you to exchange, buy, trade, and sell cryptocurrencies and also earn free crypto with our affiliate program.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://changelly.com/buy">
-                                Go to Changelly
-                            </a>
+                            <img src="../assets/img/payments/changelly2.png" alt="Changelly">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.changelly.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://changelly.com/buy"  th:text="#{buyCrypto.go.to('Changelly')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/banxa2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                Banxa is the leading global Web3 on and off-ramp solution Crypto Buy. Our mission is to accelerate the world to Web3 and beyond.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://openocean.banxa.com/">
-                                Go to Banxa
-                            </a>
+                            <img src="../assets/img/payments/banxa2.png" alt="Banxa">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.banxa.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://openocean.banxa.com/"  th:text="#{buyCrypto.go.to('Banxa')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/phemex2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                Phemex operates as a crypto derivatives trading platform. Phemex is a professional and trustworthy global cryptocurrency derivatives exchange. We offer Bitcoin, Ethereum, Ripple, and Chainlink perpetual contracts, with up to 100x leverage.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://phemex.com/fiat/buy-crypto/place-order?side=buy">
-                                Go to Phemex
-                            </a>
+                            <img src="../assets/img/payments/phemex2.png" alt="Phemex">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.phemex.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://phemex.com/fiat/buy-crypto/place-order?side=buy" th:text="#{buyCrypto.go.to('Phemex')}"></a>
                         </div>
                     </div>
 
                     <div class="payment-systems">
                         <div style="padding-bottom: 15px;" class="payment-systems-item">
-                            <img src="../assets/img/payments/ramp2.png">
-                            <div style="padding-left: 25px;" class="payment-system-description">
-                                Ramp is a global financial technology company building solutions that connect the crypto economy with today’s financial infrastructure.
-                            </div>
-                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://ramp.network/buy">
-                                Go to Ramp
-                            </a>
+                            <img src="../assets/img/payments/ramp2.png" alt="Ramp">
+                            <div style="padding-left: 25px;" class="payment-system-description" th:text="#{buyCrypto.ramp.description}"></div>
+                            <a target="_blank" rel="noreferrer" class="buttons__01" href="https://ramp.network/buy" th:text="#{buyCrypto.go.to('Ramp')}"></a>
                         </div>
                     </div>
                 </div>
