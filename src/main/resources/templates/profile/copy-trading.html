@@ -17,14 +17,12 @@
             <section class="traders-home">
                 <div class="traders-home__container">
                     <div class="traders-home__box">
-                        <div class="traders-home__title">
-                            Copy trading
-                        </div>
+                        <div class="traders-home__title" th:text="#{copy.trading.title}"></div>
 
                         <div class="traders-home__card">
                             <div class="traders-home__card-top">
                                 <div class="traders-home__card-title">
-                                    My Copy Trading
+                                    <div style="all: unset" th:text="#{copy.trading.subtitle}"></div>
 
                                     <div class="traders-home__card-show butafor__btn">
                                         <svg width="21" height="21" viewbox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,23 +30,17 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="traders-home__card-measured">
-                                    Measured in: USDT
-                                </div>
+                                <div class="traders-home__card-measured" th:text="#{copy.trading.measured}"></div>
                             </div>
                             <div class="traders-home__card-bottom">
                                 <div class="traders-home__card-info">
-                                    <div class="traders-home__card-name">
-                                        Total Assets
-                                    </div>
+                                    <div class="traders-home__card-name" th:text="#{copy.trading.total}"></div>
                                     <div class="traders-home__card-value">
                                         *****.** USDT
                                     </div>
                                 </div>
                                 <div class="traders-home__card-info">
-                                    <div class="traders-home__card-name">
-                                        Copy Trading P&L
-                                    </div>
+                                    <div class="traders-home__card-name" th:text="#{copy.trading.pl}"></div>
                                     <div class="traders-home__card-value">
                                         *****.** USDT
                                     </div>
@@ -68,15 +60,11 @@
                     <div class="traders-leaderboard__box">
                         <div class="traders-leaderboard__card traders-leaderboard__card-one">
                             <div class="traders-leaderboard__card-wrapper">
-                                <div class="traders-leaderboard__card-title">
-                                    Copy Trading Leaderboard
-                                </div>
-                                <div class="traders-leaderboard__card-description">
-                                    Followers
-                                </div>
+                                <div class="traders-leaderboard__card-title" th:text="#{copy.trading.leaderboard}"></div>
+                                <div class="traders-leaderboard__card-description" th:text="#{copy.trading.followers}"></div>
                             </div>
                             <a class="traders-leaderboard__card-link" href="#">
-                                Check It Out
+                                <div style="all: unset" th:text="#{copy.trading.check}"></div>
 
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6C2 5.72385 2.22386 5.5 2.5 5.5H9.5C9.77615 5.5 10 5.72385 10 6C10 6.27615 9.77615 6.5 9.5 6.5H2.5C2.22386 6.5 2 6.27615 2 6Z" fill="white"></path>
@@ -87,15 +75,11 @@
 
                         <div class="traders-leaderboard__card traders-leaderboard__card-two">
                             <div class="traders-leaderboard__card-wrapper">
-                                <div class="traders-leaderboard__card-title">
-                                    Copy Trading Leaderboard
-                                </div>
-                                <div class="traders-leaderboard__card-description">
-                                    Master Traders
-                                </div>
+                                <div class="traders-leaderboard__card-title" th:text="#{copy.trading.leaderboard}"></div>
+                                <div class="traders-leaderboard__card-description" th:text="#{copy.trading.master}"></div>
                             </div>
                             <a class="traders-leaderboard__card-link" href="#">
-                                Check It Out
+                                <div style="all: unset" th:text="#{copy.trading.check}"></div>
 
                                 <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6C2 5.72385 2.22386 5.5 2.5 5.5H9.5C9.77615 5.5 10 5.72385 10 6C10 6.27615 9.77615 6.5 9.5 6.5H2.5C2.22386 6.5 2 6.27615 2 6Z" fill="white"></path>
@@ -110,15 +94,11 @@
                 <div class="traders__container">
                     <div class="traders__info">
                         <div class="traders__info-wrapper">
-                            <div class="traders__title">
-                                Top Traders By ROI
-                            </div>
-                            <div class="traders__description">
-                                Traders that have earned the highest ROI in the last 7 days.
-                            </div>
+                            <div class="traders__title" th:text="#{copy.trading.top.traders}"></div>
+                            <div class="traders__description" th:text="#{copy.trading.top.traders.descr}"></div>
                         </div>
                         <a class="traders__link" href="#">
-                            View More
+                            <div style="all: unset" th:text="#{copy.trading.view.more}"></div>
 
                             <div class="traders__link-icon">
                                 <svg width="17" height="16" viewbox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -920,15 +900,11 @@
                 <div class="traders__container">
                     <div class="traders__info">
                         <div class="traders__info-wrapper">
-                            <div class="traders__title">
-                                Traders With The Highest Profit For Followers
-                            </div>
-                            <div class="traders__description">
-                                Traders that have earned the highest profits, in USDT, for Followers.
-                            </div>
+                            <div class="traders__title" th:text="#{copy.trading.highest.profit}"></div>
+                            <div class="traders__description" th:text="#{copy.trading.highest.profit.descr}"></div>
                         </div>
                         <a class="traders__link" href="#">
-                            View More
+                            <div style="all: unset" th:text="#{copy.trading.view.more}"></div>
 
                             <div class="traders__link-icon">
                                 <svg width="17" height="16" viewbox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1694,15 +1670,11 @@
                 <div class="traders__container">
                     <div class="traders__info">
                         <div class="traders__info-wrapper">
-                            <div class="traders__title">
-                                Lowest Drawdown
-                            </div>
-                            <div class="traders__description">
-                                Traders with over 10% ROI and a max. drawdown of less than 20% in the last 30 days.
-                            </div>
+                            <div class="traders__title" th:text="#{copy.trading.lowest.drawdown}"></div>
+                            <div class="traders__description" th:text="#{copy.trading.lowest.drawdown.descr}"></div>
                         </div>
                         <a class="traders__link" href="#">
-                            View More
+                            <div style="all: unset" th:text="#{copy.trading.view.more}"></div>
 
                             <div class="traders__link-icon">
                                 <svg width="17" height="16" viewbox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2498,15 +2470,11 @@
                 <div class="traders__container">
                     <div class="traders__info">
                         <div class="traders__info-wrapper">
-                            <div class="traders__title">
-                                Top Intra-Day Traders
-                            </div>
-                            <div class="traders__description">
-                                Intra-day traders with over 20% ROI and a win-rate of more than 20% in the last 7 days.
-                            </div>
+                            <div class="traders__title" th:text="#{copy.trading.top.day}"></div>
+                            <div class="traders__description" th:text="#{copy.trading.top.day.descr}"></div>
                         </div>
                         <a class="traders__link" href="#">
-                            View More
+                            <div style="all: unset" th:text="#{copy.trading.view.more}"></div>
 
                             <div class="traders__link-icon">
                                 <svg width="17" height="16" viewbox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3307,7 +3275,7 @@
                         </div>
                     </div>
                     <a class="traders-day__link" href="#">
-                        View All Master Traders
+                        <div style="all: unset" th:text="#{copy.trading.view.all}"></div>
 
                         <div class="traders-day__link-link">
                             <svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

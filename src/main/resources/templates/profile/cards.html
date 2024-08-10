@@ -18,8 +18,7 @@
                     <div class="payment-home__box">
                         <div class="payment-home__left">
                             <div class="payment-home__title">
-                                <th:block th:text="${site_name} + 'Card'"></th:block> - The Future of
-                                Payment
+                                <span th:text="#{payment.card.title(${site_name})}"></span>
                             </div>
                             <div class="payment-home__surprise">
                                 <div class="payment-home__surprise-icon">
@@ -51,16 +50,14 @@
                                 </div>
                                 <div class="payment-home__surprise-wrapper">
                                     <div class="payment-home__surprise-title">
-                                        Register your <th:block th:text="${site_name} + 'Card'"></th:block> to earn
+                                        <span th:text="#{payment.card.surprise.title(${site_name})}"></span>
                                     </div>
                                     <div class="payment-home__surprise-value">
                                         1,000 USDT!
                                     </div>
                                 </div>
                             </div>
-                            <a class="payment-home__link butafor__btn" href="#">
-                                Get for Free
-                            </a>
+                            <a class="payment-home__link butafor__btn" href="#" th:text="#{cards.get.free}"></a>
                         </div>
                         <div class="payment-home__right">
                             <div class="payment-home__img">
@@ -79,75 +76,43 @@
                             </svg>
                         </div>
 
-                        View More
+                        <div th:text="#{copy.trading.view.more}"></div>
                     </div>
                 </div>
             </section>
             <section class="your-fingertips">
                 <div class="your-fingertips__container">
-                    <div class="your-fingertips__subtitle">
-                        Card Benefits and Perks
-                    </div>
-                    <div class="your-fingertips__title">
-                        Crypto at Your
-                        Fingertips.
-                    </div>
+                    <div class="your-fingertips__subtitle" th:text="#{card.benefits.title}"></div>
+                    <div class="your-fingertips__title" th:text="#{card.fingertips.title}"></div>
                     <div class="your-fingertips__cards">
                         <div class="your-fingertips__card-wrapper your-fingertips__card-one">
                             <div class="your-fingertips__card">
-                                <div class="your-fingertips__card-title">
-                                    Real-Time Crypto to Fiat Exchange
-                                </div>
-                                <div class="your-fingertips__card-description">
-                                    <th:block th:text="${site_name} + 'Card'"></th:block> enables real-time crypto payments.
-                                    Just hold your crypto and spend when needed, no
-                                    fiat top-ups required. You can spend with <th:block th:text="${site_name} + 'Card'"></th:block>
-                                    at Visa merchants worldwide.
-                                </div>
+                                <div class="your-fingertips__card-title" th:text="#{card.one.title}"></div>
+                                <div class="your-fingertips__card-description" th:text="#{card.one.description(${site_name})}"></div>
                             </div>
                         </div>
                         <div class="your-fingertips__card-wrapper your-fingertips__card-two">
                             <div class="your-fingertips__card">
-                                <div class="your-fingertips__card-title">
-                                    Save More with Cashback
-                                </div>
-                                <div class="your-fingertips__card-description">
-                                    Receive a cashback on your <th:block th:text="${site_name} + 'Card'"></th:block>
-                                    purchases.
-                                </div>
+                                <div class="your-fingertips__card-title" th:text="#{card.two.title}"></div>
+                                <div class="your-fingertips__card-description" th:text="#{card.two.description(${site_name})}"></div>
                             </div>
                         </div>
                         <div class="your-fingertips__card-wrapper your-fingertips__card-three">
                             <div class="your-fingertips__card">
-                                <div class="your-fingertips__card-title">
-                                    Member Benefits and Bonuses
-                                </div>
-                                <div class="your-fingertips__card-description">
-                                    Become a <th:block th:text="${site_name} + 'Card'"></th:block> owner and enjoy amazing
-                                    membership benefits to be announced soon.
-                                </div>
+                                <div class="your-fingertips__card-title" th:text="#{card.three.title}"></div>
+                                <div class="your-fingertips__card-description" th:text="#{card.three.description(${site_name})}"></div>
                             </div>
                         </div>
                         <div class="your-fingertips__card-wrapper your-fingertips__card-four">
                             <div class="your-fingertips__card">
-                                <div class="your-fingertips__card-title">
-                                    Your Card, Your Limits
-                                </div>
-                                <div class="your-fingertips__card-description">
-                                    Enjoy custom spending limits that allow you to buy worry-free.
-                                    You can also change or reduce your limits to keep tabs on expenses.
-                                </div>
+                                <div class="your-fingertips__card-title" th:text="#{card.four.title}"></div>
+                                <div class="your-fingertips__card-description" th:text="#{card.four.description}"></div>
                             </div>
                         </div>
                         <div class="your-fingertips__card-wrapper your-fingertips__card-five">
                             <div class="your-fingertips__card">
-                                <div class="your-fingertips__card-title">
-                                    Supports Apple Pay & Google Pay
-                                </div>
-                                <div class="your-fingertips__card-description">
-                                    <th:block th:text="${site_name} + 'Card'"></th:block> supports Apple Pay and Google
-                                    Pay, making everyday payment more convenient and easier than ever.
-                                </div>
+                                <div class="your-fingertips__card-title" th:text="#{card.five.title}"></div>
+                                <div class="your-fingertips__card-description" th:text="#{card.five.description(${site_name})}"></div>
                             </div>
                         </div>
                     </div>
@@ -155,9 +120,7 @@
             </section>
             <section class="create-card">
                 <div class="create-card__container">
-                    <div class="create-card__title">
-                        Create a Card in Just 3 Steps
-                    </div>
+                    <div class="create-card__title" th:text="#{cards.create}"></div>
                     <div class="create-card__items">
                         <div class="create-card__item">
                             <div class="create-card__item-img">
@@ -180,14 +143,8 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="create-card__item-title">
-                                Apply Online
-                            </div>
-                            <div class="create-card__item-description">
-                                To apply for MasterCard online through the <th:block th:text="${site_name}"></th:block> website,
-                                you need to complete advanced KYC and provide
-                                passport and personal photo.
-                            </div>
+                            <div class="create-card__item-title" th:text="#{cards.apply}"></div>
+                            <div class="create-card__item-description" th:text="#{cards.apply.description(${site_name})}"></div>
                         </div>
                         <div class="create-card__item create-card__item-center">
                             <div class="create-card__item-img">
@@ -211,14 +168,8 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="create-card__item-title">
-                                Activate Online
-                            </div>
-                            <div class="create-card__item-description">
-                                After the application is approved, you can activate
-                                your <th:block th:text="${site_name}"></th:block> Card online and top up the card
-                                through your <th:block th:text="${site_name}"></th:block> account.
-                            </div>
+                            <div class="create-card__item-title" th:text="#{cards.activate}"></div>
+                            <div class="create-card__item-description" th:text="#{cards.activate.description(${site_name})}"></div>
                         </div>
                         <div class="create-card__item">
                             <div class="create-card__item-img">
@@ -240,13 +191,8 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="create-card__item-title">
-                                Card Ready
-                            </div>
-                            <div class="create-card__item-description">
-                                Your <th:block th:text="${site_name}"></th:block> Card is now activated.
-                                You can use your <th:block th:text="${site_name}"></th:block> Card for consumption.
-                            </div>
+                            <div class="create-card__item-title" th:text="#{cards.ready}"></div>
+                            <div class="create-card__item-description" th:text="#{cards.ready.description(${site_name})}"></div>
                         </div>
                     </div>
                 </div>
@@ -265,17 +211,13 @@
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.82813 13.3318C4.84786 18.5895 7.57917 24.53 12.9051 26.4418C13.11 26.5785 13.3148 26.8515 13.3148 27.0563V28.0124C13.3148 28.1489 13.3148 28.2172 13.2465 28.2854C13.1783 28.5586 12.9051 28.6951 12.6319 28.5586C8.80823 27.3295 5.87208 24.3934 4.64301 20.5697C2.59457 14.083 6.14526 7.18644 12.6319 5.138C12.7003 5.06982 12.8368 5.06982 12.9051 5.06982C13.1783 5.138 13.3148 5.34284 13.3148 5.61602V6.57191C13.3148 6.91342 13.1783 7.11827 12.9051 7.25478C10.1056 8.279 7.85235 10.4639 6.82813 13.3318ZM19.5285 5.41144C19.5967 5.13826 19.8698 5.00175 20.143 5.13826C23.8984 6.36732 26.9029 9.30348 28.1319 13.1955C30.1804 19.6822 26.6297 26.5787 20.143 28.6272C20.0747 28.6953 19.9382 28.6953 19.8698 28.6953C19.5967 28.6272 19.4601 28.4223 19.4601 28.1492V27.1933C19.4601 26.8517 19.5967 26.6469 19.8698 26.5104C22.6693 25.4862 24.9226 23.3012 25.9468 20.4334C27.9271 15.1756 25.1958 9.23514 19.8698 7.32337C19.665 7.1867 19.4601 6.91368 19.4601 6.6405V5.68462C19.4601 5.54794 19.4601 5.47977 19.5285 5.41144Z" fill="white"></path>
                                             </svg>
                                         </div>
-                                        <div class="earn-crypto__card-name">
-                                            Paying with USDC
-                                        </div>
+                                        <div class="earn-crypto__card-name" th:text="#{cards.paying.with('USDC')}"></div>
                                     </div>
                                     <div class="earn-crypto__card-wrapper">
                                         <div class="earn-crypto__card-available">
                                             $800.00
                                         </div>
-                                        <div class="earn-crypto__card-subtitle">
-                                            available
-                                        </div>
+                                        <div class="earn-crypto__card-subtitle" th:text="#{cards.available}"></div>
                                     </div>
                                 </div>
                                 <div class="earn-crypto__card-bottom">
@@ -286,9 +228,7 @@
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M24.5672 14.6523C24.9066 12.3784 23.1791 11.1561 20.8168 10.3407L21.5832 7.26047L19.7121 6.79326L18.9662 9.79237C18.4743 9.66943 17.9691 9.55359 17.4671 9.43875L18.2185 6.41985L16.3486 5.95264L15.5819 9.03184C15.1748 8.93897 14.7751 8.84718 14.3872 8.75047L14.3893 8.74078L11.8092 8.09509L11.3114 10.0977C11.3114 10.0977 12.6996 10.4166 12.6703 10.4362C13.428 10.6257 13.565 11.1284 13.5423 11.5267L12.6693 15.0358C12.7215 15.0491 12.7892 15.0683 12.8639 15.0984L12.8096 15.0848C12.7634 15.0732 12.7154 15.0612 12.6661 15.0494L11.4425 19.9651C11.35 20.1958 11.1149 20.542 10.5852 20.4105C10.604 20.4377 9.22532 20.0704 9.22532 20.0704L8.29639 22.2167L10.7312 22.825C10.9978 22.892 11.2612 22.9608 11.522 23.0289L11.5221 23.0289L11.523 23.0291C11.7049 23.0767 11.8856 23.1239 12.0652 23.1699L11.2909 26.2854L13.1598 26.7526L13.9265 23.6702C14.4371 23.8091 14.9326 23.9372 15.4176 24.058L14.6535 27.1259L16.5246 27.5931L17.2987 24.4834C20.4892 25.0885 22.8882 24.8446 23.898 21.9526C24.7117 19.6242 23.8575 18.2812 22.179 17.4055C23.4015 17.1229 24.3224 16.3171 24.5679 14.6526L24.5673 14.6521L24.5672 14.6523ZM20.2924 20.6594C19.7619 22.7956 16.4253 21.9125 14.8987 21.5084L14.8987 21.5084C14.7613 21.472 14.6387 21.4396 14.534 21.4135L15.5614 17.286C15.689 17.3179 15.8448 17.3529 16.0214 17.3927L16.0215 17.3927C17.6006 17.7478 20.8359 18.4754 20.2925 20.6594H20.2924ZM16.3382 15.4769C17.611 15.8173 20.3875 16.5599 20.871 14.6184H20.8712C21.3649 12.6327 18.6666 12.034 17.3488 11.7416C17.2005 11.7087 17.0698 11.6797 16.9629 11.653L16.0314 15.3965C16.1194 15.4184 16.2226 15.446 16.3382 15.4769Z" fill="white"></path>
                                             </svg>
                                         </div>
-                                        <div class="earn-crypto__card-name">
-                                            1% back in BTC
-                                        </div>
+                                        <div class="earn-crypto__card-name" th:text="#{cards.percent.back.in('1%', 'BTC')}"></div>
                                     </div>
                                     <div class="earn-crypto__card-earn">
                                         +$90.24
@@ -304,17 +244,13 @@
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3654 15.6668C19.8882 16.0466 21.1497 16.9065 21.1497 19.148C21.1497 20.9916 19.7841 22.4255 17.7356 22.767V24.4058C17.6673 24.7471 17.4625 24.952 17.1893 24.952H16.1651C15.8237 24.8836 15.6189 24.6788 15.6189 24.4058V22.767C13.3656 22.4255 12.273 21.1964 12 19.4895V19.4212C12 19.148 12.2048 18.9432 12.4779 18.9432H13.6388C13.8436 18.9432 14.0484 19.0798 14.1166 19.3528C14.2848 20.1937 14.7291 20.8506 15.8654 21.0588V17.3622C13.3883 16.9704 12.2048 16.0563 12.2048 13.9587C12.2048 12.2516 13.5021 10.8861 15.5505 10.6129V9.04245C15.6189 8.70094 15.8237 8.49609 16.0969 8.49609H17.1211C17.4625 8.56443 17.6673 8.76927 17.6673 9.04245V10.6812C19.2377 10.8177 20.4668 11.9784 20.74 13.4807V13.549C20.74 13.822 20.5351 14.0269 20.2619 14.0269H19.1696C18.9647 14.0269 18.7599 13.8904 18.6915 13.6855C18.448 12.9549 18.0307 12.537 17.3654 12.3574V15.6668ZM17.3654 17.6401V21.0598C18.3174 20.8514 18.9647 20.1837 18.9647 19.2847C18.9647 18.393 18.5553 17.9561 17.3654 17.6401ZM15.8654 15.4154V12.2929C14.8817 12.4453 14.3898 13.0106 14.3898 13.822C14.3898 14.5999 14.661 15.1064 15.8654 15.4154Z" fill="white"></path>
                                             </svg>
                                         </div>
-                                        <div class="earn-crypto__card-name">
-                                            Paying with USD
-                                        </div>
+                                        <div class="earn-crypto__card-name" th:text="#{cards.paying.with('USD')}"></div>
                                     </div>
                                     <div class="earn-crypto__card-wrapper">
                                         <div class="earn-crypto__card-available">
                                             $1000.00
                                         </div>
-                                        <div class="earn-crypto__card-subtitle">
-                                            available
-                                        </div>
+                                        <div class="earn-crypto__card-subtitle" th:text="#{cards.available}"></div>
                                     </div>
                                 </div>
                                 <div class="earn-crypto__card-bottom">
@@ -325,9 +261,7 @@
                                                 <path d="M11.1517 24.8033L13.4242 20.8334L15.6967 16.8765L17.9564 12.9066L18.3276 12.2774L18.4941 12.9066L19.1854 15.5208L18.4109 16.8765L16.1384 20.8334L13.8787 24.8033H16.5929L18.8654 20.8334L20.0432 18.7771L20.6001 20.8334L21.65 24.8033H24.0889L23.0391 20.8334L21.9828 16.8765L21.7076 15.8581L23.3975 12.9066H20.933L20.8498 12.6147L19.992 9.37134L19.8832 8.94971H17.5147L17.457 9.03403L15.2422 12.9066L12.9697 16.8765L10.71 20.8334L8.4375 24.8033H11.1517Z" fill="white"></path>
                                             </svg>
                                         </div>
-                                        <div class="earn-crypto__card-name">
-                                            4% back in ALGO
-                                        </div>
+                                        <div class="earn-crypto__card-name" th:text="#{cards.percent.back.in('4%', 'ALGO')}"></div>
                                     </div>
                                     <div class="earn-crypto__card-earn">
                                         +$120.24
@@ -336,12 +270,8 @@
                             </div>
                         </div>
                         <div class="earn-crypto__right">
-                            <div class="earn-crypto__title">
-                                Earn crypto back on every purchase
-                            </div>
-                            <div class="earn-crypto__description">
-                                Stack crypto rewards fast from everyday spending
-                            </div>
+                            <div class="earn-crypto__title" th:text="#{cards.earn_crypto_title}"></div>
+                            <div class="earn-crypto__description" th:text="#{cards.earn_crypto_description}"></div>
                             <div class="earn-crypto__benefits">
                                 <div class="earn-crypto__benefit">
                                     <div class="earn-crypto__benefit-icon">
@@ -357,13 +287,8 @@
                                         </svg>
                                     </div>
                                     <div class="earn-crypto__benefit-wrapper">
-                                        <div class="earn-crypto__benefit-title">
-                                            Spend cash or crypto
-                                        </div>
-                                        <div class="earn-crypto__benefit-description">
-                                            Use your card anywhere Visa® debit cards are
-                                            accepted, at 40M+ merchants worldwide.
-                                        </div>
+                                        <div class="earn-crypto__benefit-title" th:text="#{cards.earn_crypto_benefit_title}"></div>
+                                        <div class="earn-crypto__benefit-description" th:text="#{cards.earn_crypto_benefit_description}"></div>
                                     </div>
                                 </div>
                                 <div class="earn-crypto__benefit">
@@ -373,12 +298,8 @@
                                         </svg>
                                     </div>
                                     <div class="earn-crypto__benefit-wrapper">
-                                        <div class="earn-crypto__benefit-title">
-                                            No hidden fees
-                                        </div>
-                                        <div class="earn-crypto__benefit-description">
-                                            Enjoy zero spending fees and no annual fees.
-                                        </div>
+                                        <div class="earn-crypto__benefit-title" th:text="#{cards.no.hidden}"></div>
+                                        <div class="earn-crypto__benefit-description" th:text="#{cards.no.hidden.descr}"></div>
                                     </div>
                                 </div>
                                 <div class="earn-crypto__benefit">
@@ -392,12 +313,8 @@
                                         </svg>
                                     </div>
                                     <div class="earn-crypto__benefit-wrapper">
-                                        <div class="earn-crypto__benefit-title">
-                                            Earn crypto without buying crypto
-                                        </div>
-                                        <div class="earn-crypto__benefit-description">
-                                            Get unlimited crypto rewards on every purchase.
-                                        </div>
+                                        <div class="earn-crypto__benefit-title" th:text="#{cards.earn.crypto}"></div>
+                                        <div class="earn-crypto__benefit-description" th:text="#{cards.earn.crypto.descr}"></div>
                                     </div>
                                 </div>
                                 <div class="earn-crypto__benefit">
@@ -407,13 +324,8 @@
                                         </svg>
                                     </div>
                                     <div class="earn-crypto__benefit-wrapper">
-                                        <div class="earn-crypto__benefit-title">
-                                            Pay with peace of mind
-                                        </div>
-                                        <div class="earn-crypto__benefit-description">
-                                            Industry-leading security features include: 2 factor
-                                            authentication, card freezing, pin change, and more.
-                                        </div>
+                                        <div class="earn-crypto__benefit-title" th:text="#{cards.pay.with}"></div>
+                                        <div class="earn-crypto__benefit-description" th:text="#{cards.pay.with.descr}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -423,12 +335,8 @@
             </section>
             <section class="the-choice">
                 <div class="the-choice__container">
-                    <div class="the-choice__title">
-                        The choice is yours
-                    </div>
-                    <div class="the-choice__description">
-                        Select from a list of rotating crypto rewards
-                    </div>
+                    <div class="the-choice__title" th:text="#{cards.the.choice}"></div>
+                    <div class="the-choice__description" th:text="#{cards.the.choice.descr}"></div>
 
                     <div class="the-choice__box">
                         <div class="the-choice__left">
@@ -448,13 +356,8 @@
                                         </svg>
                                     </div>
                                     <div class="the-choice__benefit-wrapper">
-                                        <div class="the-choice__benefit-title">
-                                            Diversify your rewards
-                                        </div>
-                                        <div class="the-choice__benefit-description">
-                                            Earn popular and up-and-coming assets like
-                                            Bitcoin or The Graph.
-                                        </div>
+                                        <div class="the-choice__benefit-title" th:text="#{cards.diversify.rewards}"></div>
+                                        <div class="the-choice__benefit-description" th:text="#{cards.diversify.rewards.descr}"></div>
                                     </div>
                                 </div>
                                 <div class="the-choice__benefit">
@@ -464,13 +367,8 @@
                                         </svg>
                                     </div>
                                     <div class="the-choice__benefit-wrapper">
-                                        <div class="the-choice__benefit-title">
-                                            Maximize your crypto portfolio
-                                        </div>
-                                        <div class="the-choice__benefit-description">
-                                            Get full control of what you earn, and switch rewards
-                                            at any time.
-                                        </div>
+                                        <div class="the-choice__benefit-title" th:text="#{cards.maximize.portfolio}"></div>
+                                        <div class="the-choice__benefit-description" th:text="#{cards.maximize.portfolio.descr}"></div>
                                     </div>
                                 </div>
                                 <div class="the-choice__benefit">
@@ -480,13 +378,8 @@
                                         </svg>
                                     </div>
                                     <div class="the-choice__benefit-wrapper">
-                                        <div class="the-choice__benefit-title">
-                                            Rewards that can grow
-                                        </div>
-                                        <div class="the-choice__benefit-description">
-                                            Your crypto rewards have the potential to increase
-                                            in value over time.
-                                        </div>
+                                        <div class="the-choice__benefit-title" th:text="#{cards.rewads.grow}"></div>
+                                        <div class="the-choice__benefit-description" th:text="#{cards.rewads.grow.descr}"></div>
                                     </div>
                                 </div>
                             </div>
@@ -621,16 +514,9 @@
                     <div class="spend-anywhere__box-wrapper">
                         <div class="spend-anywhere__box">
                             <div class="spend-anywhere__left">
-                                <div class="spend-anywhere__title">
-                                    Spend Anywhere, Anytime
-                                </div>
-                                <div class="spend-anywhere__description">
-                                    Use your Card in over 60+ million
-                                    merchants worldwide
-                                </div>
-                                <a class="spend-anywhere__link butafor__btn" href="#">
-                                    Get Started
-                                </a>
+                                <div class="spend-anywhere__title" th:text="#{cards.spend}"></div>
+                                <div class="spend-anywhere__description" th:text="#{cards.spend.descr}"></div>
+                                <a class="spend-anywhere__link butafor__btn" href="#" th:text="#{index.get.started}"></a>
                             </div>
                         </div>
                     </div>
@@ -638,9 +524,7 @@
             </section>
             <section class="card-works">
                 <div class="card-works__container">
-                    <div class="card-works__title">
-                        How your card works
-                    </div>
+                    <div class="card-works__title" th:text="#{cards.how.card}"></div>
                     <div class="card-works__cards">
                         <div class="card-works__card">
                             <div class="card-works__card-number">
@@ -671,9 +555,7 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="card-works__card-description">
-                                Top-up crypto to your Funding Wallet
-                            </div>
+                            <div class="card-works__card-description" th:text="#{cards.top.up}"></div>
                         </div>
                         <div class="card-works__card">
                             <div class="card-works__card-number">
@@ -703,9 +585,7 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="card-works__card-description">
-                                Spend anywhere you see the Visa logo
-                            </div>
+                            <div class="card-works__card-description" th:text="#{cards.spend.anywhere}"></div>
                         </div>
                         <div class="card-works__card">
                             <div class="card-works__card-number">
@@ -735,23 +615,19 @@
                                     </defs>
                                 </svg>
                             </div>
-                            <div class="card-works__card-description">
-                                Earn cashback
-                            </div>
+                            <div class="card-works__card-description" th:text="#{cards.earn.cashback}"></div>
                         </div>
                     </div>
                 </div>
             </section>
             <section class="faqs faq-card">
                 <div class="faqs__container">
-                    <div class="faqs__title">
-                        FAQ
-                    </div>
+                    <div class="faqs__title" th:text="#{faq.title}"></div>
                     <div class="faqs__questions">
                         <div class="accordion__container">
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    How can I qualify for a <th:block th:text="${site_name} + 'Card'"></th:block>?
+                                    <span th:text="#{cards.accordion_item_title(${site_name})}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.3335 9.33268L14.0002 18.666L4.66683 9.33268" stroke="#929DA6" stroke-width="1.35393" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -759,16 +635,13 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content" th:text="'Register a ' + ${site_name} + ' account.'"></div>
-                                    <div class="content">
-                                        Complete identity verification and provide proof that you are
-                                        a resident of a <th:block th:text="${site_name} + 'Card'"></th:block> supported country/region.
-                                    </div>
+                                    <div class="content" th:text="#{cards.register.account(${site_name})}"></div>
+                                    <div class="content" th:text="#{cards.complete.identity(${site_name})}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    What crypto can I spend with <th:block th:text="${site_name} + 'Card'"></th:block>?
+                                    <span th:text="#{cards.what.crypto(${site_name})}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.3335 9.33268L14.0002 18.666L4.66683 9.33268" stroke="#929DA6" stroke-width="1.35393" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -776,15 +649,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        <th:block th:text="${site_name} + 'Card'"></th:block> currently supports USDT, BTC, and USDC, with more crypto to follow soon.
-                                    </div>
-                                    
+                                    <div class="content" th:text="#{cards.what.card.supports(${site_name})}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    Which countries/regions does <th:block th:text="${site_name} + 'Card'"></th:block> support?
+                                    <span th:text="#{cards.which.countries(${site_name})}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.3335 9.33268L14.0002 18.666L4.66683 9.33268" stroke="#929DA6" stroke-width="1.35393" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -792,16 +662,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        <th:block th:text="${site_name} + 'Card'"></th:block> is currently supported in Austria, Belgium, Bulgaria, Croatia, Republic of Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Iceland, Liechtenstein, Norway, and United Kingdom.
-<th:block th:text="${site_name} + 'Card'"></th:block> can be used worldwide.
-                                    </div>
-                                   
+                                    <div class="content" th:text="#{cards.currently.supported(${site_name})}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    Will I be charged annual or transaction fees?
+                                    <span th:text="#{cards.will.charged}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M23.3335 9.33268L14.0002 18.666L4.66683 9.33268" stroke="#929DA6" stroke-width="1.35393" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -809,11 +675,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                       <th:block th:text="${site_name} + 'Card'"></th:block> is completely free and does not have any annual fees.
-You may be charged a trading fee for crypto to fiat conversion when spending with a <th:block th:text="${site_name} + 'Card'"></th:block>.
-                                    </div>
-                                    
+                                    <div class="content" th:text="#{cards.completely.free(${site_name})}"></div>
                                 </div>
                             </div>
                         </div>

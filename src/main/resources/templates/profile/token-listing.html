@@ -17,23 +17,16 @@
             <section class="volume-home">
                 <div class="volume-home__container">
                     <div class="volume-home__box">
-                        <div class="volume-home__title">
-                            To the moon
-                            with <th:block th:text="${site_name}"></th:block>                        </div>
-                        <div class="volume-home__description">
-                            Get your trading volume to 1M+ USD with our
-                            Trading competition
-                        </div>
-                        <a class="volume-home__link" href="#" id="butafor__btn">
-                            Apply to list
-                        </a>
+                        <div class="volume-home__title" th:text="#{listing.home.title(${site_name})}"></div>
+                        <div class="volume-home__description" th:text="#{listing.home.description}"></div>
+                        <a class="volume-home__link" href="#" id="butafor__btn" th:text="#{listing.home.link}"></a>
                     </div>
                 </div>
             </section>
             <section class="skyrocket-benefits">
                 <div class="skyrocket-benefits__box">
-                    <div class="skyrocket-benefits__title" th:text="'Why will your ' + ${site_name} + ' skyrocket?'"></div>
-                    <div class="skyrocket-benefits__des">You will get the most complete solution in the market, which will help you to grow.</div>
+                    <div class="skyrocket-benefits__title" th:text="#{skyrocket.benefits.title(${site_name})}"></div>
+                    <div class="skyrocket-benefits__des" th:text="#{skyrocket.benefits.description}"></div>
 
                     <div class="skyrocket-benefits__items">
 
@@ -45,8 +38,8 @@
                                     <path d="M19.9993 7.18994C23.3344 10.8411 25.2297 15.5793 25.3327 20.5233C25.2297 25.4672 23.3344 30.2055 19.9993 33.8566C16.6643 30.2055 14.769 25.4672 14.666 20.5233C14.769 15.5793 16.6643 10.8411 19.9993 7.18994Z" stroke="#9E9EB4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                             </div>
-                            <div class="skyrocket-benefits__item-title">3 million users</div>
-                            <div class="skyrocket-benefits__des">At the moment, our exchange has more than 3 million registered users from more than 150 countries & we continue to grow.</div>
+                            <div class="skyrocket-benefits__item-title" th:text="#{skyrocket.benefits.item1.title}"></div>
+                            <div class="skyrocket-benefits__des" th:text="#{skyrocket.benefits.item1.description}"></div>
                         </div>
 
                         <div class="skyrocket-benefits__item">
@@ -57,8 +50,8 @@
                                 </svg>
 
                             </div>
-                            <div class="skyrocket-benefits__item-title">Friendly Identity verification policy</div>
-                            <div class="skyrocket-benefits__des">Users can trade and make unlimited deposits and withdrawals in any digital asset.</div>
+                            <div class="skyrocket-benefits__item-title" th:text="#{skyrocket.benefits.item2.title}"></div>
+                            <div class="skyrocket-benefits__des" th:text="#{skyrocket.benefits.item2.description}"></div>
                         </div>
 
                         <div class="skyrocket-benefits__item">
@@ -68,8 +61,8 @@
                                     <path d="M10 34.2734C10 28.7178 12.5 21.7734 20 21.7734C27.5 21.7734 30 28.7178 30 34.2734" stroke="#9E9EB4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                             </div>
-                            <div class="skyrocket-benefits__item-title">Personal manager</div>
-                            <div class="skyrocket-benefits__des">Your <th:block th:text="${site_name}"></th:block> Relations manager will make sure to answer all your questions and solve any issues 24/7.</div>
+                            <div class="skyrocket-benefits__item-title" th:text="#{skyrocket.benefits.item3.title}"></div>
+                            <div class="skyrocket-benefits__des" th:text="#{skyrocket.benefits.item3.description(${site_name})}"></div>
                         </div>
 
                         <div class="skyrocket-benefits__item">
@@ -81,8 +74,8 @@
                                     <path d="M15 13.0234H7.25C6.69772 13.0234 6.25 12.5757 6.25 12.0234V10.5234" stroke="#9E9EB4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg>
                             </div>
-                            <div class="skyrocket-benefits__item-title">Fiat gateway</div>
-                            <div class="skyrocket-benefits__des">Our users can withdraw national currency (such as USD, EUR, UAH) to their Visa and MasterCard in just two clicks.</div>
+                            <div class="skyrocket-benefits__item-title" th:text="#{skyrocket.benefits.item4.title}"></div>
+                            <div class="skyrocket-benefits__des" th:text="#{skyrocket.benefits.item4.description}"></div>
                         </div>
 
                     </div>
@@ -90,9 +83,7 @@
             </section>
             <section class="coverage">
                 <div class="coverage__container">
-                    <div class="coverage__title">
-                        Coverage
-                    </div>
+                    <div class="coverage__title" th:text="#{listing.coverage}"></div>
                     <div class="coverage__map">
                         <svg width="600" height="400" viewbox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_31_13157" style="mask-type:luminance" maskunits="userSpaceOnUse" x="143" y="263" width="79" height="132">
@@ -200,7 +191,7 @@
             </section>
             <section class="partners-feedback">
                 <div class="partners-feedback__box">
-                    <div class="partners-feedback__title">Partners feedback</div>
+                    <div class="partners-feedback__title" th:text="#{listing.feedback}"></div>
 
                     <div class="partners-feedback__card-box">
                         <div class="partners-feedback__card">
@@ -209,13 +200,11 @@
                                     <picture><source srcset="../assets/img/partners-feedback/token1.webp" type="image/webp"><picture><source srcset="../assets/img/partners-feedback/token1.webp" type="image/webp"><img class="partners-feedback__card-img" src="../assets/img/partners-feedback/token1.png" alt=""></picture></picture>
                                     <div class="partners-feedback__card-title">DASH</div>
                                 </div>
-                                <div class="partners-feedback__text">
-                                    In the time I have been working with <th:block th:text="${site_name}"></th:block>, I have found that the only thing that matches their high quality of their platform is their high quality team. When we are not in an active <th:block th:text="${site_name}"></th:block>, we are always planning one. When it came to recognizing their platform in the high user experience for our Dash community, it was a no brainer for me.
-                                </div>
+                                <div class="partners-feedback__text" th:text="#{partners.feedback.text(${site_name})}"></div>
                             </div>
                             <div class="partners-feedback__bottom">
                                 <div class="partners-feedback__bottom-title">Omar Hamwi</div>
-                                <div class="partners-feedback__text">Dash Business Development Manager</div>
+                                <div class="partners-feedback__text" th:text="#{partners.feedback.manager}"></div>
                             </div>
                         </div>
                         <div class="partners-feedback__card">
@@ -224,13 +213,11 @@
                                     <picture><source srcset="../assets/img/partners-feedback/token2.webp" type="image/webp"><picture><source srcset="../assets/img/partners-feedback/token2.webp" type="image/webp"><img class="partners-feedback__card-img" src="../assets/img/partners-feedback/token2.png" alt=""></picture></picture>
                                     <div class="partners-feedback__card-title">Horizen</div>
                                 </div>
-                                <div class="partners-feedback__text">
-                                    Horizen (ZEN) has been listed on <th:block th:text="${site_name}"></th:block> since July 2020. They have been a major venue for Eastern European users. The <th:block th:text="${site_name}"></th:block> team has provided comprehensive support to our <th:block th:text="${site_name}"></th:block>. They are professional and always available.
-                                </div>
+                                <div class="partners-feedback__text" th:text="#{partners.feedback.text2(${site_name})}"></div>
                             </div>
                             <div class="partners-feedback__bottom">
                                 <div class="partners-feedback__bottom-title">Vano Narimanidze</div>
-                                <div class="partners-feedback__text">Horizen Business Development Manager</div>
+                                <div class="partners-feedback__text" th:text="#{partners.feedback.manager2}"></div>
                             </div>
                         </div>
                         <div class="partners-feedback__card">
@@ -239,28 +226,24 @@
                                     <picture><source srcset="../assets/img/partners-feedback/token3.webp" type="image/webp"><picture><source srcset="../assets/img/partners-feedback/token3.webp" type="image/webp"><img class="partners-feedback__card-img" src="../assets/img/partners-feedback/token3.png" alt=""></picture></picture>
                                     <div class="partners-feedback__card-title">Hoge</div>
                                 </div>
-                                <div class="partners-feedback__text">
-                                    <th:block th:text="${site_name}"></th:block> was a pillar to HOGE’s early success. Their team was quick to respond to questions and feedback. It was no surprise to our community that when we asked <th:block th:text="${site_name}"></th:block> to team up to help charities, they would be excited to help with some amazing nonprofits throughout the world.
-                                </div>
+                                <div class="partners-feedback__text" th:text="#{partners.feedback.hoge(${site_name})}"></div>
                             </div>
                             <div class="partners-feedback__bottom">
                                 <div class="partners-feedback__bottom-title">Joseph Rocko</div>
-                                <div class="partners-feedback__text">Marketing Lead at HOGE Finance</div>
+                                <div class="partners-feedback__text" th:text="#{partners.feedback.hoge.title}"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             <section class="fast-listing">
-                <div class="fast-listing__title">Fast listing in 48 hours</div>
-                <div class="fast-listing__des" th:text="'We can list your ' + ${site_name} + ' on our exchange within 48 hours'"></div>
-                <a href="#" class="buttons__01 butafor__btn">Fast listing</a>
+                <div class="fast-listing__title" th:text="#{fast.listing.title}"></div>
+                <div class="fast-listing__des" th:text="#{fast.listing.description(${site_name})}"></div>
+                <a href="#" class="buttons__01 butafor__btn" th:text="#{fast.listing.button}"></a>
             </section>
             <section class="listing-experience">
                 <div class="listing-experience__container">
-                    <div class="listing-experience__title">
-                        Ever had an unsuccessful listing experience?
-                    </div>
+                    <div class="listing-experience__title" th:text="#{listing.unsuccessful.unsuccessful}"></div>
                     <div class="listing-experience__cards">
                         <div class="listing-experience__card">
                             <div class="listing-experience__card-left">
@@ -278,9 +261,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    We didn’t make any money
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.not.make}"></div>
                             </div>
                             <div class="listing-experience__card-right">
                                 <div class="listing-experience__card-icon">
@@ -296,10 +277,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    We do a marketing audit before listing, analyze your marketing
-                                    strategy, and build an improvement plan to get the best results.
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.not.make.descr}"></div>
                             </div>
                         </div>
                         <div class="listing-experience__card">
@@ -318,9 +296,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    There were no trades
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.no.trades}"></div>
                             </div>
                             <div class="listing-experience__card-right">
                                 <div class="listing-experience__card-icon">
@@ -336,9 +312,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    Our big community from different countries will give your asset a chance to grow.
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.no.trades.descr}"></div>
                             </div>
                         </div>
                         <div class="listing-experience__card">
@@ -357,9 +331,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    There were no users
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.no.users}"></div>
                             </div>
                             <div class="listing-experience__card-right">
                                 <div class="listing-experience__card-icon">
@@ -375,9 +347,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    We always attract new users with our activities and events.
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.no.users.descr}"></div>
                             </div>
                         </div>
                         <div class="listing-experience__card">
@@ -396,9 +366,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    The service was bad
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.service.bad}"></div>
                             </div>
                             <div class="listing-experience__card-right">
                                 <div class="listing-experience__card-icon">
@@ -414,9 +382,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <div class="listing-experience__card-title">
-                                    Our managers are ready to help you with any question or issue whenever you need it.
-                                </div>
+                                <div class="listing-experience__card-title" th:text="#{listing.service.bad.descr}"></div>
                             </div>
                         </div>
                     </div>
@@ -424,15 +390,15 @@
             </section>
             <section class="start-cooperation">
                 <div class="start-cooperation__form">
-                    <div class="start-cooperation__form-title">Let's start cooperation</div>
-                    <div class="start-cooperation__form-des">We can list your coin on our exchange within 48 hours</div>
+                    <div class="start-cooperation__form-title" th:text="#{listing.cooperation.title}"></div>
+                    <div class="start-cooperation__form-des" th:text="#{listing.cooperation.description}"></div>
 
                     <div class="start-cooperation__input-box">
-                        <input class="start-cooperation__input" type="text" placeholder="Coin name">
-                        <input class="start-cooperation__input" type="text" placeholder="Coin website">
-                        <input class="start-cooperation__input" type="text" placeholder="Contact e-mail">
-                        <input class="start-cooperation__input" type="text" placeholder="Position">
-                        <input class="start-cooperation__input" type="text" placeholder="Personal Telegram or WhatsApp">
+                        <input class="start-cooperation__input" type="text" th:placeholder="#{listing.cooperation.placeholder.coin_name}" />
+                        <input class="start-cooperation__input" type="text" th:placeholder="#{listing.cooperation.placeholder.coin_website}" />
+                        <input class="start-cooperation__input" type="text" th:placeholder="#{listing.cooperation.placeholder.contact_email}" />
+                        <input class="start-cooperation__input" type="text" th:placeholder="#{listing.cooperation.placeholder.position}" />
+                        <input class="start-cooperation__input" type="text" th:placeholder="#{listing.cooperation.placeholder.telegram_whatsapp}" />
 
                         <div class="start-cooperation__bottom">
                             <div class="start-cooperation__check">
@@ -442,13 +408,11 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-                                <div class="start-cooperation__right">
-                                    Add a note  <span>(optional)</span>
-                                </div>
+                                <div class="start-cooperation__right" th:text="#{listing.add.note}"></div>
                             </div>
 
                             <div class="start-cooperation__btn">
-                                <a href="#" class="buttons__01 butafor__btn">Send</a>
+                                <a href="#" class="buttons__01 butafor__btn" th:text="#{support.send}"></a>
                             </div>
                         </div>
 

@@ -23,8 +23,8 @@
                     </svg>
                 </div>
                 <div class="top-line__content">
-                    <div class="top-line__title">P2P trading</div>
-                    <div class="top-line__des">Find the best offer below and buy and sell crypto with Your Preferred Payment Methods today</div>
+                    <div class="top-line__title" th:text="#{p2p.line.title}"></div>
+                    <div class="top-line__des" th:text="#{p2p.line.des}"></div>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                                 <path d="M15.834 11.4756V2.91725H7.27565" stroke="#191D31" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                                 <path opacity="0.4" d="M2.91602 18.3335H17.0827" stroke="#191D31" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            Buy
+                            <div style="all: unset" th:text="#{p2p.buy}"></div>
                         </a>
                         <a class="table-p2p__filter-link active" href="#" onclick="showErrorModal('P2P')">
                             <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,11 +48,11 @@
                                 <path d="M4.16602 6.02441V14.5827H12.7243" stroke="#191D31" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                                 <path opacity="0.4" d="M2.91602 18.3335H17.0827" stroke="#191D31" stroke-width="1.25" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            Sell
+                            <div style="all: unset" th:text="#{p2p.sell}"></div>
                         </a>
                     </div>
                     <div class="table-p2p__filter-amount">
-                        <input type="number" placeholder="Enter amount">
+                        <input type="number" th:placeholder="#{withdraw.enter.amount}">
                         <div class="select select-p2p-amount" onclick="showErrorModal('P2P')">
                             <div class="select__selected">
                                 <div class="select__img">
@@ -72,9 +72,7 @@
                     <div class="table-p2p__filter-payments">
                         <div class="select select-p2p-payments" onclick="showErrorModal('P2P')">
                             <div class="select__selected">
-                                <div class="select__name">
-                                    All payments
-                                </div>
+                                <div class="select__name" th:text="#{p2p.all.payments}"></div>
                                 <div class="select__arrow">
                                     <svg width="12" height="12" viewbox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M6.10156 9.45312C6.3125 9.66406 6.66406 9.66406 6.875 9.45312L11.4453 4.90625C11.6562 4.67188 11.6562 4.32031 11.4453 4.10938L10.9062 3.57031C10.6953 3.35938 10.3438 3.35938 10.1094 3.57031L6.5 7.17969L2.86719 3.57031C2.63281 3.35938 2.28125 3.35938 2.07031 3.57031L1.53125 4.10938C1.32031 4.32031 1.32031 4.67188 1.53125 4.90625L6.10156 9.45312Z" fill="#667085"></path>
@@ -83,9 +81,7 @@
                             </div>
                             <div class="select__menu">
                                 <div class="select__menu-item">
-                                    <div class="select__name">
-                                        All payments
-                                    </div>
+                                    <div class="select__name" th:text="#{p2p.all.payments}"></div>
                                 </div>
                             </div>
                         </div>
@@ -96,14 +92,14 @@
                                 <input type="checkbox" onclick="event.preventDefault()">
                                 <span class="slider round"></span>
                             </label>
-                            Verified traders
+                            <div style="all: unset" th:text="#{p2p.verified.traders}"></div>
                         </div>
                         <div class="table-p2p__filter-search" onclick="showErrorModal('P2P')">
                             <svg width="20" height="20" viewbox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.58268 17.4998C13.9549 17.4998 17.4993 13.9554 17.4993 9.58317C17.4993 5.21092 13.9549 1.6665 9.58268 1.6665C5.21043 1.6665 1.66602 5.21092 1.66602 9.58317C1.66602 13.9554 5.21043 17.4998 9.58268 17.4998Z" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                                 <path d="M18.3327 18.3332L16.666 16.6665" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            Search
+                            <div style="all: unset" th:text="#{profile.search}"></div>
                         </div>
                     </div>
                 </div>
@@ -112,18 +108,10 @@
                         <div class="table-p2p__name table-p2p__name-trader">
                             Trader
                         </div>
-                        <div class="table-p2p__name table-p2p__name-method">
-                            Payment method
-                        </div>
-                        <div class="table-p2p__name table-p2p__name-price">
-                            Price
-                        </div>
-                        <div class="table-p2p__name table-p2p__name-limits">
-                            Limits
-                        </div>
-                        <div class="table-p2p__name table-p2p__name-action">
-                            Action
-                        </div>
+                        <div class="table-p2p__name table-p2p__name-method" th:text="#{p2p.payment.method}"></div>
+                        <div class="table-p2p__name table-p2p__name-price" th:text="#{price}"></div>
+                        <div class="table-p2p__name table-p2p__name-limits" th:text="#{p2p.limits}"></div>
+                        <div class="table-p2p__name table-p2p__name-action" th:text="#{table.action}"></div>
                     </div>
                     <div class="table-p2p__items">
                         <div class="table-p2p__item" th:each="entry: ${p2p_fakes}">
@@ -149,7 +137,7 @@
                                         <path d="M4.04297 5.12305V12.3976H11.3176" stroke="#F96262" stroke-width="1.0625" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                                         <path opacity="0.4" d="M2.97852 15.5806H15.0202" stroke="#F96262" stroke-width="1.0625" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
-                                    <th:block th:text="'Sell ' + ${coin.symbol}"></th:block>
+                                    <th:block th:text="#{trading.sell(${coin.symbol})}"></th:block>
                                 </a>
                             </div>
                             </th:block>
@@ -158,7 +146,7 @@
                 </div>
                 <div class="table-p2p__pagination" style="display: flex; -webkit-box-pack: end; justify-content: center; -webkit-box-align: center; align-items: center; margin-top: 21px; margin-right: 20px;">
                     <div onclick="showErrorModal('P2P')" style="padding: 14px; width: 200px; text-align: center; border-radius: 10px; cursor: pointer; background: #c8d0eb;">
-                        <p style="display: inline-block; color: #185097; font-family: 'Roboto-Regular';">Load 15 more traders</p>
+                        <p style="display: inline-block; color: #185097; font-family: 'Roboto-Regular';" th:text="#{p2p.load.more}"></p>
                     </div>
                 </div>
             </div>

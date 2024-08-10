@@ -803,6 +803,54 @@ public class ProfileController {
         return "profile/bankWithdraw";
     }
 
+    @GetMapping(value = "market-crypto")
+    public String marketCryptoController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
+        userService.createAction(authentication, request, "Go to the /market-crypto");
+
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        addUserAttribute(model, authentication);
+
+        return "profile/market-crypto";
+    }
+
+    @GetMapping(value = "market-screener")
+    public String marketScreenerController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
+        userService.createAction(authentication, request, "Go to the /market-screener");
+
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        addUserAttribute(model, authentication);
+
+        return "profile/market-screener";
+    }
+
+    @GetMapping(value = "technical-analysis")
+    public String technicalAnalysisController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
+        userService.createAction(authentication, request, "Go to the /technical-analysis");
+
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        addUserAttribute(model, authentication);
+
+        return "profile/technical-analysis";
+    }
+
+    @GetMapping(value = "cross-rates")
+    public String crossRatesController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
+        userService.createAction(authentication, request, "Go to the /cross-rates");
+
+        addDomainInfoAttribute(model, host);
+        addPaymentSettings(model);
+
+        addUserAttribute(model, authentication);
+
+        return "profile/cross-rates";
+    }
+
     @GetMapping(value = "heat-map")
     public String heatMapController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
         userService.createAction(authentication, request, "Go to the /heat-map");

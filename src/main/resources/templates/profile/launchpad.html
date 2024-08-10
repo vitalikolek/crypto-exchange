@@ -17,40 +17,21 @@
             <section class="launchpad-home">
                 <div class="launchpad-home__box">
                     <div class="launchpad-home__container">
-                        <div class="launchpad-home__slogan">
-                            Discover new, high-quality projects around the world
-                        </div>
-                        <div class="launchpad-home__title">
-                            <th:block th:text="${site_name}"></th:block> <span>Launchpad</span>
-                        </div>
-                        <div class="launchpad-home__description">
-                            Launchpad offers our users easy access to new, high-quality crypto projects.
-                            Invest in new gems now!
-                        </div>
+                        <div class="launchpad-home__slogan" th:text="#{launchpad.slogan}"></div>
+                        <div class="launchpad-home__title" th:text="#{launchpad.title(${site_name})}"></div>
+                        <div class="launchpad-home__description" th:text="#{launchpad.description}"></div>
                         <div class="launchpad-home__stats">
                             <div class="launchpad-home__stat">
-                                <div class="launchpad-home__stat-value">
-                                    1,508,424
-                                </div>
-                                <div class="launchpad-home__stat-title">
-                                    Followers
-                                </div>
+                                <div class="launchpad-home__stat-value">1,508,424</div>
+                                <div class="launchpad-home__stat-title" th:text="#{copy.trading.followers}"></div>
                             </div>
                             <div class="launchpad-home__stat">
-                                <div class="launchpad-home__stat-value">
-                                    $ 122,424,470,150
-                                </div>
-                                <div class="launchpad-home__stat-title">
-                                    Amount
-                                </div>
+                                <div class="launchpad-home__stat-value">$ 122,424,470,150</div>
+                                <div class="launchpad-home__stat-title" th:text="#{amount}"></div>
                             </div>
                             <div class="launchpad-home__stat">
-                                <div class="launchpad-home__stat-value">
-                                    32
-                                </div>
-                                <div class="launchpad-home__stat-title">
-                                    Projects
-                                </div>
+                                <div class="launchpad-home__stat-value">32</div>
+                                <div class="launchpad-home__stat-title" th:text="#{launchpad.projects}"></div>
                             </div>
                         </div>
                     </div>
@@ -274,9 +255,7 @@
                         </div>
                     </div>
                     <div class="previous-projects__link-wrapper">
-                        <a class="previous-projects__link butafor__btn" href="#">
-                            More projects
-                        </a>
+                        <a class="previous-projects__link butafor__btn" href="#" th:text="#{launchpad.more}"></a>
                     </div>
                 </div>
             </section>
@@ -284,47 +263,30 @@
                 <div class="join-Jumpstart__wrapper">
                     <div class="join-Jumpstart__container">
                         <div class="join-Jumpstart__box">
-                            <div class="join-Jumpstart__title" th:text="'Join ' + ${site_name} + ' launchpad'"></div>
-                            <div class="join-Jumpstart__description">
-                                If you are a developer of innovative blockchain projects, apply below to launch
-                                your projects on launchpad & reach out to millions of potential investors!
-                            </div>
-                            <a class="join-Jumpstart__link butafor__btn" href="#">
-                                Apply to join
-                            </a>
+                            <div class="join-Jumpstart__title" th:text="#{joinJumpstart.title(${site_name})}"></div>
+                            <div class="join-Jumpstart__description" th:text="#{joinJumpstart.description}"></div>
+                            <a class="join-Jumpstart__link butafor__btn" href="#" th:text="#{joinJumpstart.applyLink}"></a>
                             <div class="join-Jumpstart__benefits">
                                 <div class="join-Jumpstart__benefit">
                                     <div class="join-Jumpstart__benefit-img">
-                                        <picture><source srcset="../assets/img/join-Jumpstart/exposure.webp" type="image/webp"><picture><source srcset="../assets/img/join-Jumpstart/exposure.webp" type="image/webp"><img src="../assets/img/join-Jumpstart/exposure.png" alt=""></picture></picture>
+                                        <picture><source srcset="../assets/img/join-Jumpstart/exposure.webp" type="image/webp"><img src="../assets/img/join-Jumpstart/exposure.png" alt=""></picture>
                                     </div>
-                                    <div class="join-Jumpstart__benefit-title">
-                                        High exposure
-                                    </div>
-                                    <div class="join-Jumpstart__benefit-description">
-                                        Millions of visits
-                                    </div>
+                                    <div class="join-Jumpstart__benefit-title" th:text="#{joinJumpstart.benefits.highExposure.title}"></div>
+                                    <div class="join-Jumpstart__benefit-description" th:text="#{joinJumpstart.benefits.highExposure.description}"></div>
                                 </div>
                                 <div class="join-Jumpstart__benefit">
                                     <div class="join-Jumpstart__benefit-img">
-                                        <picture><source srcset="../assets/img/join-Jumpstart/liquidity.webp" type="image/webp"><picture><source srcset="../assets/img/join-Jumpstart/liquidity.webp" type="image/webp"><img src="../assets/img/join-Jumpstart/liquidity.png" alt=""></picture></picture>
+                                        <picture><source srcset="../assets/img/join-Jumpstart/liquidity.webp" type="image/webp"><img src="../assets/img/join-Jumpstart/liquidity.png" alt=""></picture>
                                     </div>
-                                    <div class="join-Jumpstart__benefit-title">
-                                        Liquidity
-                                    </div>
-                                    <div class="join-Jumpstart__benefit-description">
-                                        World-class liquidity
-                                    </div>
+                                    <div class="join-Jumpstart__benefit-title" th:text="#{joinJumpstart.benefits.liquidity.title}"></div>
+                                    <div class="join-Jumpstart__benefit-description" th:text="#{joinJumpstart.benefits.liquidity.description}"></div>
                                 </div>
                                 <div class="join-Jumpstart__benefit">
                                     <div class="join-Jumpstart__benefit-img">
-                                        <picture><source srcset="../assets/img/join-Jumpstart/fairness.webp" type="image/webp"><picture><source srcset="../assets/img/join-Jumpstart/fairness.webp" type="image/webp"><img src="../assets/img/join-Jumpstart/fairness.png" alt=""></picture></picture>
+                                        <picture><source srcset="../assets/img/join-Jumpstart/fairness.webp" type="image/webp"><img src="../assets/img/join-Jumpstart/fairness.png" alt=""></picture>
                                     </div>
-                                    <div class="join-Jumpstart__benefit-title">
-                                        Fairness
-                                    </div>
-                                    <div class="join-Jumpstart__benefit-description">
-                                        Fair participation
-                                    </div>
+                                    <div class="join-Jumpstart__benefit-title" th:text="#{joinJumpstart.benefits.fairness.title}"></div>
+                                    <div class="join-Jumpstart__benefit-description" th:text="#{joinJumpstart.benefits.fairness.description}"></div>
                                 </div>
                             </div>
                         </div>
@@ -333,14 +295,12 @@
             </section>
             <section class="faqs faqs-jumpstart">
                 <div class="faqs__container">
-                    <div class="faqs__title">
-                        FAQs
-                    </div>
+                    <div class="faqs__title" th:text="#{faqs.title}"></div>
                     <div class="faqs__questions">
                         <div class="accordion__container">
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    When does launchpad launch projects?
+                                    <div style="all: unset" th:text="#{faqs.item1.title}"></div>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -348,14 +308,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        <th:block th:text="${site_name}"></th:block> launchpad will provide users with the opportunity to experience new high-quality blockchain projects from time to time. For all events, <th:block th:text="${site_name}"></th:block> will conduct warm-ups in advance and announce relevant rules for users to prepare for their participation. You can keep an eye on the latest news and notifications on <th:block th:text="${site_name}"></th:block>.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.item1.content(${site_name})}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    How can I participate in launchpad?
+                                    <div style="all: unset" th:text="#{faqs.item2.title}"></div>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -363,14 +321,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        First, you need to create your <th:block th:text="${site_name}"></th:block> account or log in with your existing account. Second, please make sure you have completed the Lv. 3 KYC verification. Last but not least, you need to hold a certain amount of tokens for staking before participation. After logging in, you can find [Launchpad] on our platform and find the homepage to view information and details. Just click on the screen, and you can complete staking or unstaking your tokens.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.item2.content(${site_name})}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    What types of events does launchpad provide?
+                                    <div style="all: unset" th:text="#{faqs.item3.title}"></div>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -378,9 +334,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        Currently, <th:block th:text="${site_name}"></th:block> launchpad provides two types of events - Mining and On Sale. With token staking, the Mining model allows users to gain token rewards issued by relevant projects. Every event has its own staking period and total staking limit, following on a "more staking, more tokens" basis. The On Sale model adopts "Pledge + Draw" to distribute tokens. This includes position census, pledging, reward census and reward distribution. Also, token is the only token officially taken for pledging during the whole process. Both models are not applicable for users in restricted countries/regions, and those allowed to participate should refer to Project's announcements.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.item3.content(${site_name})}"></div>
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,6 @@
 package me.yukitale.cryptoexchange.exchange.controller.other;
 
 import me.yukitale.cryptoexchange.exchange.model.user.UserSupportDialog;
-import me.yukitale.cryptoexchange.exchange.repository.user.UserBalanceRepository;
 import me.yukitale.cryptoexchange.exchange.repository.user.UserSupportDialogRepository;
 import me.yukitale.cryptoexchange.panel.admin.model.payments.PaymentSettings;
 import me.yukitale.cryptoexchange.panel.admin.repository.payments.PaymentSettingsRepository;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import me.yukitale.cryptoexchange.exchange.model.user.User;
-import me.yukitale.cryptoexchange.exchange.repository.CoinRepository;
 import me.yukitale.cryptoexchange.exchange.service.CoinService;
 import me.yukitale.cryptoexchange.exchange.service.UserService;
 import me.yukitale.cryptoexchange.panel.admin.model.other.AdminLegalSettings;
@@ -45,13 +43,7 @@ public class ExchangeController {
     private AdminLegalSettingsRepository adminLegalSettingsRepository;
 
     @Autowired
-    private UserBalanceRepository userBalanceRepository;
-
-    @Autowired
     private PaymentSettingsRepository paymentSettingsRepository;
-
-    @Autowired
-    private CoinRepository coinRepository;
 
     @Autowired
     private DomainRepository domainRepository;
@@ -126,18 +118,6 @@ public class ExchangeController {
         return "cookies-policy";
     }
 
-    @GetMapping(value = "cross-rates")
-    public String crossRatesController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
-        userService.createAction(authentication, request, "Go to the /cross-rates");
-
-        addDomainInfoAttribute(model, host);
-        addPaymentSettings(model);
-
-        addUserAttribute(model, authentication);
-
-        return "cross-rates";
-    }
-
     @GetMapping(value = "fees")
     public String feesController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
         userService.createAction(authentication, request, "Go to the /fees");
@@ -180,30 +160,6 @@ public class ExchangeController {
         return "law";
     }
 
-    @GetMapping(value = "market-crypto")
-    public String marketCryptoController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
-        userService.createAction(authentication, request, "Go to the /market-crypto");
-
-        addDomainInfoAttribute(model, host);
-        addPaymentSettings(model);
-
-        addUserAttribute(model, authentication);
-
-        return "market-crypto";
-    }
-
-    @GetMapping(value = "market-screener")
-    public String marketScreenerController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
-        userService.createAction(authentication, request, "Go to the /market-screener");
-
-        addDomainInfoAttribute(model, host);
-        addPaymentSettings(model);
-
-        addUserAttribute(model, authentication);
-
-        return "market-screener";
-    }
-
     @GetMapping(value = "privacy-notice")
     public String privacyNoticeController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
         userService.createAction(authentication, request, "Go to the /privacy-notice");
@@ -238,18 +194,6 @@ public class ExchangeController {
         addUserAttribute(model, authentication);
 
         return "risk";
-    }
-
-    @GetMapping(value = "technical-analysis")
-    public String technicalAnalysisController(Model model, Authentication authentication, HttpServletRequest request, @RequestHeader("host") String host) {
-        userService.createAction(authentication, request, "Go to the /technical-analysis");
-
-        addDomainInfoAttribute(model, host);
-        addPaymentSettings(model);
-
-        addUserAttribute(model, authentication);
-
-        return "technical-analysis";
     }
 
     @GetMapping(value = "terms")

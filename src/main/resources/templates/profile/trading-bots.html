@@ -17,34 +17,26 @@
             <section class="bots-home">
                 <div class="bots-home__container">
                     <div class="bots-home__box">
-                        <div class="bots-home__title" th:text="${site_name} + ' Trading Bots'"></div>
-                        <div class="bots-home__description">
-                            Intelligent pre-built trading bots help you auto-trade and earn all-day-long
-                        </div>
+                        <div class="bots-home__title" th:text="#{site_name.trading_bots_title(${site_name})}"></div>
+                        <div class="bots-home__description" th:text="#{bots.description}"></div>
                         <div class="bots-home__stats">
                             <div class="bots-home__stats-block">
                                 <div class="bots-home__stats-value">
-                                    252,410
+                                    <span>252,410</span>
                                 </div>
-                                <div class="bots-home__stats-description">
-                                    Global bot traders
-                                </div>
+                                <div class="bots-home__stats-description" th:text="#{bots.global_traders_label}"></div>
                             </div>
                             <div class="bots-home__stats-block">
                                 <div class="bots-home__stats-value">
-                                    $45.40M
+                                    <span>$45.40M</span>
                                 </div>
-                                <div class="bots-home__stats-description">
-                                    Bot trading earnings
-                                </div>
+                                <div class="bots-home__stats-description" th:text="#{bots.trading_earnings_label}"></div>
                             </div>
                             <div class="bots-home__stats-block">
                                 <div class="bots-home__stats-value">
-                                    4.12M
+                                    <span>4.12M</span>
                                 </div>
-                                <div class="bots-home__stats-description">
-                                    Bots created worldwide
-                                </div>
+                                <div class="bots-home__stats-description" th:text="#{bots.bots_created_label}"></div>
                             </div>
                         </div>
                     </div>
@@ -53,24 +45,31 @@
             <section class="trading-bot-grid">
                 <div class="trading-bot-grid__box">
                     <div class="trading-bot-grid__left">
-                        <div class="trading-bot-grid__title">What is a trading bot?</div>
+                        <div class="trading-bot-grid__title" th:text="#{trading_bot_grid.title}"></div>
                         <div class="trading-bot-grid__left-items">
                             <div class="trading-bot-grid__left-item">
-                                <picture><source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-1.webp" type="image/webp"><picture><source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-1.webp" type="image/webp"><img class="trading-bot-grid__items-img" src="../assets/img/trading-bot-grid/trading-bot-grid-img-1.png" alt=""></picture></picture>
-                                <div class="trading-bot-grid__item-title">Buy low sell high</div>
+                                <picture>
+                                    <source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-1.webp" type="image/webp">
+                                    <img class="trading-bot-grid__items-img" src="../assets/img/trading-bot-grid/trading-bot-grid-img-1.png" alt="">
+                                </picture>
+                                <div class="trading-bot-grid__item-title" th:text="#{trading_bot_grid.item_1_title}"></div>
                             </div>
                             <div class="trading-bot-grid__left-item">
-                                <picture><source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-2.webp" type="image/webp"><picture><source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-2.webp" type="image/webp"><img class="trading-bot-grid__items-img" src="../assets/img/trading-bot-grid/trading-bot-grid-img-2.png" alt=""></picture></picture>
-                                <div class="trading-bot-grid__item-title">Volatile markets</div>
+                                <picture>
+                                    <source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-2.webp" type="image/webp">
+                                    <img class="trading-bot-grid__items-img" src="../assets/img/trading-bot-grid/trading-bot-grid-img-2.png" alt="">
+                                </picture>
+                                <div class="trading-bot-grid__item-title" th:text="#{trading_bot_grid.item_2_title}"></div>
                             </div>
                             <div class="trading-bot-grid__left-item">
-                                <picture><source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-3.webp" type="image/webp"><picture><source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-3.webp" type="image/webp"><img class="trading-bot-grid__items-img" src="../assets/img/trading-bot-grid/trading-bot-grid-img-3.png" alt=""></picture></picture>
-                                <div class="trading-bot-grid__item-title">Cyclic arbitrage</div>
+                                <picture>
+                                    <source srcset="../assets/img/trading-bot-grid/trading-bot-grid-img-3.webp" type="image/webp">
+                                    <img class="trading-bot-grid__items-img" src="../assets/img/trading-bot-grid/trading-bot-grid-img-3.png" alt="">
+                                </picture>
+                                <div class="trading-bot-grid__item-title" th:text="#{trading_bot_grid.item_3_title}"></div>
                             </div>
                         </div>
-                        <div class="trading-bot-grid__left-text">
-                            Grid bot is a simple strategy of buying low and selling high. This strategy seeks to capitalize on normal price volatility in an underlying asset by placing buy and sell orders at certain regular intervals above and below predefined price ranges.
-                        </div>
+                        <div class="trading-bot-grid__left-text" th:text="#{trading_bot_grid.text}"></div>
                     </div>
 
                     <div class="trading-bot-grid__right">
@@ -82,7 +81,7 @@
                                 <circle cx="5.75" cy="9.75" r="0.75" fill="white"></circle>
                             </svg>
                             <div class="trading-bot-grid__right-text">Spot grid</div>
-                            <a class="trading-bot-grid__right-btn butafor__btn" href="#">Create</a>
+                            <a class="trading-bot-grid__right-btn butafor__btn" href="#" th:text="#{trading_bots.create}"></a>
                         </div>
                         <div class="trading-bot-grid__right-item">
                             <svg width="16" height="15" viewbox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,14 +90,14 @@
                                 <line x1="0.0996094" y1="14" x2="15.0996" y2="14" stroke="white"></line>
                             </svg>
                             <div class="trading-bot-grid__right-text">Moon grid</div>
-                            <a class="trading-bot-grid__right-btn butafor__btn" href="#">Create</a>
+                            <a class="trading-bot-grid__right-btn butafor__btn" href="#" th:text="#{trading_bots.create}">Create</a>
                         </div>
                         <div class="trading-bot-grid__right-item">
                             <svg width="15" height="14" viewbox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.59961 13.5H14.0996V0.5H3.59961V7M3.59961 13.5V7M3.59961 13.5C1.59961 12 1.09961 10 1.09961 9C1.09961 7 2.59961 7 3.59961 7M7.09961 7H11.0996M5.59961 4.5H11.0996" stroke="white"></path>
                             </svg>
                             <div class="trading-bot-grid__right-text">Futures grid</div>
-                            <a class="trading-bot-grid__right-btn butafor__btn" href="#">Create</a>
+                            <a class="trading-bot-grid__right-btn butafor__btn" href="#" th:text="#{trading_bots.create}">Create</a>
                         </div>
 
                     </div>
@@ -106,9 +105,7 @@
             </section>
             <section class="bot-marketplace">
                 <div class="bot-marketplace__container">
-                    <div class="bot-marketplace__title">
-                        Bot Marketplace
-                    </div>
+                    <div class="bot-marketplace__title" th:text="#{trading_bots.market}"></div>
                     <div class="bot-marketplace__cards">
                         <div class="bot-marketplace__card">
                             <div class="bot-marketplace__card-title">
@@ -1168,38 +1165,44 @@
             </section>
             <section class="your-trading">
                 <div class="your-trading__box">
-                    <div class="your-trading__title">Supercharge your trading with trading bots</div>
+                    <div class="your-trading__title" th:text="#{your_trading.title}"></div>
 
                     <div class="your-trading__items">
                         <div class="your-trading__item">
-                            <picture><source srcset="../assets/img/your-trading/your-trading-img-1.webp" type="image/webp"><picture><source srcset="../assets/img/your-trading/your-trading-img-1.webp" type="image/webp"><img class="your-trading__img" src="../assets/img/your-trading/your-trading-img-1.png" alt=""></picture></picture>
-                            <div class="your-trading__item-title">Safe & Secure</div>
-                            <div class="your-trading__item-des">Protect and secure your assets anytime, anywhere</div>
+                            <picture>
+                                <source srcset="../assets/img/your-trading/your-trading-img-1.webp" type="image/webp">
+                                <img class="your-trading__img" src="../assets/img/your-trading/your-trading-img-1.png" alt="">
+                            </picture>
+                            <div class="your-trading__item-title" th:text="#{your_trading.item_1_title}"></div>
+                            <div class="your-trading__item-des" th:text="#{your_trading.item_1_des}"></div>
                         </div>
                         <div class="your-trading__item">
-                            <picture><source srcset="../assets/img/your-trading/your-trading-img-2.webp" type="image/webp"><picture><source srcset="../assets/img/your-trading/your-trading-img-2.webp" type="image/webp"><img class="your-trading__img" src="../assets/img/your-trading/your-trading-img-2.png" alt=""></picture></picture>
-                            <div class="your-trading__item-title">Exact arbitrage</div>
-                            <div class="your-trading__item-des">24/7 automate your trading strategies and auto-arbitrage</div>
+                            <picture>
+                                <source srcset="../assets/img/your-trading/your-trading-img-2.webp" type="image/webp">
+                                <img class="your-trading__img" src="../assets/img/your-trading/your-trading-img-2.png" alt="">
+                            </picture>
+                            <div class="your-trading__item-title" th:text="#{your_trading.item_2_title}"></div>
+                            <div class="your-trading__item-des" th:text="#{your_trading.item_2_des}"></div>
                         </div>
                         <div class="your-trading__item">
-                            <picture><source srcset="../assets/img/your-trading/your-trading-img-3.webp" type="image/webp"><picture><source srcset="../assets/img/your-trading/your-trading-img-3.webp" type="image/webp"><img class="your-trading__img" src="../assets/img/your-trading/your-trading-img-3.png" alt=""></picture></picture>
-                            <div class="your-trading__item-title">Easy profit</div>
-                            <div class="your-trading__item-des">Make profitable investments with powerful algorithmic trading bots</div>
+                            <picture>
+                                <source srcset="../assets/img/your-trading/your-trading-img-3.webp" type="image/webp">
+                                <img class="your-trading__img" src="../assets/img/your-trading/your-trading-img-3.png" alt="">
+                            </picture>
+                            <div class="your-trading__item-title" th:text="#{your_trading.item_3_title}"></div>
+                            <div class="your-trading__item-des" th:text="#{your_trading.item_3_des}"></div>
                         </div>
-
                     </div>
                 </div>
             </section>
             <section class="faqs faqs-dark faq-api">
                 <div class="faqs__container">
-                    <div class="faqs__title">
-                        FAQ
-                    </div>
+                    <div class="faqs__title" th:text="#{faq.title}"></div>
                     <div class="faqs__questions">
                         <div class="accordion__container accordion__container-faq-api">
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    Is <th:block th:text="${site_name}"></th:block> API free?
+                                    <div style="all: unset" th:text="#{faq.api_free_question(${site_name})}"></div>
                                     <div class="accordion__item-arrow">
                                         <svg width="15" height="7" viewbox="0 0 15 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1 1L7.5 6L14 1" stroke="white"></path>
@@ -1207,14 +1210,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-faq-api">
-                                    <div class="content">
-                                        A customizable crypto bot helps traders to create various automated trading strategies. Compared with traditional manual trading, trading bot can execute orders at a lower risk and costs, and grasp the best trading timings.
-                                    </div>
+                                    <div class="content" th:text="#{faq.api_free_answer}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    What’s spot grid bot?
+                                    <div style="all: unset" th:text="#{faq.spot_grid_bot_question}"></div>
                                     <div class="accordion__item-arrow">
                                         <svg width="15" height="7" viewbox="0 0 15 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1 1L7.5 6L14 1" stroke="white"></path>
@@ -1222,14 +1223,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-faq-api">
-                                    <div class="content">
-                                        Spot grid trading works by the simple strategy of buy low and sell high. After you set the parameters, the system automatically places orders at incrementally increasing or decreasing prices. Overall, the grid bot seeks to capitalize on normal price volatility by placing buy and sell orders at certain regular intervals above and below a predefined base price.
-                                    </div>
+                                    <div class="content" th:text="#{faq.spot_grid_bot_answer}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    Is <th:block th:text="${site_name}"></th:block> Trading Bot free?
+                                    <div style="all: unset" th:text="#{faq.trading_bot_free_question(${site_name})}"></div>
                                     <div class="accordion__item-arrow">
                                         <svg width="15" height="7" viewbox="0 0 15 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1 1L7.5 6L14 1" stroke="white"></path>
@@ -1237,25 +1236,21 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-faq-api">
-                                    <div class="content">
-                                        Yes, <th:block th:text="${site_name}"></th:block> Trading Bot is total free for all <th:block th:text="${site_name}"></th:block> users.
-                                    </div>
+                                    <div class="content" th:text="#{faq.trading_bot_free_answer(${site_name})}"></div>
                                 </div>
                             </div>
-                            
-                              
+
+
                             </div>
-                           
+
                             </div>
                         </div>
-                    
-                
+
+
             </section>
             <section class="users-saying">
                 <div class="users-saying__container">
-                    <div class="users-saying__title">
-                        What <th:block th:text="${site_name}"></th:block> users are saying
-                    </div>
+                    <div class="users-saying__title" th:text="#{faq.what_users_saying(${site_name})}"></div>
                     <div class="users-saying__slider">
                         <div class="users-saying__slider-track" id="users-saying-track-one">
                             <div class="users-saying__slide">

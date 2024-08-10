@@ -17,13 +17,9 @@
                 <div class="traveller-home__container">
                     <div class="traveller-home__box">
                         <div class="traveller-home__left">
-                            <div class="traveller-home__title" th:text="${site_name} + ' Space Traveller
-                                Earn with your referral code!'">
-                            </div>
-                            <div class="traveller-home__description">
-                                Up to 60% commission waiting for you to unlock!
-                            </div>
-                            <a class="traveller-home__link butafor__btn" href="#">Join us now!</a>
+                            <div class="traveller-home__title" th:text="#{traveller.title(${site_name})}"></div>
+                            <div class="traveller-home__description" th:text="#{traveller.description}"></div>
+                            <a class="traveller-home__link butafor__btn" href="#" th:text="#{traveller.button.text}"></a>
                         </div>
                         <div class="traveller-home__right">
                             <div class="traveller-home__img">
@@ -155,57 +151,46 @@
             </section>
             <section class="get-commission">
                 <div class="get-commission__container">
-                    <div class="get-commission__title">
-                        Get commission easily
-                    </div>
+                    <div class="get-commission__title" th:text="#{get-commission.title}"></div>
 
                     <div class="get-commission__steps">
                         <div class="get-commission__step get-commission__step-share">
                             <div class="get-commission__step-img">
-                                <picture><source srcset="../assets/img/get-commission/share.webp" type="image/webp"><picture><source srcset="../assets/img/get-commission/share.webp" type="image/webp"><img src="../assets/img/get-commission/share.png" alt=""></picture></picture>
+                                <picture>
+                                    <source srcset="../assets/img/get-commission/share.webp" type="image/webp">
+                                    <img src="../assets/img/get-commission/share.png" alt="Share">
+                                </picture>
                             </div>
-                            <div class="get-commission__step-title">
-                                Share your code
-                            </div>
-                            <div class="get-commission__step-description">
-                                Share your referral code/link
-                                to your friends or the community.
-                            </div>
+                            <div class="get-commission__step-title" th:text="#{get-commission.steps.share.title}"></div>
+                            <div class="get-commission__step-description" th:text="#{get-commission.steps.share.description}"></div>
                         </div>
                         <div class="get-commission__step get-commission__step-sign">
                             <div class="get-commission__step-img">
-                                <picture><source srcset="../assets/img/get-commission/sign.webp" type="image/webp"><picture><source srcset="../assets/img/get-commission/sign.webp" type="image/webp"><img src="../assets/img/get-commission/sign.png" alt=""></picture></picture>
+                                <picture>
+                                    <source srcset="../assets/img/get-commission/sign.webp" type="image/webp">
+                                    <img src="../assets/img/get-commission/sign.png" alt="Sign Up">
+                                </picture>
                             </div>
-                            <div class="get-commission__step-title">
-                                Referral sign up for trading
-                            </div>
-                            <div class="get-commission__step-description">
-                                Earn from every sign up through
-                                your referral for trading.
-                            </div>
+                            <div class="get-commission__step-title" th:text="#{get-commission.steps.sign.title}"></div>
+                            <div class="get-commission__step-description" th:text="#{get-commission.steps.sign.description}"></div>
                         </div>
 
                         <div class="get-commission__step get-commission__step-earning">
                             <div class="get-commission__step-img">
-                                <picture><source srcset="../assets/img/get-commission/earning.webp" type="image/webp"><picture><source srcset="../assets/img/get-commission/earning.webp" type="image/webp"><img src="../assets/img/get-commission/earning.png" alt=""></picture></picture>
+                                <picture>
+                                    <source srcset="../assets/img/get-commission/earning.webp" type="image/webp">
+                                    <img src="../assets/img/get-commission/earning.png" alt="Earning">
+                                </picture>
                             </div>
-                            <div class="get-commission__step-title">
-                                Start earning
-                            </div>
-                            <div class="get-commission__step-description">
-                                Up to 60% commission waiting for
-                                you to unlock while your friends
-                                enjoy 10% rebate.
-                            </div>
+                            <div class="get-commission__step-title" th:text="#{get-commission.steps.earning.title}"></div>
+                            <div class="get-commission__step-description" th:text="#{get-commission.steps.earning.description}"></div>
                         </div>
                     </div>
                 </div>
             </section>
             <section class="traveller-tiers">
                 <div class="traveller-tiers__container">
-                    <div class="traveller-tiers__title">
-                        Space Traveller Tiers
-                    </div>
+                    <div class="traveller-tiers__title" th:text="#{space.traveller}"></div>
                     <div class="traveller-tiers__cards">
                         <div class="traveller-tiers__card">
                             <div class="traveller-tiers__card-title">
@@ -389,143 +374,109 @@
                         </div>
                     </div>
                     <div class="traveller-tiers__requirements">
-                        <div class="traveller-tiers__requirements-title">
-                            Requirements:
-                        </div>
+                        <div class="traveller-tiers__requirements-title" th:text="#{traveller-tiers.requirements.title}">Requirements:</div>
                         <ul>
-                            <li>
-                                In order to get a higher commission better than 20%, please fill
-                                out Space Traveller Application Form to apply.
-                            </li>
-                            <li>
-                                Every <th:block th:text="${site_name}"></th:block> user, KOLs, bloggers, community managers and influencers
-                                are welcomed to promote <th:block th:text="${site_name}"></th:block> and become a Space Traveller.
-                            </li>
-                            <li>
-                                Activation rate = number of activated referrals / total number of referrals.
-                                Activated referrals are those who trade more than $50 on <th:block th:text="${site_name}"></th:block>.
-                            </li>
-                            <li>
-                                <th:block th:text="${site_name}"></th:block> will evaluate your performance and adjust your Space Traveller
-                                tier every month. The referral data will be reset monthly.
-                            </li>
-                            <li>
-                                Sun Captains enjoy 50% commission from the referrals’ trading fee and
-                                10% commission from sub-referrals’.
-                            </li>
+                            <li th:text="#{traveller-tiers.requirements.item1}"></li>
+                            <li th:text="#{traveller-tiers.requirements.item2(${site_name})}"></li>
+                            <li th:text="#{traveller-tiers.requirements.item3(${site_name})}"></li>
+                            <li th:text="#{traveller-tiers.requirements.item4(${site_name})}"></li>
+                            <li th:text="#{traveller-tiers.requirements.item5}"></li>
                         </ul>
                     </div>
                     <div class="traveller-tiers__link-wrapper">
-                        <a class="traveller-tiers__link butafor__btn" href="#">View more ></a>
+                        <a class="traveller-tiers__link butafor__btn" href="#" th:text="#{copy.trading.view.more}"></a>
                     </div>
                 </div>
             </section>
             <section class="more-benefits">
                 <div class="more-benefits__container">
-                    <div class="more-benefits__title">
-                        More Benefits
-                    </div>
+                    <div class="more-benefits__title" th:text="#{more-benefits.title}"></div>
                     <div class="more-benefits__cards">
                         <div class="more-benefits__card">
                             <div class="more-benefits__card-wrapper">
-                                <div class="more-benefits__card-title">
-                                    Exclusive Bonus
-                                </div>
+                                <div class="more-benefits__card-title" th:text="#{more-benefits.card1.title}"></div>
                                 <div class="more-benefits__card-img">
-                                    <picture><source srcset="../assets/img/more-benefits/bonus.webp" type="image/webp"><picture><source srcset="../assets/img/more-benefits/bonus.webp" type="image/webp"><img src="../assets/img/more-benefits/bonus.png" alt=""></picture></picture>
+                                    <picture>
+                                        <source srcset="../assets/img/more-benefits/bonus.webp" type="image/webp">
+                                        <img src="../assets/img/more-benefits/bonus.png" alt="" th:alt="#{more-benefits.card1.imgAlt}">
+                                    </picture>
                                 </div>
                             </div>
-                            <div class="more-benefits__card-description">
-                                Besides referral commission, <th:block th:text="${site_name}"></th:block> will hold exclusive events
-                                for Space Travellers and you could win NFT, Futures trial fund and more.
-                            </div>
+                            <div class="more-benefits__card-description" th:text="#{more-benefits.card1.description(${site_name})}"></div>
                         </div>
                         <div class="more-benefits__card">
                             <div class="more-benefits__card-wrapper">
-                                <div class="more-benefits__card-title">
-                                    Special Events
-                                </div>
+                                <div class="more-benefits__card-title" th:text="#{more-benefits.card2.title}">Special Events</div>
                                 <div class="more-benefits__card-img">
-                                    <picture><source srcset="../assets/img/more-benefits/events.webp" type="image/webp"><picture><source srcset="../assets/img/more-benefits/events.webp" type="image/webp"><img src="../assets/img/more-benefits/events.png" alt=""></picture></picture>
+                                    <picture>
+                                        <source srcset="../assets/img/more-benefits/events.webp" type="image/webp">
+                                        <img src="../assets/img/more-benefits/events.png" alt="" th:alt="#{more-benefits.card2.imgAlt}">
+                                    </picture>
                                 </div>
                             </div>
-                            <div class="more-benefits__card-description">
-                                Space Travellers could gain exclusive access to
-                                online and offline events and crypto industry lectures hosted by <th:block th:text="${site_name}"></th:block>.
-                            </div>
+                            <div class="more-benefits__card-description" th:text="#{more-benefits.card2.description(${site_name})}"></div>
                         </div>
                         <div class="more-benefits__card">
                             <div class="more-benefits__card-wrapper">
-                                <div class="more-benefits__card-title">
-                                    Build <th:block th:text="${site_name}"></th:block> Together
-                                </div>
+                                <div class="more-benefits__card-title" th:text="#{more-benefits.card3.title(${site_name})}"></div>
                                 <div class="more-benefits__card-img">
-                                    <picture><source srcset="../assets/img/more-benefits/build.webp" type="image/webp"><picture><source srcset="../assets/img/more-benefits/build.webp" type="image/webp"><img src="../assets/img/more-benefits/build.png" alt=""></picture></picture>
+                                    <picture>
+                                        <source srcset="../assets/img/more-benefits/build.webp" type="image/webp">
+                                        <img src="../assets/img/more-benefits/build.png" alt="" th:alt="#{more-benefits.card3.imgAlt}">
+                                    </picture>
                                 </div>
                             </div>
-                            <div class="more-benefits__card-description">
-                                Space Traveller could help us build and grow the
-                                <th:block th:text="${site_name}"></th:block> ecosystem by providing direct input for our
-                                products and marketing initiatives.
-                            </div>
+                            <div class="more-benefits__card-description" th:text="#{more-benefits.card3.description(${site_name})}"></div>
                         </div>
                     </div>
                 </div>
             </section>
             <section class="faqs">
                 <div class="faqs__container">
-                    <div class="faqs__title">
-                        FAQs
-                    </div>
+                    <div class="faqs__title" th:text="#{faqs.title}">FAQs</div>
                     <div class="faqs__questions">
                         <div class="accordion__container">
                             <div class="accordion__item">
-                                <div class="accordion__item-title">
-                                    What’s the benefits for the invitees as new users?
+                                <div class="accordion__item-title" th:text="#{faqs.question1.title}">
                                     <div class="accordion__item-arrow">
-                                        <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
                                         </svg>
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content" th:text="${site_name} + ' welcome the new users with 10% fee rebates for 60 days, which doesn’t affect inviters’ commission.'"></div>
+                                    <div class="content" th:text="#{faqs.question1.answer(${site_name})}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
-                                <div class="accordion__item-title">
-                                    Where can I see my referral rewards? How often will the rewards be distributed?
+                                <div class="accordion__item-title" th:text="#{faqs.question2.title}">
                                     <div class="accordion__item-arrow">
-                                        <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
                                         </svg>
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        Rewards will be distributed to referrers in USDT on a daily basis based all trades referrals made the day prior (UTC time).
+                                    <div class="content" th:text="#{faqs.question2.answer}">
                                     </div>
                                 </div>
                             </div>
                             <div class="accordion__item">
-                                <div class="accordion__item-title">
-                                    How many times can a referral code be used?
+                                <div class="accordion__item-title" th:text="#{faqs.question3.title}">
                                     <div class="accordion__item-arrow">
-                                        <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
                                         </svg>
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-one">
-                                    <div class="content">
-                                        You can share your code as many times as you like, and every person who signs up using your code will be another person you can earn from, while a new user can only be invited by one code.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.question3.answer}"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="faqs__link-wrapper">
-                        <a class="faqs__link butafor__btn" href="#">View more ></a>
+                        <a class="faqs__link butafor__btn" href="#" th:text="#{copy.trading.view.more}"></a>
                     </div>
                 </div>
             </section>
@@ -533,16 +484,13 @@
                 <div class="traveller-banner__container">
                     <div class="traveller-banner__box">
                         <div class="traveller-banner__wrapper">
-                            <div class="traveller-banner__title" th:text="${site_name} + ' Space Traveller'"></div>
-                            <div class="traveller-banner__description">
-                                Up to <span>60% commission</span> waiting for you to unlock!
-                            </div>
+                            <div class="traveller-banner__title" th:text="#{travellerBanner.title(${site_name})}"></div>
+                            <div class="traveller-banner__description" th:text="#{travellerBanner.description}"></div>
                         </div>
-                        <a class="traveller-banner__link butafor__btn" href="#">Join us now!</a>
+                        <a class="traveller-banner__link butafor__btn" href="#" th:text="#{travellerBanner.linkText}"></a>
                     </div>
                 </div>
             </section>
-
         </main>
 
     </script><script src="../assets/js/traveller-home.min.js"></script>

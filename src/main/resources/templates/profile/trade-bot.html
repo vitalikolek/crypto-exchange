@@ -37,31 +37,30 @@
             <div class="top-ghTgp info">
                 <div class="info__container">
                     <div class="info__stats">
-                        <p>Total work: <span id="total-work" class="total-work border-gradient"></span></p>
+                        <p>
+                            <span th:text="#{bot.total.work}"></span>
+                            <span id="total-work" class="total-work border-gradient"></span>
+                        </p>
                     </div>
 
                     <div class="info__stats" style="display: inline-block;">
-                        <p>Status: <span id="status" class="status border-gradient"></span>
+                        <span th:text="#{bot.status}"></span>
+                        <span id="status" class="status border-gradient"></span>
                     </div>
 
                     <div class="info__stats">
-                        <p>Total profit: <span id="profit" class="profit border-gradient"></span></p>
+                        <span style="all: unset" th:text="#{bot.total.profit}"></span>
+                        <span id="profit" class="profit border-gradient"></span>
                     </div>
                 </div>
             </div>
             <div class="left-ghTgp coins">
-                <div class="book__title">
-                    Last Orders
-                </div>
+                <div class="book__title" th:text="#{bot.last.orders}"></div>
                 <div class="coins__names">
-                    <div class="coins__names-item coins__names-currency">
-                        Pair
-                    </div>
+                    <div class="coins__names-item coins__names-currency" th:text="#{trading.pair}"></div>
                     <div class="coins__names-item coins__names-last">
                     </div>
-                    <div class="coins__names-item coins__names-change">
-                        Change
-                    </div>
+                    <div class="coins__names-item coins__names-change" th:text="#{trading.change}"></div>
                 </div>
                 <div class="coins__items">
                     <div id="lastOrders" class="coins__items-wrapper">
@@ -100,9 +99,12 @@
                             </div>
                         </div>
                         <div class="step__available">
-                            <div>Available: <span id="my_available_balance" onclick="availableBalance()">0</span></div>
+                            <div>
+                                <span th:text="#{available}"></span>
+                                <span id="my_available_balance" onclick="availableBalance()">0</span>
+                            </div>
                         </div>
-                        <input class="input__01" type="number" placeholder="Amount" id="firstCoinAmount" style="width: 100%">
+                        <input class="input__01" type="number" th:placeholder="#{amount}" id="firstCoinAmount" style="width: 100%">
                     </div>
 
                     <div class="select step-form-coins-receive" style="width: 138px;">
@@ -131,26 +133,25 @@
                             </div>
                         </div>
                         <div class="step__available">
-                            <div>Available: <span id="my_available_balance_2" onclick="availableBalance2()">0</span></div>
+                            <div>
+                                <span th:text="#{available}"></span>
+                                <span id="my_available_balance_2" onclick="availableBalance2()">0</span>
+                            </div>
                         </div>
-                        <input class="input__01" type="number" placeholder="Amount" id="secondCoinAmount" style="width: 100%">
+                        <input class="input__01" type="number" th:placeholder="#{amount}" id="secondCoinAmount" style="width: 100%">
                     </div>
 
                 </div>
                 <div th:if="${coins.size()} > 1" class="loader-buttons">
-                    <button class="order_btn-fbGht order_btn-fbGht-buy" id="start-btn">Start</button>
-                    <button class="order_btn-fbGht order_btn-fbGht-sell" id="stop-btn">Stop</button>
+                    <button class="order_btn-fbGht order_btn-fbGht-buy" id="start-btn" th:text="#{bot.start}"></button>
+                    <button class="order_btn-fbGht order_btn-fbGht-sell" id="stop-btn" th:text="#{trading.stop}"></button>
                 </div>
                 <div th:unless="${coins.size()} > 1">
-                    <div class="home__description">
-                        You must have 2 coins with a balance of at least 10 USDT each
-                    </div>
+                    <div class="home__description" th:text="#{bot.must.have}"></div>
                 </div>
             </div>
             <div class="right-top-ghTgp coins">
-                <div class="book__title">
-                    User Profits
-                </div>
+                <div class="book__title" th:text="#{bot.user.profits}"></div>
                 <div class="coins__items">
                     <div id="user-profits-list" class="coins__items-wrapper"></div>
                 </div>
@@ -159,29 +160,17 @@
     </div>
     <div class="orders-list">
         <div class="button__container" id="orders">
-            <div class="rushButton buttonActiveNew">
-                My Trading History
-            </div>
+            <div class="rushButton buttonActiveNew" th:text="#{trading.trading.history}"></div>
         </div>
         <div class="orders_content__container tabsBoxOne">
             <div class="content__container-item tabsBoxOne itemActiveNew" id="ordersConOne">
                 <div class="orders__table">
                     <div class="orders__names">
-                        <div class="orders__names-item orders__names-date">
-                            Date
-                        </div>
-                        <div class="orders__names-item orders__names-pair">
-                            Pair
-                        </div>
-                        <div class="orders__names-item orders__names-side">
-                            Change %
-                        </div>
-                        <div class="orders__names-item orders__names-amount">
-                            Amount
-                        </div>
-                        <div class="orders__names-item orders__names-amount">
-                            Profit
-                        </div>
+                        <div class="orders__names-item orders__names-date" th:text="#{table.date}"></div>
+                        <div class="orders__names-item orders__names-pair" th:text="#{trading.pair}"></div>
+                        <div class="orders__names-item orders__names-side" th:text="#{trading.change} + ' %'"></div>
+                        <div class="orders__names-item orders__names-amount" th:text="#{amount}"></div>
+                        <div class="orders__names-item orders__names-amount" th:text="#{bot.profit}"></div>
                     </div>
                     <div class="orders__items" id="orders_table"><div class="orders_noHis" style="margin: auto; text-align: center; margin-top: 100px;">No open orders</div>
                     </div>

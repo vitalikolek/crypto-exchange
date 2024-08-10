@@ -19,15 +19,8 @@
                 <div class="money-home__container">
                     <div class="money-home__box">
                         <div class="money-home__left">
-                            
-                            <div class="money-home__title">
-                                Where smart
-                                money moves
-                            </div>
-                            <div class="money-home__description">
-                                <th:block th:text="${site_name}"></th:block> offers the world`s most powerful
-                                suite of institutional crypto trading solutions
-                            </div>
+                            <div class="money-home__title" th:text="#{money.home.title}"></div>
+                            <div class="money-home__description" th:text="#{money.home.description(${site_name})}"></div>
                         </div>
                         <div class="money-home__right">
                             <div class="money-home__img">
@@ -39,123 +32,92 @@
             </section>
             <section class="why-choose">
                 <div class="why-choose__container">
-                    <div class="why-choose__title">
-                        Why institutions choose <th:block th:text="${site_name}"></th:block>                    </div>
+                    <div class="why-choose__title" th:text="#{institutions.why.choose(${site_name})}"></div>
                     <div class="why-choose__slider">
                         <div class="why-choose__slider-wrapper swiper-wrapper">
                             <div class="why-choose__slide swiper-slide">
                                 <div class="why-choose__slide-img">
                                     <picture><source srcset="../assets/img/why-choose/performance.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/performance.webp" type="image/webp"><img src="../assets/img/why-choose/performance.png" alt=""></picture></picture>
                                 </div>
-                                <div class="why-choose__slide-title">
-                                    Unparalleled performance
-                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.title}"></div>
                                 <div class="why-choose__slide-list">
                                     <ul>
-                                        <li>
-                                            5ms REST and WebSocket API
-                                            <br>connectivity
-                                        </li>
-                                        <li>
-                                            400,000 requests per second order
-                                            <br>matching
-                                        </li>
+                                        <li th:text="#{why.choose.slide.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.list.2}"></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="why-choose__slide swiper-slide">
                                 <div class="why-choose__slide-img">
-                                    <picture><source srcset="../assets/img/why-choose/transparency.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/transparency.webp" type="image/webp"><img src="../assets/img/why-choose/transparency.png" alt=""></picture></picture>
+                                    <picture>
+                                        <source srcset="../assets/img/why-choose/transparency.webp" type="image/webp">
+                                        <img src="../assets/img/why-choose/transparency.png" alt="" />
+                                    </picture>
                                 </div>
-                                <div class="why-choose__slide-title">
-                                    Trust and transparency
-                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.trust.title}"></div>
                                 <div class="why-choose__slide-list">
                                     <ul>
-                                        <li>Regulatory-compliant</li>
-                                        <li>Frequent 1:1 Proof of Reserves (PoR)</li>
-                                        <li>Zero-breach security record</li>
+                                        <li th:text="#{why.choose.slide.trust.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.trust.list.2}"></li>
+                                        <li th:text="#{why.choose.slide.trust.list.3}"></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="why-choose__slide swiper-slide">
                                 <div class="why-choose__slide-img">
-                                    <picture><source srcset="../assets/img/why-choose/fees.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/fees.webp" type="image/webp"><img src="../assets/img/why-choose/fees.png" alt=""></picture></picture>
+                                    <picture>
+                                        <source srcset="../assets/img/why-choose/fees.webp" type="image/webp">
+                                        <img src="../assets/img/why-choose/fees.png" alt="" />
+                                    </picture>
                                 </div>
-                                <div class="why-choose__slide-title">
-                                    Competitive fees
-                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.fees.title}"></div>
                                 <div class="why-choose__slide-list">
                                     <ul>
-                                        <li>Dynamic low-fee tier structures</li>
-                                        <li>Up to 0% maker/taker VIP fees</li>
+                                        <li th:text="#{why.choose.slide.fees.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.fees.list.2}"></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="why-choose__slide swiper-slide">
                                 <div class="why-choose__slide-img">
-                                    <picture><source srcset="../assets/img/why-choose/liquidity.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/liquidity.webp" type="image/webp"><img src="../assets/img/why-choose/liquidity.png" alt=""></picture></picture>
+                                    <picture>
+                                        <source srcset="../assets/img/why-choose/liquidity.webp" type="image/webp">
+                                        <img src="../assets/img/why-choose/liquidity.png" alt="" />
+                                    </picture>
                                 </div>
-                                <div class="why-choose__slide-title">
-                                    Deep liquidity
-                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.liquidity.title}"></div>
                                 <div class="why-choose__slide-list">
                                     <ul>
-                                        <li>
-                                            2nd largest platform in global trading
-                                            <br>volume
-                                        </li>
-                                        <li>26B USD in peak daily trading volume</li>
+                                        <li th:text="#{why.choose.slide.liquidity.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.liquidity.list.2}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="why-choose__slide swiper-slide">
+                                <div class="why-choose__slide-img">
+                                    <picture>
+                                        <source srcset="../assets/img/why-choose/performance.webp" type="image/webp">
+                                        <img src="../assets/img/why-choose/performance.png" alt="Performance">
+                                    </picture>
+                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.performance.title}"></div>
+                                <div class="why-choose__slide-list">
+                                    <ul>
+                                        <li th:text="#{why.choose.slide.performance.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.performance.list.2}"></li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="why-choose__slide swiper-slide">
                                 <div class="why-choose__slide-img">
-                                    <picture><source srcset="../assets/img/why-choose/performance.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/performance.webp" type="image/webp"><img src="../assets/img/why-choose/performance.png" alt=""></picture></picture>
-                                </div>
-                                <div class="why-choose__slide-title">
-                                    Unparalleled performance
-                                </div>
-                                <div class="why-choose__slide-list">
-                                    <ul>
-                                        <li>
-                                            5ms REST and WebSocket API
-                                            <br>connectivity
-                                        </li>
-                                        <li>
-                                            400,000 requests per second order
-                                            <br>matching
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="why-choose__slide swiper-slide">
-                                <div class="why-choose__slide-img">
-                                    <picture><source srcset="../assets/img/why-choose/transparency.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/transparency.webp" type="image/webp"><img src="../assets/img/why-choose/transparency.png" alt=""></picture></picture>
-                                </div>
-                                <div class="why-choose__slide-title">
-                                    Trust and transparency
-                                </div>
-                                <div class="why-choose__slide-list">
-                                    <ul>
-                                        <li>Regulatory-compliant</li>
-                                        <li>Frequent 1:1 Proof of Reserves (PoR)</li>
-                                        <li>Zero-breach security record</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="why-choose__slide swiper-slide">
-                                <div class="why-choose__slide-img">
                                     <picture><source srcset="../assets/img/why-choose/fees.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/fees.webp" type="image/webp"><img src="../assets/img/why-choose/fees.png" alt=""></picture></picture>
                                 </div>
-                                <div class="why-choose__slide-title">
-                                    Competitive fees
-                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.competitive.title}"></div>
                                 <div class="why-choose__slide-list">
                                     <ul>
-                                        <li>Dynamic low-fee tier structures</li>
-                                        <li>Up to 0% maker/taker VIP fees</li>
+                                        <li th:text="#{why.choose.slide.competitive.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.competitive.list.2}"></li>
                                     </ul>
                                 </div>
                             </div>
@@ -163,16 +125,11 @@
                                 <div class="why-choose__slide-img">
                                     <picture><source srcset="../assets/img/why-choose/liquidity.webp" type="image/webp"><picture><source srcset="../assets/img/why-choose/liquidity.webp" type="image/webp"><img src="../assets/img/why-choose/liquidity.png" alt=""></picture></picture>
                                 </div>
-                                <div class="why-choose__slide-title">
-                                    Deep liquidity
-                                </div>
+                                <div class="why-choose__slide-title" th:text="#{why.choose.slide.deep.liquidity.title}"></div>
                                 <div class="why-choose__slide-list">
                                     <ul>
-                                        <li>
-                                            2nd largest platform in global trading
-                                            <br>volume
-                                        </li>
-                                        <li>26B USD in peak daily trading volume</li>
+                                        <li th:text="#{why.choose.slide.deep.liquidity.list.1}"></li>
+                                        <li th:text="#{why.choose.slide.deep.liquidity.list.2}"></li>
                                     </ul>
                                 </div>
                             </div>
@@ -182,139 +139,97 @@
             </section>
             <section class="powerful-solutions">
                 <div class="powerful-solutions__container">
-                    <div class="powerful-solutions__title">
-                        The world`s most powerful crypto trading solutions
-                    </div>
-                    <div class="powerful-solutions__description">
-                        Whether you’re a trading firm, asset manager, family
-                        office, or broker — we have the right solution for you.
-                    </div>
+                    <div class="powerful-solutions__title" th:text="#{powerful.solutions.title}"></div>
+                    <div class="powerful-solutions__description" th:text="#{powerful.solutions.description}"></div>
 
                     <div class="powerful-solutions__cards">
                         <div class="powerful-solutions__card">
                             <div class="powerful-solutions__card-left">
-                                <div class="powerful-solutions__card-title">
-                                    Products
-                                </div>
+                                <div class="powerful-solutions__card-title" th:text="#{footer.products.title}"></div>
                                 <div class="powerful-solutions__card-img">
                                     <picture><source srcset="../assets/img/powerful-solutions/products.webp" type="image/webp"><picture><source srcset="../assets/img/powerful-solutions/products.webp" type="image/webp"><img src="../assets/img/powerful-solutions/products.png" alt=""></picture></picture>
                                 </div>
                             </div>
                             <div class="powerful-solutions__card-right">
                                 <div class="powerful-solutions__card-block">
-                                    <th:block th:text="${site_name}"></th:block> Exchange order book
+                                    <div th:text="#{powerful.solutions.card.orderbook.title(${site_name})}"></div>
                                     <ul>
-                                        <li>350+ tokens</li>
-                                        <li>730 spot trading pairs</li>
-                                        <li>280 derivatives instruments</li>
-                                        <li>1,000 options instruments</li>
+                                        <li th:text="#{powerful.solutions.card.orderbook.tokens}"></li>
+                                        <li th:text="#{powerful.solutions.card.orderbook.spotPairs}"></li>
+                                        <li th:text="#{powerful.solutions.card.orderbook.derivatives}"></li>
+                                        <li th:text="#{powerful.solutions.card.orderbook.options}"></li>
                                     </ul>
-                                    <a class="powerful-solutions__card-link" href="#">
-                                        Start trading →
-                                    </a>
+                                    <a class="powerful-solutions__card-link" href="#" th:text="#{powerful.solutions.card.orderbook.link}"></a>
                                 </div>
                                 <div class="powerful-solutions__card-block">
-                                    Yield and structured products
+                                    <div th:text="#{powerful.solutions.card.yield.title}"></div>
                                     <ul>
-                                        <li>Customizable trading strategies</li>
-                                        <li>Top-tier DeFi protocols access</li>
-                                        <li>Earn yield by providing liquidity or staking</li>
+                                        <li th:text="#{powerful.solutions.card.yield.customizableStrategies}"></li>
+                                        <li th:text="#{powerful.solutions.card.yield.defiAccess}"></li>
+                                        <li th:text="#{powerful.solutions.card.yield.earnYield}"></li>
                                     </ul>
                                 </div>
                                 <div class="powerful-solutions__card-block">
-                                    Liquid Marketplace
+                                    <div th:text="#{powerful.solutions.card.marketplace.title}"></div>
                                     <ul>
-                                        <li>
-                                            On-demand liquidity network
-                                            with multiple brokers
-                                        </li>
-                                        <li>
-                                            Instantly trade spot OTC, future spreads,
-                                            and options strategies at the price you
-                                            want
-                                        </li>
-                                        <li>
-                                            No impact on the orderbook
-                                        </li>
+                                        <li th:text="#{powerful.solutions.card.marketplace.liquidityNetwork}"></li>
+                                        <li th:text="#{powerful.solutions.card.marketplace.trade}"></li>
+                                        <li th:text="#{powerful.solutions.card.marketplace.noImpact}"></li>
                                     </ul>
-                                    <a class="powerful-solutions__card-link" href="#">
-                                        Start trading →
-                                    </a>
+                                    <a class="powerful-solutions__card-link" href="#" th:text="#{powerful.solutions.card.marketplace.link}"></a>
                                 </div>
                                 <div class="powerful-solutions__card-block">
-                                    Advanced execution algos
+                                    <div th:text="#{powerful.solutions.card.execution.title}"></div>
                                     <ul>
-                                        <li>
-                                            Use sophisticated time-weighted average price (TWAP)
-                                            and iceberg execution algorithms to split up large
-                                            orders and reduce slippage.
-                                        </li>
+                                        <li th:text="#{powerful.solutions.card.execution.description}"></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <div class="powerful-solutions__card">
                             <div class="powerful-solutions__card-left">
-                                <div class="powerful-solutions__card-title">
-                                    Services
-                                </div>
+                                <div class="powerful-solutions__card-title" th:text="#{footer.services.title}"></div>
                                 <div class="powerful-solutions__card-img">
                                     <picture><source srcset="../assets/img/powerful-solutions/services.webp" type="image/webp"><picture><source srcset="../assets/img/powerful-solutions/services.webp" type="image/webp"><img src="../assets/img/powerful-solutions/services.png" alt=""></picture></picture>
                                 </div>
                             </div>
                             <div class="powerful-solutions__card-right">
                                 <div class="powerful-solutions__card-block">
-                                    VIP Loan pools
+                                    <div th:text="#{institutions.vip.loan}"></div>
                                     <ul>
-                                        <li>
-                                            Dedicated low-interest-rate lending pools
-                                        </li>
+                                        <li th:text="#{institutions.dedicated}"></li>
                                     </ul>
                                 </div>
                                 <div class="powerful-solutions__card-block">
-                                    ETH 2.0 Staking
+                                    <div th:text="#{powerful.solutions.card.staking.title}"></div>
                                     <ul>
-                                        <li>Low barriers to entry</li>
-                                        <li>Flexible exit policy</li>
+                                        <li th:text="#{powerful.solutions.card.staking.lowBarriers}"></li>
+                                        <li th:text="#{powerful.solutions.card.staking.flexiblePolicy}"></li>
                                     </ul>
-                                    <a class="powerful-solutions__card-link" href="#">
-                                        Learn more →
-                                    </a>
+                                    <a class="powerful-solutions__card-link" href="#" th:text="#{powerful.solutions.card.staking.link}"></a>
                                 </div>
                             </div>
                         </div>
                         <div class="powerful-solutions__card">
                             <div class="powerful-solutions__card-left">
-                                <div class="powerful-solutions__card-title">
-                                    Programs
-                                </div>
+                                <div class="powerful-solutions__card-title" th:text="#{powerful.programs}"></div>
                                 <div class="powerful-solutions__card-img">
                                     <picture><source srcset="../assets/img/powerful-solutions/programs.webp" type="image/webp"><picture><source srcset="../assets/img/powerful-solutions/programs.webp" type="image/webp"><img src="../assets/img/powerful-solutions/programs.png" alt=""></picture></picture>
                                 </div>
                             </div>
                             <div class="powerful-solutions__card-right">
                                 <div class="powerful-solutions__card-block">
-                                    Market maker program
+                                    <div th:text="#{powerful.solutions.card.marketMaker.title}"></div>
                                     <ul>
-                                        <li>
-                                            Enjoy competitive rebates by providing liquidity
-                                            for our spot and derivative markets on both our
-                                            order books and Liquid Marketplace.
-                                        </li>
+                                        <li th:text="#{powerful.solutions.card.marketMaker.description}"></li>
                                     </ul>
                                 </div>
                                 <div class="powerful-solutions__card-block">
-                                    Broker program
+                                    <div th:text="#{powerful.solutions.card.broker.title}"></div>
                                     <ul>
-                                        <li>
-                                            Tailored broker solutions
-                                        </li>
-                                        <li>
-                                            Competitive commissions
-                                        </li>
-                                        <li>
-                                            Top-tier liquidity and market depth
-                                        </li>
+                                        <li th:text="#{powerful.solutions.card.broker.solution}"></li>
+                                        <li th:text="#{powerful.solutions.card.broker.commissions}"></li>
+                                        <li th:text="#{powerful.solutions.card.broker.liquidity}"></li>
                                     </ul>
                                 </div>
                             </div>
@@ -325,23 +240,11 @@
             <section class="clients-say">
                 <div class="clients-say__container">
                     <div class="clients-say__box">
-                        <div class="clients-say__title">
-                            Here’s what our
-                            clients have to
-                            say
-                        </div>
+                        <div class="clients-say__title" th:text="#{powerful.what.to.say}"></div>
                         <div class="clients-say__slider swiper">
                             <div class="clients-say__slider-wrapper swiper-wrapper">
                                 <div class="clients-say__slide swiper-slide">
-                                    <div class="clients-say__slide-text">
-                                        “<th:block th:text="${site_name}"></th:block> has always been one of the most user-friendly
-                                        exchanges for institutional traders like ourselves,
-                                        with features like portfolio margin providing greater
-                                        capital efficiency. <th:block th:text="${site_name}"></th:block>’s Liquid Marketplace opens
-                                        up additional opportunities for us to quote sophisticated,
-                                        multi-instrument strategies, without the counterparty
-                                        having to worry about slippage or execution.”
-                                    </div>
+                                    <div class="clients-say__slide-text" th:text="#{powerful.has.always(${site_name})}"></div>
                                     <div class="clients-say__slide-wrapper">
                                         <div class="clients-say__slide-company">
                                             Clément Florentin, CEO, Darley Technologies
@@ -352,9 +255,7 @@
                                     </div>
                                 </div>
                                 <div class="clients-say__slide swiper-slide">
-                                    <div class="clients-say__slide-text">
-                                        “<th:block th:text="${site_name}"></th:block> has quickly become one of the best exchanges for institutions and is a preferred trading venue for our clients. <th:block th:text="${site_name}"></th:block> has highly competitive fees, deep liquidity, and multiple account margin types. We attribute their success to the same reason why <th:block th:text="${site_name}"></th:block> is a core pillar of FPG’s business: rich product features and a highly responsive client service team.”
-                                    </div>
+                                    <div class="clients-say__slide-text" th:text="#{powerful.has.quickly(${site_name})}"></div>
                                     <div class="clients-say__slide-wrapper">
                                         <div class="clients-say__slide-company">
                                             Kevin March, Co-Founder, Floating Point Group
@@ -364,10 +265,6 @@
                                         </div>
                                     </div>
                                 </div>
-                               
-                               
-                                
-                                
                             </div>
                         </div>
                         <div class="clients-say__slider-next">
@@ -380,17 +277,10 @@
             </section>
             <section class="commitment">
                 <div class="commitment__container">
-                    <div class="commitment__title">
-                        Our commitment to transparency
-                    </div>
-                    <div class="commitment__description">
-                        We hold 1:1 reserves of all our customers assets
-                        and give you full transparency over our reserves and your funds.
-                    </div>
+                    <div class="commitment__title" th:text="#{commitment.title}"></div>
+                    <div class="commitment__description" th:text="#{commitment.description}"></div>
                     <div class="commitment__link-wrapper">
-                        <a class="commitment__link" href="#" id="butafor__btn">
-                            View Proof of Reverves
-                        </a>
+                        <a class="commitment__link" href="#" id="butafor__btn" th:text="#{commitment.link}"></a>
                     </div>
                 </div>
             </section>
@@ -404,56 +294,41 @@
                             <div class="industry-leading__card-value">
                                 $6.2B
                             </div>
-                            <div class="industry-leading__card-description">
-                                Assets on
-                                platform
-                            </div>
+                            <div class="industry-leading__card-description" th:text="#{institutions.assets}"></div>
                         </div>
                         <div class="industry-leading__card">
                             <div class="industry-leading__card-value">
                                 $21T
                             </div>
-                            <div class="industry-leading__card-description">
-                                Total traded
-                            </div>
+                            <div class="industry-leading__card-description" th:text="#{institutions.total.traded}"></div>
                         </div>
                         <div class="industry-leading__card">
                             <div class="industry-leading__card-value">
                                 99.95%
                             </div>
-                            <div class="industry-leading__card-description">
-                                Uptime record
-                            </div>
+                            <div class="industry-leading__card-description" th:text="#{institutions.uptime.record}"></div>
                         </div>
                         <div class="industry-leading__card">
                             <div class="industry-leading__card-value">
                                 800+
                             </div>
-                            <div class="industry-leading__card-description">
-                                Trading instruments
-                            </div>
+                            <div class="industry-leading__card-description" th:text="#{institutions.trading.instruments}"></div>
                         </div>
                         <div class="industry-leading__card">
                             <div class="industry-leading__card-value">
                                 $26B
                             </div>
-                            <div class="industry-leading__card-description">
-                                Peak daily trading volume
-                            </div>
+                            <div class="industry-leading__card-description" th:text="#{institutions.peak.daily}"></div>
                         </div>
                         <div class="industry-leading__card">
                             <div class="industry-leading__card-value">
                                 20M+
                             </div>
-                            <div class="industry-leading__card-description">
-                                Users worldwide
-                            </div>
+                            <div class="industry-leading__card-description" th:text="#{institutions.users.worldwide}"></div>
                         </div>
                     </div>
                     <div class="industry-leading__link-wrapper">
-                        <a class="industry-leading__link butafor__btn">
-                            Get started
-                        </a>
+                        <a class="industry-leading__link butafor__btn" th:text="#{index.get.started}"></a>
                     </div>
                 </div>
             </section>

@@ -17,16 +17,15 @@
                 <div class="savings-home__container">
                     <div class="savings-home__box">
                         <div class="savings-home__left">
-                            <div class="savings-home__title" th:text="${site_name} + ' Savings'"></div>
-                            <div class="savings-home__description">
-                                Low risk | Flexible terms. <br>
-                                Savings allows users to earn hourly interests by funding <th:block th:text="${site_name}"></th:block> margin loans.
-                            </div>
-                            
+                            <div class="savings-home__title" th:text="#{savings.title(${site_name})}"></div>
+                            <div class="savings-home__description" th:utext="#{savings.description(${site_name})}"></div>
                         </div>
                         <div class="savings-home__right">
                             <div class="savings-home__img">
-                                <picture><source srcset="../assets/img/savings-home/illustration-crypto.webp" type="image/webp"><picture><source srcset="../assets/img/savings-home/illustration-crypto.webp" type="image/webp"><img src="../assets/img/savings-home/illustration-crypto.png" alt=""></picture></picture>
+                                <picture>
+                                    <source srcset="../assets/img/savings-home/illustration-crypto.webp" type="image/webp">
+                                    <img src="../assets/img/savings-home/illustration-crypto.png" alt="Crypto Illustration">
+                                </picture>
                             </div>
                         </div>
                     </div>
@@ -35,19 +34,17 @@
             <section class="savings-offers">
                 <div class="savings-offers__container">
                     <div class="savings-offers__top">
-                        <div class="savings-offers__title">
-                            Offers
-                        </div>
+                        <div class="savings-offers__title" th:text="#{savings.offers}"></div>
                         <div class="savings-offers__wrapper">
                             <div class="savings-offers__checkbox">
                                 <label class="checkbox butafor__btn">
                                     <input type="checkbox">
                                     <span class="checkbox__style"></span>
-                                    My crypto
+                                    <div style="all: unset" th:text="#{savings.my.crypto}"></div>
                                 </label>
                             </div>
                             <div class="savings-offers__search">
-                                <input type="text" placeholder="Search crypto">
+                                <input type="text" th:placeholder="#{savings.search.crypto}">
                             </div>
                         </div>
                     </div>
@@ -56,7 +53,7 @@
                             <div class="savings-offers__table-name savings-offers__table-token">Token</div>
                             <div class="savings-offers__table-name savings-offers__table-apy">Est. APY</div>
                             <div class="savings-offers__table-name savings-offers__table-term">Term</div>
-                            <div class="savings-offers__table-name savings-offers__table-action">Action</div>
+                            <div class="savings-offers__table-name savings-offers__table-action" th:text="#{table.action}"></div>
                         </div>
                         <div class="savings-offers__table-items">
                             <div class="savings-offers__item">
@@ -187,23 +184,18 @@
                         </div>
                     </div>
                     <div class="savings-offers__link-wrapper">
-                        <a class="savings-offers__link butafor__btn" href="#">
-                            View more
-                        </a>
+                        <a class="savings-offers__link butafor__btn" href="#" th:text="#{copy.trading.view.more}"></a>
                     </div>
                 </div>
             </section>
             <section class="faqs faqs-savings">
                 <div class="faqs__container">
-                    <div class="faqs__title">
-                        Frequently Asked Questions
-                    </div>
+                    <div class="faqs__title" th:text="#{faqs.savings.title}"></div>
                     <div class="faqs__questions">
                         <div class="accordion__container accordion__container-faq-savings">
-                            
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    When will I start earning?
+                                    <span th:text="#{faqs.savings.start_earning.title}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -211,14 +203,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-faq-savings">
-                                    <div class="content">
-                                        For funds loaned out within any given hour, your interest for the said hour will arrive in the next hour.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.savings.start_earning}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    How is the interest rate calculated?
+                                    <span th:text="#{faqs.savings.interest_rate.title}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -226,14 +216,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-faq-savings">
-                                    <div class="content">
-                                        With 15% of the loan interest withheld as insurance fund, the hourly interest rate for lenders is loan principal*APY/365/24*0.85.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.savings.interest_rate}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    Why haven't I received my interests?
+                                    <span th:text="#{faqs.savings.not_received.title}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -241,14 +229,12 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-faq-savings">
-                                    <div class="content">
-                                        Interests are available for loaned-out assets only. Please verify if your assets are loaned or not.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.savings.not_received}"></div>
                                 </div>
                             </div>
                             <div class="accordion__item">
                                 <div class="accordion__item-title">
-                                    When can I receive my redeemed assets?
+                                    <span th:text="#{faqs.savings.redeemed_assets.title}"></span>
                                     <div class="accordion__item-arrow">
                                         <svg width="14" height="7" viewbox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M0.599609 1L7.09961 6L13.5996 1" stroke="#929292"></path>
@@ -256,9 +242,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion__item-body accordion__item-body-faq-savings">
-                                    <div class="content">
-                                        Your funds will arrive immediately regardless of the loan status.
-                                    </div>
+                                    <div class="content" th:text="#{faqs.savings.redeemed_assets}"></div>
                                 </div>
                             </div>
                         </div>
