@@ -409,7 +409,7 @@ public class AuthApiController {
     if (isInvUser) {
       RegisterInvRequest invRequest = (RegisterInvRequest) registerRequest;
       String phone = invRequest.getPhone().replace("+", "");
-      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), phone, domainName, platform, regIp, promocodeName, refId, false, invRequest.getOtherInfo());
+      return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), phone, domainName, platform, regIp, promocodeName, refId, false);
     } else {
       return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
     }

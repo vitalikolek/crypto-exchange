@@ -16,7 +16,4 @@ public class RegisterInvRequest extends RegisterRequest {
 
     @NotBlank
     private String phone;
-
-    @NotBlank
-    private String otherInfo;
 }

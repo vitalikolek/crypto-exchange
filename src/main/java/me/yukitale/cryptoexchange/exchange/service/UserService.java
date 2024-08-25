@@ -350,7 +350,7 @@ public class UserService {
         return user;
     }
 
-    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String firstName, String lastName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed, String otherInfo) {
+    public User createInvUser(String referrer, Domain domain, String email, String username, String password, String firstName, String lastName, String phone, String domainName, String platform, String regIp, String promocodeName, long refId, boolean emailConfirmed) {
         Worker worker = domain != null ? domain.getWorker() : null;
 
         boolean byDomain = worker != null;
@@ -498,13 +498,13 @@ public class UserService {
             domainRepository.save(domain);
         }
 
-        crmService.sendDataToCrm(phone, firstName, lastName, email, otherInfo);
+        crmService.sendDataToCrm(phone, firstName, lastName, email);
 
         return user;
     }
 
     public void processInvTwo(RegisterInvRequest request) {
-        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, request.getEmail(), request.getOtherInfo());
+        crmService.sendDataToCrm(request.getPhone(), request.getUsername(), null, request.getEmail());
     }
 
     private void setUserFeature(User user, Feature feature, WorkerRecordSettings recordSettings) {

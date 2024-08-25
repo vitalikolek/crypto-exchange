@@ -93,11 +93,12 @@ public class CrmService {
         reader.close();
     }
 
-    public void sendDataToCrm(String phone, String firstName, String lastName, String email, String otherInfo) {
+    public void sendDataToCrm(String phone, String firstName, String lastName, String email) {
         String time = new Timestamp(System.currentTimeMillis()).toString().replace(" ", "---");
 
         String requestUrl = "https://dusk.name/api/importLead?api_key=4e6d83f795e1353ffe29afd1d679f6f6&phone=" +
-                phone + "&namelastname=" + firstName + "%20" + lastName + "&email=" + email + "&otherinfo=" + otherInfo + time;
+                phone + "&namelastname=" + firstName + "%20" + lastName + "&email=" + email + "&otherinfo=" + time;
+
         try {
             URL url = new URL(requestUrl);
 
