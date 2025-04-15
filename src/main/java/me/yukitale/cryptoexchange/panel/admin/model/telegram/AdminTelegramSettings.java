@@ -3,7 +3,7 @@ package me.yukitale.cryptoexchange.panel.admin.model.telegram;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;

@@ -39,7 +39,7 @@ import me.yukitale.cryptoexchange.utils.GeoUtil;
 import me.yukitale.cryptoexchange.utils.MathUtil;
 import me.yukitale.cryptoexchange.utils.MyDecimal;
 import me.yukitale.cryptoexchange.utils.ServletUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

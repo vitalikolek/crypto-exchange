@@ -38,7 +38,7 @@ import me.yukitale.cryptoexchange.utils.HttpUtil;
 import me.yukitale.cryptoexchange.utils.JsonUtil;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.CloseableHttpResponse;

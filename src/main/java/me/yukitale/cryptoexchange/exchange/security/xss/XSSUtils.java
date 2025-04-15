@@ -3,7 +3,6 @@ package me.yukitale.cryptoexchange.exchange.security.xss;
 import lombok.experimental.UtilityClass;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
-import org.owasp.esapi.ESAPI;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 
@@ -37,9 +36,7 @@ public class XSSUtils {
 
         value = value.replace("\\n", newlinePlaceholder);
 
-        value = ESAPI.encoder()
-                .canonicalize(value)
-                .replaceAll("\0", "");
+        value = value.replaceAll("\0", "");
 
         value = Jsoup.clean(value, Safelist.none());
 

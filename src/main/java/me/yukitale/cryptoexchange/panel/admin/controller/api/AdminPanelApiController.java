@@ -58,7 +58,7 @@ import me.yukitale.cryptoexchange.panel.worker.service.WorkerService;
 import me.yukitale.cryptoexchange.utils.DataValidator;
 import me.yukitale.cryptoexchange.utils.FileUploadUtil;
 import me.yukitale.cryptoexchange.utils.JsonUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 import org.springframework.beans.factory.annotation.Autowired;

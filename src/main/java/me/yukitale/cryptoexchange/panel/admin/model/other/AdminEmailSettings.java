@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @Entity
 @Table(name = "admin_email_settings")

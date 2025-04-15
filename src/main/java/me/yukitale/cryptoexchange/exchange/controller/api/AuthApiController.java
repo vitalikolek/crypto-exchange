@@ -22,7 +22,7 @@ import me.yukitale.cryptoexchange.panel.admin.repository.other.AdminEmailSetting
 import me.yukitale.cryptoexchange.panel.worker.model.Domain;
 import me.yukitale.cryptoexchange.panel.worker.repository.DomainRepository;
 import me.yukitale.cryptoexchange.utils.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;

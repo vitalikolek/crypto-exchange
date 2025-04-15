@@ -3,7 +3,6 @@ package me.yukitale.cryptoexchange.panel.admin.model.payments;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang.StringUtils;
 
 import jakarta.persistence.*;
 

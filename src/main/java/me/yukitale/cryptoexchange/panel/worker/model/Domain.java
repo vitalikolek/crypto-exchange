@@ -6,7 +6,7 @@ import lombok.Setter;
 import me.yukitale.cryptoexchange.panel.common.types.HomePageDesign;
 import me.yukitale.cryptoexchange.utils.MyDecimal;
 import me.yukitale.cryptoexchange.utils.StringUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.*;

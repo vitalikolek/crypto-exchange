@@ -31,7 +31,7 @@ import me.yukitale.cryptoexchange.panel.worker.repository.settings.coins.WorkerD
 import me.yukitale.cryptoexchange.panel.worker.repository.settings.other.*;
 import me.yukitale.cryptoexchange.utils.DataValidator;
 import me.yukitale.cryptoexchange.utils.JsonUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
