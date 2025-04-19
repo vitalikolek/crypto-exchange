@@ -116,6 +116,19 @@
             </div>
           </div>
           <div class="header__more">
+            <a class="header__more-link" href="trade-bot">
+              <div class="header__more-img">
+                <img src="../assets/img/header/cap.png" alt="">
+              </div>
+              <div class="header__more-wrapper">
+                <div class="header__more-name" style="display: inline;">
+                  <div style="all: unset" th:text="#{header.trading.bot}"></div>
+                  <span class="header__link-hot" style="display: inline; font-size: 12px" th:text="#{header.hot}"></span>
+                </div>
+
+                <div class="header__more-description" th:text="#{header.more.tradebot.description}"></div>
+              </div>
+            </a>
             <a class="header__more-link" href="copy-trading">
               <div class="header__more-img">
                 <img src="../assets/img/header/copy.png" alt="">
@@ -297,7 +310,7 @@
               </div>
             </div>
             <div class="header-menu__links">
-              <a style="color: orange;" class="header-menu__links-link" href="../admin-panel">
+              <a th:if="${user.isAdmin()}" style="color: orange;" class="header-menu__links-link" href="../admin-panel">
                 <img src="../assets/img/header/admin.svg" alt="">
                 Admin Panel
               </a>

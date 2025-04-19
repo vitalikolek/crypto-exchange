@@ -406,3 +406,14 @@ input[type=number]
 .control-group {
     margin-top: 5px;
 }
+
+.show_password_button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}

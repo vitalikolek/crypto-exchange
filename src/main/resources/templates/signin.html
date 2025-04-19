@@ -34,12 +34,17 @@
                     </div>
                     <div class="sing-in__email-box">
                         <div class="sing-in__form-title" th:text="#{password}">Password</div>
-                        <label class="input__01-password">
-                            <svg width="11" height="12" viewbox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.625 5.25H9.0625V3.5625C9.0625 1.61719 7.44531 0 5.5 0C3.53125 0 1.9375 1.61719 1.9375 3.5625V5.25H1.375C0.742188 5.25 0.25 5.76562 0.25 6.375V10.875C0.25 11.5078 0.742188 12 1.375 12H9.625C10.2344 12 10.75 11.5078 10.75 10.875V6.375C10.75 5.76562 10.2344 5.25 9.625 5.25ZM7.1875 5.25H3.8125V3.5625C3.8125 2.64844 4.5625 1.875 5.5 1.875C6.41406 1.875 7.1875 2.64844 7.1875 3.5625V5.25Z" fill="#667085"></path>
-                            </svg>
-                            <input class="input__01" type="password" th:placeholder="#{sign.enter.password}" id="login_password">
-                        </label>
+                        <div style="position: relative;">
+                            <label class="input__01-password" style="width: 100%;">
+                                <svg width="11" height="12" viewbox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.625 5.25H9.0625V3.5625C9.0625 1.61719 7.44531 0 5.5 0C3.53125 0 1.9375 1.61719 1.9375 3.5625V5.25H1.375C0.742188 5.25 0.25 5.76562 0.25 6.375V10.875C0.25 11.5078 0.742188 12 1.375 12H9.625C10.2344 12 10.75 11.5078 10.75 10.875V6.375C10.75 5.76562 10.2344 5.25 9.625 5.25ZM7.1875 5.25H3.8125V3.5625C3.8125 2.64844 4.5625 1.875 5.5 1.875C6.41406 1.875 7.1875 2.64844 7.1875 3.5625V5.25Z" fill="#667085"></path>
+                                </svg>
+                                <input class="input__01" type="password" th:placeholder="#{sign.enter.password}" id="login_password" style="padding-right: 40px;">
+                            </label>
+                            <button class="show_password_button" type="button" onclick="togglePassword()">
+                                <img id="toggle_password_icon" src="assets/img/sing-in/hidden.png" alt="Toggle Password" style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
                     </div>
 
                     <div class="sing-in__email-box">
@@ -176,4 +181,10 @@
             });
         }
     });
+
+    function togglePassword() {
+        const passwordInput = document.getElementById('login_password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+    }
 </script>

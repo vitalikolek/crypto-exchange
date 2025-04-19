@@ -476,6 +476,16 @@ public class SupporterPanelApiController {
             return ResponseEntity.badRequest().body("username_error");
         }
 
+        String email = (String) data.get("email");
+        if (!DataValidator.isEmailValided(email)) {
+            return ResponseEntity.badRequest().body("email_error");
+        }
+
+        String phone = (String) data.get("phone");
+        if (!DataValidator.isPhoneValided(phone)) {
+            return ResponseEntity.badRequest().body("phone_error");
+        }
+
         String password = XSSUtils.stripXSS((String) data.get("password"));
         if (password.length() < 8 || password.length() > 64) {
             return ResponseEntity.badRequest().body("password_error");
@@ -514,11 +524,13 @@ public class SupporterPanelApiController {
             return ResponseEntity.badRequest().body("note_length_error");
         }
 
-        if (!note.equals(user.getNote()) || withdrawCommission != user.getWithdrawCommission() || depositCommission != user.getDepositCommission() || !user.getUsername().equals(username) || !user.getPassword().equals(password) || user.getFirstDepositBonusAmount() != firstDepositBonusAmount || user.isFirstDepositBonusEnabled() != firstDepositBonusEnabled || user.isTwoFactorEnabled() != twoFactorEnabled || user.isEmailConfirmed() != emailConfirmed || user.isFakeVerified() != fakeVerified) {
+        if (!note.equals(user.getNote()) || withdrawCommission != user.getWithdrawCommission() || depositCommission != user.getDepositCommission() || !user.getUsername().equals(username) || !Objects.equals(user.getEmail(), email) || !Objects.equals(user.getPhone(), phone) || !user.getPassword().equals(password) || user.getFirstDepositBonusAmount() != firstDepositBonusAmount || user.isFirstDepositBonusEnabled() != firstDepositBonusEnabled || user.isTwoFactorEnabled() != twoFactorEnabled || user.isEmailConfirmed() != emailConfirmed || user.isFakeVerified() != fakeVerified) {
             user.setNote(note);
             user.setDepositCommission(depositCommission);
             user.setWithdrawCommission(withdrawCommission);
             user.setUsername(username);
+            user.setEmail(email);
+            user.setPhone(phone);
             user.setPassword(password);
             user.setFirstDepositBonusAmount(firstDepositBonusAmount);
             user.setFirstDepositBonusEnabled(firstDepositBonusEnabled);

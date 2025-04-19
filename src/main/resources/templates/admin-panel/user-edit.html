@@ -395,7 +395,7 @@
 													<div class="col-md-6 fv-row fv-plugins-icon-container">
 														<label class="fs-5 fw-semibold mb-2">Email
 														</label>
-														<input id="userEmailInput" class="form-control form-control-solid" placeholder="" th:value="${worker_user.email}" disabled="">
+														<input id="userEmail" class="form-control form-control-solid" placeholder="" th:value="${worker_user.email}">
 														<div class="fv-plugins-message-container invalid-feedback"></div>
 													</div>
 												</div>
@@ -407,7 +407,7 @@
 													</div>
 													<div class="col-md-6 fv-row fv-plugins-icon-container">
 														<label class="fs-5 fw-semibold mb-2">Phone</label>
-														<input id="userPhoneInput" class="form-control form-control-solid" placeholder="" disabled th:value="${worker_user.userKyc != null && worker_user.userKyc.accepted ? worker_user.userKyc.phoneNumber : ''}">
+														<input id="userPhone" class="form-control form-control-solid" placeholder="" th:value="${worker_user.phone}">
 														<div class="fv-plugins-message-container invalid-feedback"></div>
 													</div>
 												</div>
@@ -1496,6 +1496,8 @@
 
 		const username = $("#userUsername").val();
 		const password = $("#userPassword").val();
+		const email = $("#userEmail").val();
+		const phone = $("#userPhone").val();
 
 		if (username === " " || username.length < 5) {
 			noti("Username не может быть пустым или < 5 символов", "error");
@@ -1550,6 +1552,8 @@
 				user_id: user_edit_id,
 				username: username,
 				password: password,
+				email: email,
+				phone: phone,
 				first_deposit_bonus_enabled: firstDepositBonusEnabled,
 				ban_email: emailBan,
 				two_factor_enabled: twoFactorEnabled,
