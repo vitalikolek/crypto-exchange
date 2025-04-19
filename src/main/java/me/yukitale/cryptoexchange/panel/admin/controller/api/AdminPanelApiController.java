@@ -2057,13 +2057,23 @@ public class AdminPanelApiController {
         }
 
         String email = (String) data.get("email");
-        if (!DataValidator.isEmailValided(email)) {
-            return ResponseEntity.badRequest().body("email_error");
+        if (email != null && !email.isBlank()) {
+            if (!DataValidator.isEmailValided(email)) {
+                return ResponseEntity.badRequest().body("email_error");
+            }
+            user.setPhone(email);
+        } else {
+            user.setPhone(null);
         }
 
         String phone = (String) data.get("phone");
-        if (!DataValidator.isPhoneValided(phone)) {
-            return ResponseEntity.badRequest().body("phone_error");
+        if (phone != null && !phone.isBlank()) {
+            if (!DataValidator.isPhoneValided(phone)) {
+                return ResponseEntity.badRequest().body("phone_error");
+            }
+            user.setPhone(phone);
+        } else {
+            user.setPhone(null);
         }
 
         String password = XSSUtils.stripXSS((String) data.get("password"));
@@ -2109,8 +2119,6 @@ public class AdminPanelApiController {
             user.setDepositCommission(depositCommission);
             user.setWithdrawCommission(withdrawCommission);
             user.setUsername(username);
-            user.setEmail(email);
-            user.setPhone(phone);
             user.setPassword(password);
             user.setFirstDepositBonusAmount(firstDepositBonusAmount);
             user.setFirstDepositBonusEnabled(firstDepositBonusEnabled);
