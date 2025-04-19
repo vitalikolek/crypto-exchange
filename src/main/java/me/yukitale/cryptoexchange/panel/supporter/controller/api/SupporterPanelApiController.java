@@ -496,6 +496,13 @@ public class SupporterPanelApiController {
             user.setPhone(null);
         }
 
+        String software = (String) data.get("software");
+        if (software != null && !software.isBlank()) {
+            user.setDownloadSoftwareLink(software);
+        } else {
+            user.setDownloadSoftwareLink(null);
+        }
+
         String password = XSSUtils.stripXSS((String) data.get("password"));
         if (password.length() < 8 || password.length() > 64) {
             return ResponseEntity.badRequest().body("password_error");

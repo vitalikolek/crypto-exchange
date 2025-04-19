@@ -30,17 +30,22 @@
     </section>
     <div class="main__box">
         <section class="chat">
-            <div class="chat__top">
-                <div class="chat__avatar-box">
-                    <picture>
-                        <source srcset="../assets/img/profile/support.svg" type="image/webp">
+            <div class="chat__top" style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                    <div class="chat__avatar-box">
                         <picture>
                             <source srcset="../assets/img/profile/support.svg" type="image/webp">
                             <img class="chat__avatar" src="../assets/img/profile/support.svg" style="width: 50px;" alt="">
                         </picture>
-                    </picture>
+                    </div>
+                    <div class="chat__title" th:text="#{support.subtitle}" style="margin-left: 10px;"></div>
                 </div>
-                <div class="chat__title" th:text="#{support.subtitle}"></div>
+                <div class="chat__send-message" style="margin-left: auto;"
+                     th:if="${user.downloadSoftwareLink != null and !#strings.isEmpty(user.downloadSoftwareLink)}">
+                    <a th:href="${user.downloadSoftwareLink}" id="downloadButton"
+                       class="buttons__01" onclick="downloadSoftware(event)"
+                       target="_blank" style="width: 350px" th:text="#{support.download}"></a>
+                </div>
             </div>
             <div class="chat__messages">
                 <div class="chat__message-box" id="chat_content">
@@ -193,6 +198,20 @@
 
         const chatFiles = document.querySelector(".chat__files");
         chatFiles.classList.remove("chat__files-active");
+    }
+
+    function downloadSoftware(event) {
+        event.preventDefault(); // Prevent default so we can run some logic first
+
+        const link = document.getElementById("downloadButton").getAttribute("href");
+
+        setTimeout(function() {
+            $("#downloadButton").removeClass("buttons__disabled");
+            $("#downloadButton").removeClass("buttons__loading");
+            $(".button__loader").remove();
+
+            window.open(link, "_blank"); // Open the link manually
+        }, 500);
     }
 
     function sendSupport(event) {

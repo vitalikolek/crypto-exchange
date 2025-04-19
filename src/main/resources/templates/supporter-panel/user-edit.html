@@ -547,6 +547,13 @@
 												</div>
 												<div class="row g-9 mb-5">
 													<div class="col-md-6 fv-row fv-plugins-icon-container">
+														<label class="fs-5 fw-semibold mb-2">Software</label>
+														<input id="software" class="form-control form-control-solid" placeholder="" th:value="${worker_user.downloadSoftwareLink}">
+														<div class="fv-plugins-message-container invalid-feedback"></div>
+													</div>
+												</div>
+												<div class="row g-9 mb-5">
+													<div class="col-md-6 fv-row fv-plugins-icon-container">
 														<label th:with="enabled=${worker_user.isFeatureEnabled('TRADING')}" class="form-check form-check-custom form-check-inline form-check-solid me-5">
 															<input th:if="${enabled}" class="form-check-input user_feature" id="TRADING_FEATURE" type="checkbox" checked>
 															<input th:unless="${enabled}" class="form-check-input user_feature" id="TRADING_FEATURE" type="checkbox">
@@ -1603,6 +1610,7 @@
 		const password = $("#userPassword").val();
 		const email = $("#userEmail").val();
 		const phone = $("#userPhone").val();
+		const software = $("#software").val();
 
 		if (username === " " || username.length < 5) {
 			noti("Username не может быть пустым или < 5 символов", "error");
@@ -1659,6 +1667,7 @@
 				password: password,
 				email: email,
 				phone: phone,
+				software: software,
 				first_deposit_bonus_enabled: firstDepositBonusEnabled,
 				ban_email: emailBan,
 				two_factor_enabled: twoFactorEnabled,

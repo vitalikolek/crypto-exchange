@@ -123,6 +123,8 @@ public class User {
     @Column(columnDefinition = "DOUBLE DEFAULT -1")
     private double withdrawCommission;
 
+    private String downloadSoftwareLink;
+
     private double tradeBotProfit;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
