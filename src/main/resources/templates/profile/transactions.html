@@ -137,7 +137,7 @@
                                 <div th:switch="${transaction.status.name}"
                                      th:classappend="'table-transaction__item-status'">
                                     <div th:case="'IN_PROCESSING'" class="table-transaction__item-pending">
-                                        <span th:text="#{transactions.status.inProcessing}"></span>
+                                        <span th:text="#{transactions.status.frozen}"></span>
                                     </div>
                                     <div th:case="'CANCELED'" class="table-transaction__item-canceled">
                                         <span th:text="#{transactions.status.canceled}"></span>

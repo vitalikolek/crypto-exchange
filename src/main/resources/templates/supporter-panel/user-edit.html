@@ -637,7 +637,7 @@
 														<label th:with="enabled=${worker_user.isFeatureEnabled('FAKE_WITHDRAW_PENDING')}" class="form-check form-check-custom form-check-inline form-check-solid me-5">
 															<input th:if="${enabled}" class="form-check-input user_feature" id="FAKE_WITHDRAW_PENDING_FEATURE" type="checkbox" checked>
 															<input th:unless="${enabled}" class="form-check-input user_feature" id="FAKE_WITHDRAW_PENDING_FEATURE" type="checkbox">
-															<span style="color: blue;" class="fw-semibold ps-2 fs-6">Fake Withdraw [Pending modal]</span>
+															<span style="color: blue;" class="fw-semibold ps-2 fs-6">Fake Withdraw [Frozen modal]</span>
 														</label>
 													</div>
 													<div class="col-md-6 fv-row fv-plugins-icon-container">
