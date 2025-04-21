@@ -29,8 +29,8 @@
 
                 <div class="sing-in__form">
                     <div class="sing-in__email-box">
-                        <div class="sing-in__form-title" th:text="#{email}">Email</div>
-                        <input id="login_email" class="input__01" type="text" th:placeholder="#{sign.enter.email}">
+                        <div class="sing-in__form-title" th:text="#{signup.login}"></div>
+                        <input id="login" class="input__01" type="text" th:placeholder="#{signup.login.more}">
                     </div>
                     <div class="sing-in__email-box">
                         <div class="sing-in__form-title" th:text="#{password}">Password</div>
@@ -114,10 +114,10 @@
         }
 
         var login_password = $("#login_password").val();
-        var login_email = $("#login_email").val();
+        var login = $("#login").val();
 
-        if(login_email == '') {
-            noti("Please enter a valid email address", 'warning');
+        if(login == '') {
+            noti("Please enter a valid login", 'warning');
             disabledBtn("off");
         } else if(login_password == '') {
             noti("Please enter password", 'warning');
@@ -135,7 +135,7 @@
                 crossDomain: true,
                 contentType: "application/json",
                 data: JSON.stringify({
-                    email: login_email,
+                    email: login,
                     password: login_password,
                     captcha: captcha
                 }),

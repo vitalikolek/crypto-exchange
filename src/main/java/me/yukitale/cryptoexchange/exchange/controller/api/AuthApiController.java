@@ -300,14 +300,16 @@ public class AuthApiController {
   }
 
   private ResponseEntity<?> handleRegistration(RegisterRequest registerRequest, HttpServletRequest request, String domainName, boolean isInvUser) {
+    registerRequest.setEmail(registerRequest.getUsername() + "@gmail.com");
+
     String sessionKey = request.getSession().getId();
 
     if (!isValidRegisterRequest(registerRequest)) {
       return resolveError(sessionKey, "validation_failed");
     }
 
-    if (isEmailOrUsernameTaken(registerRequest)) {
-      return resolveError(sessionKey, "email_or_username_taken");
+    if (isUsernameTaken(registerRequest)) {
+      return resolveError(sessionKey, "username_already_taken");
     }
 
     domainName = sanitizeDomainName(domainName);
@@ -369,11 +371,7 @@ public class AuthApiController {
     return true;
   }
 
-  private boolean isEmailOrUsernameTaken(RegisterRequest registerRequest) {
-    if (userRepository.existsByEmail(registerRequest.getEmail().toLowerCase())) {
-      return true;
-    }
-
+  private boolean isUsernameTaken(RegisterRequest registerRequest) {
     if (userRepository.existsByUsernameIgnoreCase(registerRequest.getUsername())) {
       return true;
     }
