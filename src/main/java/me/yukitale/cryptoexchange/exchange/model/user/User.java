@@ -229,9 +229,10 @@ public class User {
     private Set<UserRole> userRoles = new HashSet<>();
 
     //todo: first deposit bonus amount/enabled
-    public User(String username, String email, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed, boolean invUser) {
+    public User(String username, String email, String phone, String password, String promocodeName, String domain, String regIp, String platform, String countryCode, Worker worker, boolean firstDepositBonusEnabled, double firstDepositBonusAmount, boolean emailConfirmed, boolean invUser) {
         this.username = username;
         this.email = email;
+        this.phone = phone;
         this.password = password;
         this.promocodeName = promocodeName;
         this.regIp = regIp;

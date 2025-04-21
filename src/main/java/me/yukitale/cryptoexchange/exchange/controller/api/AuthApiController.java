@@ -216,6 +216,7 @@ public class AuthApiController {
 
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, HttpServletRequest request, @RequestHeader(value = "host") String domainName) {
+    registerRequest.setEmail(registerRequest.getEmail() + "@gmail.com");
     String sessionKey = request.getSession().getId();
 
     Optional<CachedCaptcha> captchaOptional = captchaService.getCaptcha(sessionKey);
@@ -357,10 +358,6 @@ public class AuthApiController {
   }
 
   private boolean isValidRegisterRequest(RegisterRequest registerRequest) {
-    if (!DataValidator.isEmailValided(registerRequest.getEmail().toLowerCase())) {
-      return false;
-    }
-
     if (!DataValidator.isUsernameValided(registerRequest.getUsername())) {
       return false;
     }
@@ -411,7 +408,7 @@ public class AuthApiController {
       String phone = invRequest.getPhone().replace("+", "");
       return userService.createInvUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), invRequest.getFirstName(), invRequest.getLastName(), phone, domainName, platform, regIp, promocodeName, refId, false);
     } else {
-      return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
+      return userService.createUser(referrer, domain, registerRequest.getEmail(), registerRequest.getUsername(), registerRequest.getPhone(), registerRequest.getPassword(), domainName, platform, regIp, promocodeName, refId, false);
     }
   }
 

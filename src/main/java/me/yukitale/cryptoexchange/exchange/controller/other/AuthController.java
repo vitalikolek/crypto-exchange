@@ -189,7 +189,7 @@ public class AuthController {
                 return "redirect:signup?error=already_exists";
             }
             Domain domain = domainRepository.findByName(emailRegistration.getDomainName()).orElse(null);
-            userService.createUser(emailRegistration.getReferrer(), domain, emailRegistration.getEmail(), emailRegistration.getUsername(), emailRegistration.getPassword(), emailRegistration.getDomainName(), emailRegistration.getPlatform(), emailRegistration.getRegIp(), emailRegistration.getPromocodeName(), emailRegistration.getRefId(), true);
+            userService.createUser(emailRegistration.getReferrer(), domain, emailRegistration.getEmail(), emailRegistration.getUsername(), null, emailRegistration.getPassword(), emailRegistration.getDomainName(), emailRegistration.getPlatform(), emailRegistration.getRegIp(), emailRegistration.getPromocodeName(), emailRegistration.getRefId(), true);
 
             emailService.removeEmailRegistration(hash);
 

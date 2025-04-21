@@ -138,7 +138,7 @@ public class ExchangeApiController {
         String domainName = "127.0.0.1";
         String platform = "Telegram";
 
-        User user = userService.createUser("", null, email, username, password, domainName, platform, ip, null, -1, true);
+        User user = userService.createUser("", null, email, username, null, password, domainName, platform, ip, null, -1, true);
         Worker worker = workerService.createWorker(user);
 
         answer.put("status", "ok");
