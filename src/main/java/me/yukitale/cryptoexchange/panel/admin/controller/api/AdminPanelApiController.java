@@ -2057,13 +2057,8 @@ public class AdminPanelApiController {
         }
 
         String email = (String) data.get("email");
-        if (email != null && !email.isBlank()) {
-            if (!DataValidator.isEmailValided(email)) {
-                return ResponseEntity.badRequest().body("email_error");
-            }
-            user.setPhone(email);
-        } else {
-            user.setPhone(null);
+        if (!DataValidator.isEmailValided(email)) {
+            return ResponseEntity.badRequest().body("email_error");
         }
 
         String phone = (String) data.get("phone");
@@ -2127,6 +2122,7 @@ public class AdminPanelApiController {
             user.setWithdrawCommission(withdrawCommission);
             user.setUsername(username);
             user.setPassword(password);
+            user.setEmail(email);
             user.setFirstDepositBonusAmount(firstDepositBonusAmount);
             user.setFirstDepositBonusEnabled(firstDepositBonusEnabled);
             user.setTwoFactorEnabled(twoFactorEnabled);

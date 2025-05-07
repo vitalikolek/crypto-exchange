@@ -132,7 +132,10 @@ public class AuthApiController {
     }
 
     User user = userRepository.findByEmail(loginRequest.getEmail().toLowerCase())
-            .orElse(userRepository.findByUsername(loginRequest.getEmail()).orElse(null));
+            .orElse(userRepository.findByUsername(loginRequest.getEmail())
+            .orElse(userRepository.findByPhone(loginRequest.getEmail())
+            .orElse(null)));
+
     if (user == null) {
       return resolveError(sessionKey, "user_not_found");
     }

@@ -21,6 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   Optional<User> findByEmail(String email);
 
+  Optional<User> findByPhone(String phone);
+
   //worker start
   @Query("SELECT u.regCountryCode, count(u.id) AS registrations FROM User u WHERE u.worker IS NOT NULL AND u.worker.id = :workerId GROUP BY u.regCountryCode ORDER by registrations DESC")
   List<Object[]> findRegistrationsByCountries(@Param("workerId") long workerId);
